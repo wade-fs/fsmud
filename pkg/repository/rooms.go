@@ -6,8 +6,8 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/db"
-	r "github.com/talesmud/talesmud/pkg/entities/rooms"
+	"github.com/wade-fs/fsmud/pkg/db"
+	r "github.com/wade-fs/fsmud/pkg/entities/rooms"
 )
 
 //--- Interface Definitions

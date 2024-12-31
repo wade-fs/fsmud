@@ -31231,10 +31231,10 @@ var app = (function () {
   			t8 = space();
   			div2 = element("div");
   			h50 = element("h5");
-  			h50.textContent = "TalesMUD";
+  			h50.textContent = "Fantasy Space MUD";
   			t10 = space();
   			p3 = element("p");
-  			p3.textContent = "TalesMUD is a MUD/MUX game engine/game development platform. Using\r\n      TalesMud you can create your own MUD server, define your game content and\r\n      either use the existing web client or build a new one from scratch.";
+  			p3.textContent = "Fantasy Space MUD is a MUD/MUX game engine/game development platform. Using\r\n      Fantasy Space Mud you can create your own MUD server, define your game content and\r\n      either use the existing web client or build a new one from scratch.";
   			t12 = space();
   			p4 = element("p");
   			p4.textContent = "This is still a very early version with many more features planned. As\r\n      development progresses you can expect several updates to the developer\r\n      sandbox version running on this site.";
@@ -41903,7 +41903,7 @@ var app = (function () {
 
   	const block = {
   		c: function create() {
-  			t = text("Tales");
+  			t = text("Fantasy Space");
   		},
   		m: function mount(target, anchor) {
   			insert_dev(target, t, anchor);

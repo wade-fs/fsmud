@@ -6,9 +6,9 @@ import (
 
 	log "github.com/sirupsen/logrus"
 
-	"github.com/talesmud/talesmud/pkg/db"
-	"github.com/talesmud/talesmud/pkg/entities"
-	i "github.com/talesmud/talesmud/pkg/entities/items"
+	"github.com/wade-fs/fsmud/pkg/db"
+	"github.com/wade-fs/fsmud/pkg/entities"
+	i "github.com/wade-fs/fsmud/pkg/entities/items"
 )
 
 //--- Interface Definitions

@@ -4,8 +4,8 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
 )
 
 func (game *Game) handleDefaultMessage(message *messages.Message) {

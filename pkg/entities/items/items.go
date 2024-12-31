@@ -3,8 +3,8 @@ package items
 import (
 	"time"
 
-	"github.com/talesmud/talesmud/pkg/entities"
-	"github.com/talesmud/talesmud/pkg/entities/traits"
+	"github.com/wade-fs/fsmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/entities/traits"
 )
 
 //ItemType type

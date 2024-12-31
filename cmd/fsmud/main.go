@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/talesmud/talesmud/pkg/server"
+	"github.com/wade-fs/fsmud/pkg/server"
 )
 
 func main() {
@@ -18,7 +18,7 @@ func main() {
 		log.Error("Error loading .env file")
 	}
 
-	fmt.Println("Starting tales server...")
+	fmt.Println("Starting Fantasy Space MUD server...")
 
 	fmt.Printf("mongo connection string %v\n", os.Getenv("MONGODB_CONNECTION_STRING"))
 	fmt.Printf("mongo database %v\n", os.Getenv("MONGODB_DATABASE"))

@@ -1,9 +1,9 @@
 package service
 
 import (
-	"github.com/talesmud/talesmud/pkg/db"
-	"github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/scripts"
+	"github.com/wade-fs/fsmud/pkg/db"
+	"github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/scripts"
 )
 
 //Facade ...

@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/talesmud/talesmud/pkg/mudserver/game/def"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/def"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
 )
 
 // WhoCommand ... foo

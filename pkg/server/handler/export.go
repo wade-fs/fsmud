@@ -4,13 +4,13 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	e "github.com/talesmud/talesmud/pkg/entities"
-	"github.com/talesmud/talesmud/pkg/entities/characters"
-	"github.com/talesmud/talesmud/pkg/entities/items"
-	"github.com/talesmud/talesmud/pkg/entities/rooms"
-	"github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/scripts"
-	"github.com/talesmud/talesmud/pkg/service"
+	e "github.com/wade-fs/fsmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/entities/characters"
+	"github.com/wade-fs/fsmud/pkg/entities/items"
+	"github.com/wade-fs/fsmud/pkg/entities/rooms"
+	"github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/scripts"
+	"github.com/wade-fs/fsmud/pkg/service"
 )
 
 //ExportHandler ...

@@ -4,11 +4,11 @@ import (
 	"time"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/entities"
 
-	c "github.com/talesmud/talesmud/pkg/mudserver/game/commands"
-	m "github.com/talesmud/talesmud/pkg/mudserver/game/messages"
-	"github.com/talesmud/talesmud/pkg/service"
+	c "github.com/wade-fs/fsmud/pkg/mudserver/game/commands"
+	m "github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/service"
 )
 
 //Game ... contains live game state

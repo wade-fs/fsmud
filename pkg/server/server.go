@@ -15,11 +15,11 @@ import (
 
 	"github.com/buger/jsonparser"
 
-	"github.com/talesmud/talesmud/pkg/db"
-	mud "github.com/talesmud/talesmud/pkg/mudserver"
-	"github.com/talesmud/talesmud/pkg/scripts/runner"
-	"github.com/talesmud/talesmud/pkg/server/handler"
-	"github.com/talesmud/talesmud/pkg/service"
+	"github.com/wade-fs/fsmud/pkg/db"
+	mud "github.com/wade-fs/fsmud/pkg/mudserver"
+	"github.com/wade-fs/fsmud/pkg/scripts/runner"
+	"github.com/wade-fs/fsmud/pkg/server/handler"
+	"github.com/wade-fs/fsmud/pkg/service"
 
 	"errors"
 

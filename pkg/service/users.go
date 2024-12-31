@@ -4,8 +4,8 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	e "github.com/talesmud/talesmud/pkg/entities"
-	r "github.com/talesmud/talesmud/pkg/repository"
+	e "github.com/wade-fs/fsmud/pkg/entities"
+	r "github.com/wade-fs/fsmud/pkg/repository"
 )
 
 //UsersService delives logical functions on top of the users Repo

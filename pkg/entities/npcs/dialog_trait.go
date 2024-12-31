@@ -3,7 +3,7 @@ package npc
 import (
 	"time"
 
-	d "github.com/talesmud/talesmud/pkg/entities/dialogs"
+	d "github.com/wade-fs/fsmud/pkg/entities/dialogs"
 )
 
 //DialogTrait data

@@ -5,9 +5,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities/items"
-	"github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/service"
+	"github.com/wade-fs/fsmud/pkg/entities/items"
+	"github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/service"
 )
 
 //ItemsHandler ...

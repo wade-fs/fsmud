@@ -2,10 +2,10 @@ package service
 
 import (
 	"github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities"
-	"github.com/talesmud/talesmud/pkg/entities/items"
-	r "github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/scripts"
+	"github.com/wade-fs/fsmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/entities/items"
+	r "github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/scripts"
 )
 
 //--- Interface Definitions

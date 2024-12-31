@@ -1,6 +1,6 @@
 package scripts
 
-import "github.com/talesmud/talesmud/pkg/entities"
+import "github.com/wade-fs/fsmud/pkg/entities"
 
 //ScriptType type
 type ScriptType string

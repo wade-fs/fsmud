@@ -165,11 +165,12 @@
   {/if}
 
   <div class="welcome" style="clear:left; text-align: justify;">
-    <h5>TalesMUD</h5>
+    <h5>Fantasy Space MUD</h5>
     <p>
-      TalesMUD is a MUD/MUX game engine/game development platform. Using
-      TalesMud you can create your own MUD server, define your game content and
-      either use the existing web client or build a new one from scratch.
+      Fantasy Space MUD is a MUD/MUX game engine/game development platform.
+      Using Fantasy Space Mud you can create your own MUD server, 
+      define your game content and either use the existing web client or
+      build a new one from scratch.
     </p>
     <p>
       This is still a very early version with many more features planned. As

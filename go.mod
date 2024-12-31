@@ -1,4 +1,4 @@
-module github.com/talesmud/talesmud
+module github.com/wade-fs/fsmud
 
 go 1.18
 

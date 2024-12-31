@@ -6,10 +6,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities"
-	"github.com/talesmud/talesmud/pkg/entities/characters"
-	"github.com/talesmud/talesmud/pkg/server/dto"
-	"github.com/talesmud/talesmud/pkg/service"
+	"github.com/wade-fs/fsmud/pkg/entities"
+	"github.com/wade-fs/fsmud/pkg/entities/characters"
+	"github.com/wade-fs/fsmud/pkg/server/dto"
+	"github.com/wade-fs/fsmud/pkg/service"
 )
 
 //CharactersHandler ...

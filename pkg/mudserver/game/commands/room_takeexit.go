@@ -1,10 +1,10 @@
 package commands
 
 import (
-	"github.com/talesmud/talesmud/pkg/entities/rooms"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/def"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/messages"
-	m "github.com/talesmud/talesmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/entities/rooms"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/def"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
+	m "github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
 )
 
 // TakeExit ... executes scream command

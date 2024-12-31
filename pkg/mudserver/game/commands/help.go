@@ -1,8 +1,8 @@
 package commands
 
 import (
-	"github.com/talesmud/talesmud/pkg/mudserver/game/def"
-	m "github.com/talesmud/talesmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/def"
+	m "github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
 )
 
 // HelpCommand ... foo

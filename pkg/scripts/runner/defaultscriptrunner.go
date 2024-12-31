@@ -8,13 +8,13 @@ import (
 	_ "github.com/robertkrimen/otto/underscore"
 
 	"github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities/items"
-	"github.com/talesmud/talesmud/pkg/entities/rooms"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/def"
-	"github.com/talesmud/talesmud/pkg/mudserver/game/messages"
-	"github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/scripts"
-	"github.com/talesmud/talesmud/pkg/service"
+	"github.com/wade-fs/fsmud/pkg/entities/items"
+	"github.com/wade-fs/fsmud/pkg/entities/rooms"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/def"
+	"github.com/wade-fs/fsmud/pkg/mudserver/game/messages"
+	"github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/scripts"
+	"github.com/wade-fs/fsmud/pkg/service"
 )
 
 // DefaultScriptRunner ...

@@ -9,7 +9,7 @@ import (
 	log "github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 
-	d "github.com/talesmud/talesmud/pkg/entities/dialogs"
+	d "github.com/wade-fs/fsmud/pkg/entities/dialogs"
 
 	"github.com/joho/godotenv"
 	"github.com/manifoldco/promptui"

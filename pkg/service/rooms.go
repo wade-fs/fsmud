@@ -1,7 +1,7 @@
 package service
 
 import (
-	r "github.com/talesmud/talesmud/pkg/repository"
+	r "github.com/wade-fs/fsmud/pkg/repository"
 )
 
 // RoomValueHelpEntry ...

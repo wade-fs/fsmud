@@ -26866,10 +26866,10 @@ function create_fragment$k(ctx) {
 			t0 = space();
 			div0 = element("div");
 			h50 = element("h5");
-			h50.textContent = "TalesMUD";
+			h50.textContent = "FS MUD";
 			t2 = space();
 			p0 = element("p");
-			p0.textContent = "TalesMUD is a MUD/MUX game engine/game development platform. Using\n      TalesMud you can create your own MUD server, define your game content and\n      either use the existing web client or build a new one from scratch.";
+			p0.textContent = "FS MUD is a MUD/MUX game engine/game development platform. Using\n      FS Mud you can create your own MUD server, define your game content and\n      either use the existing web client or build a new one from scratch.";
 			t4 = space();
 			p1 = element("p");
 			p1.textContent = "This is still a very early version with many more features planned. As\n      development progresses you can expect several updates to the developer\n      sandbox version running on this site.";
@@ -36179,7 +36179,7 @@ function create_default_slot_9(ctx) {
 
 	const block = {
 		c: function create() {
-			t = text("Tales");
+			t = text("Fantasy Space");
 		},
 		m: function mount(target, anchor) {
 			insert_dev(target, t, anchor);

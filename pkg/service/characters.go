@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	log "github.com/sirupsen/logrus"
-	"github.com/talesmud/talesmud/pkg/entities/characters"
-	r "github.com/talesmud/talesmud/pkg/repository"
-	"github.com/talesmud/talesmud/pkg/server/dto"
+	"github.com/wade-fs/fsmud/pkg/entities/characters"
+	r "github.com/wade-fs/fsmud/pkg/repository"
+	"github.com/wade-fs/fsmud/pkg/server/dto"
 )
 
 //--- Interface Definitions

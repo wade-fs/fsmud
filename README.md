@@ -15,5 +15,5 @@ Fork from https://github.com/TalesMUD/talesmud
 ## stop 
 - docker-compose down
 
-# open and play talesmud
+# open and play fsmud
 - http://localhost:8010
