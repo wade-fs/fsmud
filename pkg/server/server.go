@@ -345,6 +345,9 @@ func (app *app) Run() {
 
 	// read port from env file
 	port := os.Getenv("PORT")
+	if len(port) == 0 {
+		port = "8010"
+	}
 	
 	server := fmt.Sprintf("0.0.0.0:%v", port)
 
