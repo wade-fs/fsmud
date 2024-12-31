@@ -1,5 +1,6 @@
-# New Fantasy Space MUD, 
-Fork from https://github.com/TalesMUD/talesmud
+# New Fantasy Space MUD
+- Fork from https://github.com/TalesMUD/talesmud
+- For personal leisure time only to study TalesMUD, not for formal MUD development.
 
 # Install by use docker
 ## prepare docker
