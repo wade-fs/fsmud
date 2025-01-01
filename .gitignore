@@ -21,3 +21,4 @@ main
 bin/tales
 out.json
 dialog1.json
+__build
