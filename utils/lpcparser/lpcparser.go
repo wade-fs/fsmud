@@ -20,6 +20,7 @@ const (
     TokenOperator
     TokenPunctuator
     TokenComment
+    TokenPreprocessor // 新增：預處理器指令
 )
 
 // 關鍵字列表 (部分LPC常用關鍵字)
@@ -38,6 +39,16 @@ var keywords = map[string]bool{
     "inherit": true,
 }
 
+// 預處理器指令關鍵字
+var preprocessorKeywords = map[string]bool{
+    "ifndef":  true,
+    "define":  true,
+    "include": true,
+    "endif":   true,
+    "ifdef":   true,
+    "else":    true,
+}
+
 // Token 表示一個語法單元
 type Token struct {
     Type    TokenType
@@ -48,11 +59,11 @@ type Token struct {
 
 // Lexer 負責詞法分析
 type Lexer struct {
-    reader    *bufio.Reader
-    line      int
-    column    int
+    reader     *bufio.Reader
+    line       int
+    column     int
     peekedRune rune
-    hasPeek   bool
+    hasPeek    bool
 }
 
 // NewLexer 創建新的 Lexer
@@ -105,7 +116,10 @@ func (l *Lexer) peekRune() (rune, error) {
 
 // NextToken 返回下一個 token
 func (l *Lexer) NextToken() (Token, error) {
-    // 跳過空白字符
+    // 跳過空白字符和空行
+    var startLine, startColumn int
+    var atLineStart = true
+
     for {
         r, err := l.nextRune()
         if err != nil {
@@ -115,16 +129,66 @@ func (l *Lexer) NextToken() (Token, error) {
             return Token{}, err
         }
 
+        // 更新起始位置
+        if atLineStart {
+            startLine = l.line
+            startColumn = l.column
+        }
+
+        // 如果遇到非空白字符，準備處理
         if !unicode.IsSpace(r) {
             l.peekedRune = r
             l.hasPeek = true
             break
         }
+
+        // 如果是換行，重置行首標誌
+        if r == '\n' {
+            atLineStart = true
+            continue
+        }
+
+        // 如果遇到非換行空白字符，則不再是行首
+        atLineStart = false
     }
 
     r, err := l.nextRune()
     if err != nil {
         return Token{}, err
+    }
+
+    // 處理預處理器指令
+    if r == '#' && atLineStart {
+        directive := ""
+        // 讀取指令名稱
+        for {
+            nextR, err := l.peekRune()
+            if err != nil || unicode.IsSpace(nextR) {
+                break
+            }
+            l.nextRune()
+            directive += string(nextR)
+        }
+
+        // 讀取指令的參數直到行尾
+        params := ""
+        for {
+            nextR, err := l.peekRune()
+            if err != nil || nextR == '\n' {
+                if nextR == '\n' {
+                    l.nextRune() // 消耗換行符
+                }
+                break
+            }
+            l.nextRune()
+            params += string(nextR)
+        }
+        return Token{
+            Type:   TokenPreprocessor,
+            Value:  strings.TrimSpace(directive + " " + params),
+            Line:   startLine,
+            Column: 1, // 預處理器指令總是在列 1 開始
+        }, nil
     }
 
     // 處理單行註釋
@@ -139,8 +203,8 @@ func (l *Lexer) NextToken() (Token, error) {
                     return Token{
                         Type:   TokenComment,
                         Value:  comment,
-                        Line:   l.line,
-                        Column: l.column,
+                        Line:   startLine,
+                        Column: startColumn,
                     }, nil
                 }
                 comment += string(r)
@@ -162,8 +226,8 @@ func (l *Lexer) NextToken() (Token, error) {
         return Token{
             Type:   TokenNumber,
             Value:  num,
-            Line:   l.line,
-            Column: l.column,
+            Line:   startLine,
+            Column: startColumn,
         }, nil
     }
 
@@ -191,8 +255,8 @@ func (l *Lexer) NextToken() (Token, error) {
         return Token{
             Type:   TokenString,
             Value:  str,
-            Line:   l.line,
-            Column: l.column,
+            Line:   startLine,
+            Column: startColumn,
         }, nil
     }
 
@@ -214,18 +278,18 @@ func (l *Lexer) NextToken() (Token, error) {
         return Token{
             Type:   tokenType,
             Value:  id,
-            Line:   l.line,
-            Column: l.column,
+            Line:   startLine,
+            Column: startColumn,
         }, nil
     }
 
     // 處理操作符和標點符號
     value := string(r)
     return Token{
-        Type:   TokenOperator, // 這裡需要更細分的操作符分類
+        Type:   TokenOperator,
         Value:  value,
-        Line:   l.line,
-        Column: l.column,
+        Line:   startLine,
+        Column: startColumn,
     }, nil
 }
 
@@ -240,6 +304,7 @@ const (
     NodeIdentifier
     NodeString
     NodeNumber
+    NodePreprocessor // 新增：預處理器節點
 )
 
 // AST 節點
@@ -275,9 +340,9 @@ func (p *Parser) advance() error {
 // expect 檢查期望的 token 類型
 func (p *Parser) expect(tokenType TokenType) error {
     if p.currentToken.Type != tokenType {
-        return fmt.Errorf("unexpected token at line %d, column %d: got %v, want %v",
+        return fmt.Errorf("unexpected token at line %d, column %d: got %v, want %v, value=%q",
             p.currentToken.Line, p.currentToken.Column,
-            p.currentToken.Type, tokenType)
+            p.currentToken.Type, tokenType, p.currentToken.Value)
     }
     return p.advance()
 }
@@ -319,6 +384,20 @@ func (p *Parser) parseNumber() (*Node, error) {
         Column: p.currentToken.Column,
     }
     if err := p.expect(TokenNumber); err != nil {
+        return nil, err
+    }
+    return node, nil
+}
+
+// parsePreprocessor 解析預處理器指令
+func (p *Parser) parsePreprocessor() (*Node, error) {
+    node := &Node{
+        Type:   NodePreprocessor,
+        Value:  p.currentToken.Value,
+        Line:   p.currentToken.Line,
+        Column: p.currentToken.Column,
+    }
+    if err := p.expect(TokenPreprocessor); err != nil {
         return nil, err
     }
     return node, nil
@@ -402,7 +481,8 @@ func (p *Parser) parseFunction() (*Node, error) {
             }
             node.Children = append(node.Children, returnStmt)
         } else {
-            return nil, fmt.Errorf("unexpected token in function body at line %d", p.currentToken.Line)
+            return nil, fmt.Errorf("unexpected token in function body at line %d, column %d: type=%v, value=%q",
+                p.currentToken.Line, p.currentToken.Column, p.currentToken.Type, p.currentToken.Value)
         }
     }
 
@@ -435,7 +515,8 @@ func (p *Parser) parseReturn() (*Node, error) {
     case TokenString:
         value, err = p.parseString()
     default:
-        return nil, fmt.Errorf("unexpected return value type at line %d", p.currentToken.Line)
+        return nil, fmt.Errorf("unexpected return value type at line %d, column %d: type=%v, value=%q",
+            p.currentToken.Line, p.currentToken.Column, p.currentToken.Type, p.currentToken.Value)
     }
     if err != nil {
         return nil, err
@@ -461,22 +542,39 @@ func (p *Parser) Parse() (*Node, error) {
     }
 
     for p.currentToken.Type != TokenEOF {
+        // 跳過空行（如果仍有空行 token）
+        if p.currentToken.Type == TokenOperator && (p.currentToken.Value == "\n" || p.currentToken.Value == "") {
+            if err := p.advance(); err != nil {
+                return nil, err
+            }
+            continue
+        }
+
         switch {
+        case p.currentToken.Type == TokenPreprocessor:
+            preprocNode, err := p.parsePreprocessor()
+            if err != nil {
+                return nil, fmt.Errorf("failed to parse preprocessor directive at line %d, column %d: %v",
+                    p.currentToken.Line, p.currentToken.Column, err)
+            }
+            program.Children = append(program.Children, preprocNode)
         case p.currentToken.Type == TokenKeyword && p.currentToken.Value == "inherit":
             inheritNode, err := p.parseInherit()
             if err != nil {
-                return nil, err
+                return nil, fmt.Errorf("failed to parse inherit statement at line %d, column %d: %v",
+                    p.currentToken.Line, p.currentToken.Column, err)
             }
             program.Children = append(program.Children, inheritNode)
         case p.currentToken.Type == TokenKeyword: // 假設是函數返回類型
             funcNode, err := p.parseFunction()
             if err != nil {
-                return nil, err
+                return nil, fmt.Errorf("failed to parse function at line %d, column %d: %v",
+                    p.currentToken.Line, p.currentToken.Column, err)
             }
             program.Children = append(program.Children, funcNode)
         default:
-            return nil, fmt.Errorf("unexpected token at line %d: %v", 
-                p.currentToken.Line, p.currentToken.Type)
+            return nil, fmt.Errorf("unexpected token at line %d, column %d: type=%v, value=%q",
+                p.currentToken.Line, p.currentToken.Column, p.currentToken.Type, p.currentToken.Value)
         }
     }
 
