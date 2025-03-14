@@ -34,6 +34,13 @@
 	- go north
 	- go south
 	- quit
+- mud4: 將 LPCObject 獨立在 rooms/ 下，還不是完整的 lpc object
+	- make mud4 && ./out/mud4 & telnet localhost 4000
+	- look
+	- go north
+	- go south
+	- go east ....
+	- quit
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
