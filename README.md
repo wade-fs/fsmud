@@ -20,6 +20,13 @@
 
 - 利用 AI 讓 MUD 中的人物具有智慧
 
+# 測試
+- make mud1 && ./out/mud1 & telnet localhost 4000
+	- look
+	- go north
+	- quit
+
+
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud
