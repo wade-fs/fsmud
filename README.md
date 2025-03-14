@@ -1,7 +1,7 @@
 # fsmud 簡介
 - 我只會用中文撰寫註解、文件
 - 想實作 LPC in golang
-- [Writing An Interpreter In Go][2]實作[LPC][1]
+- [Writing An Interpreter In Go][2]實作[FluffOS LPC][1]及[Dead Souls Mudlib][6]
 
 # 目標
 
@@ -41,9 +41,12 @@
 	- go south
 	- go east ....
 	- quit
+- lpc: 實作簡易的 LPC parser
+	- make lpc && ./out/lpc
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud
 [4]: https://en.wikipedia.org/wiki/LPMud
 [5]: https://www.fluffos.info/
+[6]: https://github.com/mudren/dead-souls
