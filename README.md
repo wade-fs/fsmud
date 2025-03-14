@@ -28,7 +28,12 @@
 	- quit
 - mud2: 擴展基本物件屬性與方法
 	- make mud2 && ./out/mud2
-
+- mud3: 結合 LPCObject 與 玩家系統，具有基本的互動
+	- make mud3 && ./out/mud3 & telnet localhost 4000
+	- look
+	- go north
+	- go south
+	- quit
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
