@@ -21,10 +21,13 @@
 - 利用 AI 讓 MUD 中的人物具有智慧
 
 # 測試
-- make mud1 && ./out/mud1 & telnet localhost 4000
+- mud1: 支援 telnet 4000, look, go north, quit 命令
+	- make mud1 && ./out/mud1 & telnet localhost 4000
 	- look
 	- go north
 	- quit
+- mud2: 擴展基本物件屬性與方法
+	- make mud2 && ./out/mud2
 
 
 [1]: https://www.fluffos.info/lpc/
