@@ -67,6 +67,17 @@ func parseLPCScript(filePath string) *LPCObject {
 			name = value
 		case "description":
 			desc = value
+		case "exits":
+			// 解析出口，例如 "north:森林小徑,east:村莊廣場"
+			exits := strings.Split(value, ",")
+			for _, exit := range exits {
+				exitParts := strings.SplitN(exit, ":", 2)
+				if len(exitParts) == 2 {
+					exitDir := strings.TrimSpace(exitParts[0])
+					exitRoom := strings.TrimSpace(exitParts[1])
+					props[exitDir] = exitRoom
+				}
+			}
 		default:
 			props[key] = value
 		}
@@ -87,9 +98,19 @@ func parseLPCScript(filePath string) *LPCObject {
 
 	// 設定 "look" 方法
 	room.Methods["look"] = func(obj *LPCObject, _ string) string {
-		return obj.Props["description"]
+		// 顯示房間描述和出口
+		desc := obj.Props["description"]
+		var exits []string
+		for dir, roomName := range obj.Props {
+			if dir != "description" && roomName != "" {
+				exits = append(exits, dir+" -> "+roomName)
+			}
+		}
+		if len(exits) > 0 {
+			desc += "\n出口: " + strings.Join(exits, ", ")
+		}
+		return desc
 	}
-
 	return room
 }
 
