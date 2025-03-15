@@ -1,7 +1,6 @@
 # fsmud 簡介
 - 我只會用中文撰寫註解、文件
-- 想實作 LPC in golang
-- [Writing An Interpreter In Go][2]實作[FluffOS LPC][1]及[Dead Souls Mudlib][6]
+- 棄 LPC 改用 JSON 來表達物件，最後希望透過 JSON 定義 Action / Cmd
 
 # 目標
 
@@ -9,18 +8,20 @@
 
 - 實作一個可以 telnet 的簡易環境。
 	- 有想過找[TalesMud][3]這類的現成環境來修改，後來覺得沒意義，重新寫也是一種很好的學習過程。
-- 具備簡易[LPMUD][4]的環境。
+- 具備簡易[MUD][7]的環境。
 
 ## 中期
 
 - 實作 web UI 環境進行圖形虛擬世界。
-- 實作跟[FluffOS][5]一樣，可以與現行 LPMud 相容的環境。
+- 實作跟[TalesMud][3]一樣具備 Mudlib 的完整遊戲世界。
 
 ## 長期
 
 - 利用 AI 讓 MUD 中的人物具有智慧
+- 提供地圖製作
+- 可以的話具備3D效果，類似[minecraft][8]
 
-# 測試
+# 歷程與測試
 - mud1: 支援 telnet 4000, look, go north, quit 命令
 	- make mud1 && ./out/mud1 & telnet localhost 4000
 	- look
@@ -43,6 +44,8 @@
 	- quit
 - lpc: 實作簡易的 LPC parser
 	- make lpc && ./out/lpc
+- obj: 撰寫 json loader 
+    - make obj && ./out/obj -d ./json_data/ -k config.name -k settings.app.theme
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
@@ -50,3 +53,5 @@
 [4]: https://en.wikipedia.org/wiki/LPMud
 [5]: https://www.fluffos.info/
 [6]: https://github.com/mudren/dead-souls
+[7]: https://en.wikipedia.org/wiki/Multi-user_dungeon
+[8]: https://minecraft.wiki/
