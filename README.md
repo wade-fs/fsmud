@@ -41,12 +41,19 @@
   - quit
 - lpc: Implement a simple LPC parser
   - make lpc && ./out/lpc
+- v8: Bind V8 engine
+  - make v8 && ./out/v8
 - obj: Write JSON loader
   - make obj
   - ./out/obj -d ./json_data -k config.name -k settings.app.theme
   - ./out/obj -d ./json_data -s "settings/hello"
-- v8: Bind V8 engine
-  - make v8 && ./out/v8
+- mud5: convert rooms/*.c to *.json to represent new LPC object
+  - make mud5 && ./out/mud5 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - go east ....
+  - quit
 
 ## Other Languages
 - [中文](README.zh.md)

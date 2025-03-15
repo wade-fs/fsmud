@@ -44,12 +44,19 @@
 	- quit
 - lpc: 實作簡易的 LPC parser
 	- make lpc && ./out/lpc
+- v8: bind v8 engine
+    - make v8 && ./out/v8
 - obj: 撰寫 json loader 
     - make obj
     - ./out/obj -d ./json_data -k config.name -k settings.app.theme
     - ./out/obj -d ./json_data -s "settings/hello"
-- v8: bind v8 engine
-    - make v8 && ./out/v8
+- mud5: 將 rooms/ 下 *.c 轉成 .json, 並轉換成 LPCObject
+	- make mud5 && ./out/mud5 & telnet localhost 4000
+	- look
+	- go north
+	- go south
+	- go east ....
+	- quit
 
 [返回英文版](README.md)
 

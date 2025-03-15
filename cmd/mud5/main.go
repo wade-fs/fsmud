@@ -13,6 +13,7 @@ import (
 
 type LPCObject struct {
 	Name    string
+	FName   string
 	Props   map[string]string
 	Methods map[string]func(*LPCObject, string) string
 }
@@ -59,20 +60,13 @@ func loadRoomsFromScripts() {
     for fileName, roomData := range roomsData {
         cleanFileName := strings.TrimSuffix(fileName, ".json")
         if roomMap, ok := roomData.(map[string]interface{}); ok {
-            // 從 JSON 中獲取房間名稱
-            roomName, ok := roomMap["name"].(string)
-            if !ok || roomName == "" {
-                fmt.Println("警告: 文件", cleanFileName, "缺少有效的房間名稱")
-                continue
-            }
-
-            // 使用 JSON 中的 name 作為房間名稱
-            room := convertToLPCObject(roomName, roomMap)
+            // 使用文件名作為房間名稱
+            room := convertToLPCObject(cleanFileName, roomMap)
             if room != nil {
-                rooms[roomName] = room
-                fmt.Println("載入房間:", roomName, "(文件:", cleanFileName, ")")
+                rooms[cleanFileName] = room
+                fmt.Println("載入房間:", cleanFileName)
             } else {
-                fmt.Println("警告: 無法轉換房間:", roomName, "(文件:", cleanFileName, ")")
+                fmt.Println("警告: 無法轉換房間:", cleanFileName)
             }
         } else {
             fmt.Println("警告: 文件", cleanFileName, "的資料格式無效")
@@ -86,7 +80,7 @@ func loadRoomsFromScripts() {
     }
 
     // 檢查是否成功載入起始房間
-    startRoomName := "開始之地" // 使用 JSON 中的 name
+    startRoomName := "start" // 使用文件名
     if _, exists := rooms[startRoomName]; !exists {
         fmt.Println("錯誤: 未找到起始房間 '", startRoomName, "'")
     } else {
@@ -98,28 +92,34 @@ func convertToLPCObject(name string, data map[string]interface{}) *LPCObject {
     props := make(map[string]string)
     methods := make(map[string]func(*LPCObject, string) string)
 
-    // 設置名稱
+    // 設置名稱（使用文件名）
     room := &LPCObject{
-        Name:    name,
+        FName:   name,
+		Name:    data["name"].(string),
         Props:   props,
         Methods: methods,
     }
 
     // 設置描述
-    if desc, ok := data["description"].(string); ok {
+    if desc, ok := data["description"].(string); ok && desc != "" {
         room.SetProp("description", desc)
     } else {
-        fmt.Println("警告: 房間", name, "沒有描述")
+        fmt.Println("警告: 房間", name, "缺少或無效的描述")
         return nil
     }
 
     // 設置出口
     if exits, ok := data["exits"].(map[string]interface{}); ok {
         for dir, roomName := range exits {
-            if roomNameStr, ok := roomName.(string); ok {
+            if roomNameStr, ok := roomName.(string); ok && roomNameStr != "" {
                 room.SetProp(dir, roomNameStr)
+                fmt.Println("設置出口:", name, "方向:", dir, "目標房間:", roomNameStr)
+            } else {
+                fmt.Println("警告: 房間", name, "的出口", dir, "無效")
             }
         }
+    } else {
+        fmt.Println("警告: 房間", name, "缺少出口資料")
     }
 
     // 設置 look 方法
@@ -148,15 +148,28 @@ type Player struct {
 var rooms = make(map[string]*LPCObject)
 var players = make(map[string]*Player)
 var mutex sync.Mutex
+
 func movePlayer(player *Player, direction string) string {
-	if newRoomName, exists := player.Location.Props[direction]; exists {
-		if newRoom, ok := rooms[newRoomName]; ok {
-			player.Location = newRoom
-			return "你移動到了 " + newRoom.Name
-		}
-	}
-	return "你不能往這個方向移動。"
+    if player.Location == nil {
+        return "錯誤: 當前房間無效"
+    }
+
+    fmt.Println("嘗試移動:", player.Location.Name, "方向:", direction)
+    if newRoomName, exists := player.Location.Props[direction]; exists {
+        fmt.Println("找到出口:", direction, "目標房間:", newRoomName)
+        if newRoom, ok := rooms[newRoomName]; ok {
+            player.Location = newRoom
+            fmt.Println("成功移動到:", newRoom.Name)
+            return "你移動到了 " + newRoom.Name
+        } else {
+            fmt.Println("錯誤: 目標房間", newRoomName, "不存在")
+        }
+    } else {
+        fmt.Println("錯誤: 方向", direction, "無效")
+    }
+    return "你不能往這個方向移動。"
 }
+
 func processCommand(player *Player, input string) string {
 	args := strings.SplitN(input, " ", 2)
 	if len(args) == 0 {
@@ -192,7 +205,7 @@ func handlePlayer(conn net.Conn) {
 	defer conn.Close()
 	player := &Player{
 		Name:     "玩家",
-		Location: rooms["開始之地"],
+		Location: rooms["start"],
 		conn:     conn,
 	}
 	mutex.Lock()
