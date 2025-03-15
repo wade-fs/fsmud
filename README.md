@@ -1,6 +1,6 @@
 # fsmud 簡介
 - 我只會用中文撰寫註解、文件
-- 棄 LPC 改用 JSON 來表達物件，最後希望透過 JSON 定義 Action / Cmd
+- 棄 LPC 改用[JSON][10] 來表達物件，最後希望透過[Javascript][11]/[v8go][9]讓[JSON][10] 定義 Action / Cmd
 
 # 目標
 
@@ -46,6 +46,8 @@
 	- make lpc && ./out/lpc
 - obj: 撰寫 json loader 
     - make obj && ./out/obj -d ./json_data/ -k config.name -k settings.app.theme
+- v8: bind v8 engine
+    - make v8 && ./out/v8
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
@@ -55,3 +57,6 @@
 [6]: https://github.com/mudren/dead-souls
 [7]: https://en.wikipedia.org/wiki/Multi-user_dungeon
 [8]: https://minecraft.wiki/
+[9]: https://github.com/rogchap/v8go
+[10]: https://en.wikipedia.org/wiki/JSON
+[11]: https://en.wikipedia.org/wiki/JavaScript
