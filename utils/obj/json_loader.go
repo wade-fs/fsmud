@@ -88,6 +88,10 @@ func (o *ObjectLoader) insertNestedMap(keyPath string, data interface{}, target 
     current[keys[len(keys)-1]] = data
 }
 
+func (o *ObjectLoader) GetData() interface{} {
+    return o.data
+}
+
 // Get 支援 "a.b.c" 的鍵路徑存取
 func (o *ObjectLoader) Get(path string) interface{} {
 	keys := strings.Split(path, ".")

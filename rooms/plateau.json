@@ -1,0 +1,7 @@
+{
+  "name": "高原路",
+  "description": "眼前是一片高原。",
+  "exits": {
+    "east": "start"
+  }
+}
