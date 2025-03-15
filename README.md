@@ -1,53 +1,52 @@
-# fsmud 簡介
-- 我只會用中文撰寫註解、文件
-- 棄 LPC 改用[JSON][10] 來表達物件，最後希望透過[Javascript][11]/[v8go][9]讓[JSON][10] 定義 Action / Cmd
+# fsmud Introduction
+- I will only write comments and documentation in Chinese.
+- Abandon LPC and use [JSON][10] to represent objects, ultimately hoping to define Actions/Cmds through [JavaScript][11]/[v8go][9] with [JSON][10].
 
-# 目標
+# Goals
 
-## 近期
+## Short-term
+- Implement a simple telnet-enabled environment.
+  - Considered modifying existing environments like [TalesMud][3], but later felt it was meaningless. Rewriting from scratch is also a great learning process.
+- Create a basic [MUD][7] environment.
 
-- 實作一個可以 telnet 的簡易環境。
-	- 有想過找[TalesMud][3]這類的現成環境來修改，後來覺得沒意義，重新寫也是一種很好的學習過程。
-- 具備簡易[MUD][7]的環境。
+## Mid-term
+- Implement a web UI environment for a graphical virtual world.
+- Build a complete game world with Mudlib, similar to [TalesMud][3].
 
-## 中期
+## Long-term
+- Utilize AI to make characters in the MUD intelligent.
+- Provide map creation tools.
+- If possible, include 3D effects, similar to [Minecraft][8].
 
-- 實作 web UI 環境進行圖形虛擬世界。
-- 實作跟[TalesMud][3]一樣具備 Mudlib 的完整遊戲世界。
-
-## 長期
-
-- 利用 AI 讓 MUD 中的人物具有智慧
-- 提供地圖製作
-- 可以的話具備3D效果，類似[minecraft][8]
-
-# 歷程與測試
-- mud1: 支援 telnet 4000, look, go north, quit 命令
-	- make mud1 && ./out/mud1 & telnet localhost 4000
-	- look
-	- go north
-	- quit
-- mud2: 擴展基本物件屬性與方法
-	- make mud2 && ./out/mud2
-- mud3: 結合 LPCObject 與 玩家系統，具有基本的互動
-	- make mud3 && ./out/mud3 & telnet localhost 4000
-	- look
-	- go north
-	- go south
-	- quit
-- mud4: 將 LPCObject 獨立在 rooms/ 下，還不是完整的 lpc object
-	- make mud4 && ./out/mud4 & telnet localhost 4000
-	- look
-	- go north
-	- go south
-	- go east ....
-	- quit
-- lpc: 實作簡易的 LPC parser
-	- make lpc && ./out/lpc
-- obj: 撰寫 json loader 
-    - make obj && ./out/obj -d ./json_data/ -k config.name -k settings.app.theme
-- v8: bind v8 engine
-    - make v8 && ./out/v8
+# Progress and Testing
+- mud1: Supports telnet 4000, commands: look, go north, quit
+  - make mud1 && ./out/mud1 & telnet localhost 4000
+  - look
+  - go north
+  - quit
+- mud2: Extend basic object properties and methods
+  - make mud2 && ./out/mud2
+- mud3: Integrate LPCObject with the player system, enabling basic interaction
+  - make mud3 && ./out/mud3 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - quit
+- mud4: Isolate LPCObject under rooms/, not yet a complete LPC object
+  - make mud4 && ./out/mud4 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - go east ....
+  - quit
+- lpc: Implement a simple LPC parser
+  - make lpc && ./out/lpc
+- obj: Write JSON loader
+  - make obj
+  - ./out/obj -d ./json_data -k config.name -k settings.app.theme
+  - ./out/obj -d ./json_data -s "settings/hello"
+- v8: Bind V8 engine
+  - make v8 && ./out/v8
 
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/

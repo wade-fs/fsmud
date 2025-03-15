@@ -12,58 +12,80 @@ import (
 // ObjectLoader 整合 JSON 載入與資料操作功能
 type ObjectLoader struct {
 	data map[string]interface{}
+	scripts map[string]interface{}
 }
 
 // NewObjectLoader 建立新的 ObjectLoader 實例
 func NewObjectLoader() *ObjectLoader {
-	return &ObjectLoader{data: make(map[string]interface{})}
-}
-
-// LoadJSONTree 從目錄載入 JSON 檔案並構建嵌套結構
-func (o *ObjectLoader) LoadJSONTree(rootDir string) error {
-	err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-
-		if info.IsDir() || !strings.HasSuffix(info.Name(), ".json") {
-			return nil
-		}
-
-		rawData, err := os.ReadFile(path)
-		if err != nil {
-			return err
-		}
-
-		relativePath, _ := filepath.Rel(rootDir, path)
-		cleanKey := strings.TrimSuffix(relativePath, filepath.Ext(relativePath))
-
-		var jsonData map[string]interface{}
-		if err := json.Unmarshal(rawData, &jsonData); err != nil {
-			return err
-		}
-
-		o.insertNestedMap(cleanKey, jsonData)
-		return nil
-	})
-
-	return err
-}
-
-// insertNestedMap 將 JSON 資料插入嵌套結構
-func (o *ObjectLoader) insertNestedMap(keyPath string, jsonData map[string]interface{}) {
-	keys := strings.Split(keyPath, string(os.PathSeparator))
-	current := o.data
-
-	for i := 0; i < len(keys)-1; i++ {
-		if _, exists := current[keys[i]]; !exists {
-			current[keys[i]] = make(map[string]interface{})
-		}
-		if nextMap, ok := current[keys[i]].(map[string]interface{}); ok {
-			current = nextMap
-		}
+	return &ObjectLoader{
+		data: make(map[string]interface{}),
+		scripts: make(map[string]interface{}),
 	}
-	current[keys[len(keys)-1]] = jsonData
+}
+
+// LoadJSONTree 從目錄載入 JSON 和 JS 檔案並構建嵌套結構
+func (o *ObjectLoader) LoadJSONTree(rootDir string) error {
+    err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+        if err != nil {
+            return err
+        }
+
+        if info.IsDir() {
+            return nil
+        }
+
+        relativePath, _ := filepath.Rel(rootDir, path)
+        cleanKey := strings.TrimSuffix(relativePath, filepath.Ext(relativePath))
+        cleanKey = strings.ReplaceAll(cleanKey, string(os.PathSeparator), "/") // 統一使用 / 分隔
+
+        // 處理 .json 檔案
+        if strings.HasSuffix(info.Name(), ".json") {
+            rawData, err := os.ReadFile(path)
+            if err != nil {
+                return err
+            }
+
+            var jsonData map[string]interface{}
+            if err := json.Unmarshal(rawData, &jsonData); err != nil {
+                return err
+            }
+
+            o.insertNestedMap(cleanKey, jsonData, o.data)
+            return nil
+        }
+
+        // 處理 .js 檔案
+        if strings.HasSuffix(info.Name(), ".js") {
+            rawData, err := os.ReadFile(path)
+            if err != nil {
+                return err
+            }
+
+            // 將腳本內容插入到樹狀結構
+            o.insertScript(cleanKey, string(rawData))
+            return nil
+        }
+
+        return nil
+    })
+
+    return err
+}
+
+// insertNestedMap 將 js, JSON 資料插入嵌套結構
+func (o *ObjectLoader) insertNestedMap(keyPath string, data interface{}, target map[string]interface{}) {
+    keys := strings.Split(keyPath, "/")
+    current := target
+
+    for i := 0; i < len(keys)-1; i++ {
+        if _, exists := current[keys[i]]; !exists {
+            current[keys[i]] = make(map[string]interface{})
+        }
+        if nextMap, ok := current[keys[i]].(map[string]interface{}); ok {
+            current = nextMap
+        }
+    }
+    current[keys[len(keys)-1]] = data
 }
 
 // Get 支援 "a.b.c" 的鍵路徑存取
