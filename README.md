@@ -48,6 +48,9 @@
 - v8: Bind V8 engine
   - make v8 && ./out/v8
 
+## Other Languages
+- [中文](README.zh.md)
+
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud
