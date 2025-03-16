@@ -11,28 +11,6 @@ import (
 	"fsmud/utils/obj"
 )
 
-type LPCObject struct {
-	Name    string
-	FName   string
-	Props   map[string]string
-	Methods map[string]func(*LPCObject, string) string
-}
-
-func (lpc *LPCObject) SetProp(key, value string) {
-	lpc.Props[key] = value
-}
-
-func (lpc *LPCObject) GetProp(key string) string {
-	return lpc.Props[key]
-}
-
-func (lpc *LPCObject) CallMethod(method string, param string) string {
-	if fn, ok := lpc.Methods[method]; ok {
-		return fn(lpc, param)
-	}
-	return "未知的方法: " + method
-}
-
 func loadRoomsFromScripts() {
     loader := obj.NewObjectLoader()
     err := loader.LoadJSONTree("rooms")
@@ -88,12 +66,12 @@ func loadRoomsFromScripts() {
     }
 }
 
-func convertToLPCObject(name string, data map[string]interface{}) *LPCObject {
+func convertToLPCObject(name string, data map[string]interface{}) *obj.LPCObject {
     props := make(map[string]string)
-    methods := make(map[string]func(*LPCObject, string) string)
+    methods := make(map[string]func(*obj.LPCObject, string) string)
 
     // 設置名稱（使用文件名）
-    room := &LPCObject{
+    room := &obj.LPCObject{
         FName:   name,
 		Name:    data["name"].(string),
         Props:   props,
@@ -123,34 +101,34 @@ func convertToLPCObject(name string, data map[string]interface{}) *LPCObject {
     }
 
     // 設置 look 方法
-room.Methods["look"] = func(obj *LPCObject, _ string) string {
-    desc := obj.Props["description"]
-    var exits []string
-    for dir, roomName := range obj.Props {
-        if dir != "description" && roomName != "" {
-            // 根據 roomName 查找目標房間
-            if targetRoom, exists := rooms[roomName]; exists {
-                exits = append(exits, dir+" -> "+targetRoom.Name)
-            } else {
-                exits = append(exits, dir+" -> 未知房間")
-            }
-        }
-    }
-    if len(exits) > 0 {
-        desc += "\n出口: " + strings.Join(exits, ", ")
-    }
-    return desc
-}
+	room.Methods["look"] = func(r *obj.LPCObject, _ string) string {
+	    desc := r.Props["description"]
+	    var exits []string
+	    for dir, roomName := range r.Props {
+	        if dir != "description" && roomName != "" {
+	            // 根據 roomName 查找目標房間
+	            if targetRoom, exists := rooms[roomName]; exists {
+	                exits = append(exits, dir+" -> "+targetRoom.Name)
+	            } else {
+	                exits = append(exits, dir+" -> 未知房間")
+	            }
+	        }
+	    }
+	    if len(exits) > 0 {
+	        desc += "\n出口: " + strings.Join(exits, ", ")
+	    }
+	    return desc
+	}
 
     return room
 }
 
 type Player struct {
 	Name     string
-	Location *LPCObject
+	Location *obj.LPCObject
 	conn     net.Conn
 }
-var rooms = make(map[string]*LPCObject)
+var rooms = make(map[string]*obj.LPCObject)
 var players = make(map[string]*Player)
 var mutex sync.Mutex
 
