@@ -61,8 +61,10 @@
     - make v8-tree && ./out/v8-tree
     - 請參考 rooms/main.js
 
-[返回英文版](README.md)
+# [我在想什麼？][0]
+# [返回英文版](README.md)
 
+[0]: docs/README-Thinking.md
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud

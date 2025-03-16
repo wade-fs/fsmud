@@ -58,9 +58,12 @@
   - make v8-tree && ./out/v8-tree
   - Please read rooms/main.js too.
 
-## Other Languages
+# [What's I am thinking?][0]
+
+# Other Languages
 - [中文](README.zh.md)
 
+[0]: docs/README-Thinking.md
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud
