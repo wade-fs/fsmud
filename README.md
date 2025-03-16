@@ -54,6 +54,9 @@
   - go south
   - go east ....
   - quit
+- v8-tree: recurssive read rooms/, and run main.js
+  - make v8-tree && ./out/v8-tree
+  - Please read rooms/main.js too.
 
 ## Other Languages
 - [中文](README.zh.md)

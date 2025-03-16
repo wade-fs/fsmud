@@ -57,6 +57,9 @@
 	- go south
 	- go east ....
 	- quit
+- v8-tree: 讀樹狀目錄，執行 main.js
+    - make v8-tree && ./out/v8-tree
+    - 請參考 rooms/main.js
 
 [返回英文版](README.md)
 
