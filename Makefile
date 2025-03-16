@@ -10,11 +10,12 @@ ENVW := $(ENV) CGO_ENABLED=1 CGO_CFLAGS="-Wno-return-local-addr" GOOS=windows GO
 
 %:
 	@ cd cmd/$(basename $(notdir $@)) && \
-	echo "target $@" && \
+	echo "building $@..." && \
 	if [ "$(suffix $@)" = ".exe" ]; then \
 	    export ENVVAR=$(ENVW); \
 	else \
 	    export ENVVAR=$(ENV); \
 	fi; \
 	$(GOROOT)/bin/go get && \
-	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@
+	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@ && \
+	cd $(TOP) && $(OUT)/$@

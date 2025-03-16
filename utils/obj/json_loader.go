@@ -25,18 +25,41 @@ func NewObjectLoader() *ObjectLoader {
 
 // LoadJSONTree 從目錄載入 JSON 和 JS 檔案並構建嵌套結構
 func (o *ObjectLoader) LoadJSONTree(rootDir string) error {
-    err := filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
+    return filepath.Walk(rootDir, func(path string, info os.FileInfo, err error) error {
         if err != nil {
             return err
         }
 
+        // 檢查是否為符號連結
+        if info.Mode()&os.ModeSymlink != 0 {
+            // 獲取符號連結指向的真實路徑
+            realPath, err := os.Readlink(path)
+            if err != nil {
+                return err
+            }
+            // 獲取真實路徑的檔案資訊
+            realInfo, err := os.Stat(realPath)
+            if err != nil {
+                return err
+            }
+            // 如果符號連結指向目錄，遞迴遍歷該目錄
+            if realInfo.IsDir() {
+                return o.LoadJSONTree(realPath)
+            }
+            // 如果符號連結指向檔案，更新 path 和 info 繼續處理
+            path = realPath
+            info = realInfo
+        }
+
+        // 如果是目錄，跳過
         if info.IsDir() {
             return nil
         }
 
+        // 計算相對路徑並清理鍵名
         relativePath, _ := filepath.Rel(rootDir, path)
         cleanKey := strings.TrimSuffix(relativePath, filepath.Ext(relativePath))
-        cleanKey = strings.ReplaceAll(cleanKey, string(os.PathSeparator), "/") // 統一使用 / 分隔
+        cleanKey = strings.ReplaceAll(cleanKey, string(os.PathSeparator), "/")
 
         // 處理 .json 檔案
         if strings.HasSuffix(info.Name(), ".json") {
@@ -44,12 +67,10 @@ func (o *ObjectLoader) LoadJSONTree(rootDir string) error {
             if err != nil {
                 return err
             }
-
             var jsonData map[string]interface{}
             if err := json.Unmarshal(rawData, &jsonData); err != nil {
                 return err
             }
-
             o.insertNestedMap(cleanKey, jsonData, o.data)
             return nil
         }
@@ -60,16 +81,12 @@ func (o *ObjectLoader) LoadJSONTree(rootDir string) error {
             if err != nil {
                 return err
             }
-
-            // 將腳本內容插入到樹狀結構
             o.insertScript(cleanKey, string(rawData))
             return nil
         }
 
         return nil
     })
-
-    return err
 }
 
 // insertNestedMap 將 js, JSON 資料插入嵌套結構
