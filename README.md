@@ -57,6 +57,8 @@
 - v8-tree: recurssive read rooms/, and run main.js
   - make v8-tree && ./out/v8-tree
   - Please read rooms/main.js too.
+- v8-js-call-go: regist golang callback, so in js can call func from golang
+    - make v8-js-call-go
 
 # [What's I am thinking?][0]
 
