@@ -218,6 +218,9 @@ class Player {
         this.admin = (id === "player_1");
         this.nickname = "";
         this.bio = "";
+        this.isCombat = false;
+        this.combatTarget = null;
+        this.combatTimer = null;
         loadPlayerMethods(this);
     }
 }
@@ -254,6 +257,12 @@ function addPlayer(id, username = null) {
 }
 
 function removePlayer(id) {
+    let player = players[id];
+    if (player && player.inCombat) {
+        clearTimeout(player.combatTimer);
+        player.inCombat = false;
+        player.combatTarget = null;
+    }
     let room = players[id] ? players[id].room : "";
     delete players[id];
     broadcastToRoom(i18n("left_game", { id }), room);
@@ -273,6 +282,10 @@ function processCommand(playerID, cmd) {
 
     if (commandAliases[action]) {
         action = commandAliases[action];
+    }
+
+    if (player.inCombat && !["attack", "quit"].includes(action)) {
+        return i18n("combat_restrict");
     }
 
     switch (action) {
@@ -326,6 +339,6 @@ function processCommand(playerID, cmd) {
     }
 }
 
-loadLanguage();
+loadLanguage("en");
 preloadCache();
 updateWeatherAndTime();
