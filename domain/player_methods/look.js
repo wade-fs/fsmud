@@ -43,14 +43,14 @@ function look(target) {
         });
     }
 
-    if (this.inventory.includes(target)) {
+    if (this.inventory.includes(target) || room.items.includes(target)) {
         let item = loadObject("items", target);
-        return i18n("look_item", { item: target, desc: item.desc || "A common item." });
-    }
-
-    if (room.items.includes(target)) {
-        let item = loadObject("items", target);
-        return i18n("look_item", { item: target, desc: item.desc || "A common item." });
+        return i18n("look_item", {
+            item: target,
+            desc: item.desc || "A common item.",
+            weight: item.weight || 0,
+            value: item.value || 0
+        });
     }
 
     return i18n("look_no_target");

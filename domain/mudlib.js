@@ -39,7 +39,7 @@ const defaultMessage = {
     "look_npcs": " NPCs: {npcs}",
     "look_players": " Players here: {players}",
     "look_player": "{id}{nick} [{race}]{bio}\nHP: {hp}, Mana: {mana}, Int: {int}, Spi: {spi}, Luck: {luck}",
-    "look_item": "{item}: {desc}",
+    "look_item": "{item}: {desc} (Weight: {weight}, Value: {value})",
     "look_no_target": "No such target here.",
     "go_success": "{desc}",
     "go_fail": "You can't go that way!",
@@ -65,6 +65,7 @@ const defaultMessage = {
     "cast_no_mana": "Not enough mana to cast {spell}!",
     "cast_fail": "Invalid spell or target!",
     "combatlog_empty": "No combat history available.",
+    "stats": "Stats for {id}{nick}:\nRace: {race}\nHP: {hp}\nMana: {mana}\nInt: {int}\nSpi: {spi}\nLuck: {luck}\nInventory: {inventory}",
     "save_success": "Your progress has been saved.",
     "setnick_success": "Nickname set to {nick}.",
     "setnick_broadcast": "{id} has set their nickname to {nick}.",
@@ -227,6 +228,7 @@ class Player {
         this.isCombat = false;
         this.combatTarget = null;
         this.combatTimer = null;
+        this.combatLog = [];
         loadPlayerMethods(this);
     }
 }
@@ -250,6 +252,7 @@ function addPlayer(id, username = null) {
             players[id].admin = savedData.admin || false;
             players[id].nickname = savedData.nickname;
             players[id].bio = savedData.bio;
+            players[id].combatLog = savedData.combatLog || [];
             broadcastToRoom(i18n("rejoined_game", { id }), players[id].room);
         } else {
             let raceList = Object.keys(races);
@@ -274,6 +277,52 @@ function removePlayer(id) {
     broadcastToRoom(i18n("left_game", { id }), room);
 }
 
+function processCombatTurn(npcId, roomId) {
+    let queue = combatQueues[npcId];
+    if (!queue || queue.length === 0) {
+        delete combatQueues[npcId];
+        return;
+    }
+
+    let player = queue.shift();
+    if (!player.inCombat || player.combatTarget !== npcId) {
+        processCombatTurn(npcId, roomId);
+        return;
+    }
+
+    let npc = loadObject("npcs", npcId);
+    if (npc.hp > 0) {
+        let npcDamage = npc.attack;
+        player.hp -= npcDamage;
+        player.combatLog.push(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }));
+        broadcastToRoom(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }), roomId);
+
+        if (player.hp <= 0) {
+            broadcastToRoom(`${player.id} has been defeated by ${npc.name}!`, roomId);
+            player.inCombat = false;
+            player.combatTarget = null;
+        } else {
+            queue.push(player);
+            broadcastToRoom(i18n("attack_continue", { npc: npc.name, hp: npc.hp, id: player.id }), roomId);
+        }
+    }
+
+    saveObject("npcs", npcId, npc);
+    saveObject("players", player.id, player);
+
+    if (queue.length > 0 && npc.hp > 0) {
+        setTimeout(() => processCombatTurn(npcId, roomId), 2000);
+    } else {
+        delete combatQueues[npcId];
+        for (let p of Object.values(players)) {
+            if (p.combatTarget === npcId) {
+                p.inCombat = false;
+                p.combatTarget = null;
+            }
+        }
+    }
+}
+
 function processCommand(playerID, cmd) {
     if (!players[playerID]) {
         addPlayer(playerID, cmd);
@@ -290,7 +339,7 @@ function processCommand(playerID, cmd) {
         action = commandAliases[action];
     }
 
-    if (player.inCombat && !["attack", "quit"].includes(action)) {
+    if (player.inCombat && !["attack", "flee", "cast", "combatlog", "quit", "stats"].includes(action)) {
         return i18n("combat_restrict");
     }
 
@@ -305,6 +354,14 @@ function processCommand(playerID, cmd) {
             return player.drop(parts[1]);
         case "attack":
             return player.attack(parts[1]);
+        case "flee":
+            return player.flee(parts[1]);
+        case "cast":
+            return player.cast(parts[1]);
+        case "combatlog":
+            return player.combatlog(parts[1]);
+        case "stats":
+            return player.stats(parts[1]);
         case "save":
             return player.save();
         case "quit":
