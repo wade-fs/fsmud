@@ -15,6 +15,7 @@ let commandAliases = {
 let weather = "sunny";
 let isDay = true;
 let messages = {};
+let currentLang = "en";
 
 const races = {
     "Human": { hp: 100, mana: 50, int: 10, spi: 10, luck: 10, attackBonus: 0, desc: "Balanced and adaptable." },
@@ -25,20 +26,88 @@ const races = {
     "Dwarf": { hp: 105, mana: 30, int: 10, spi: 10, luck: 10, attackBonus: 1, desc: "Sturdy and tough." }
 };
 
+const defaultMessage = {
+    "welcome": "Welcome to the MUD! Type commands to play.",
+    "player_not_found": "Player not found.",
+    "unknown_command": "Unknown command.",
+    "joined_game": "{id} has joined the game as a {race}.",
+    "rejoined_game": "{id} has rejoined the game.",
+    "left_game": "{id} has left the game.",
+    "goodbye": "Goodbye.",
+    "look_room": "[{area}] {desc} (Weather: {weather}, Time: {time}) Exits: {exits}",
+    "look_items": " Items: {items}",
+    "look_npcs": " NPCs: {npcs}",
+    "look_players": " Players here: {players}",
+    "look_player": "{id}{nick} [{race}]{bio}\nHP: {hp}, Mana: {mana}, Int: {int}, Spi: {spi}, Luck: {luck}",
+    "look_item": "{item}: {desc}",
+    "look_no_target": "No such target here.",
+    "go_success": "{desc}",
+    "go_fail": "You can't go that way!",
+    "get_success": "You got {item}.",
+    "get_broadcast": "{id} got {item}.",
+    "get_fail": "No such item here.",
+    "drop_success": "You dropped {item}. It will vanish in 10 seconds.",
+    "drop_broadcast": "{id} dropped {item}.",
+    "drop_vanish": "{item} has vanished from {room}.",
+    "drop_fail": "You don't have that item.",
+    "attack_no_mana": "You don't have enough mana to attack!",
+    "attack_hit": "{id} attacked {npc} for {damage} damage!",
+    "attack_critical": " (Critical Hit!)",
+    "attack_defeat": "{npc} is defeated!",
+    "attack_continue": "{npc} has {hp} HP left. It hits you for {attack} damage! Your HP: {hp}, Mana: {mana}",
+    "attack_fail": "No such target here.",
+    "save_success": "Your progress has been saved.",
+    "setnick_success": "Nickname set to {nick}.",
+    "setnick_broadcast": "{id} has set their nickname to {nick}.",
+    "setnick_fail": "Invalid nickname. Must be 1-20 characters.",
+    "setbio_success": "Bio updated.",
+    "setbio_broadcast": "{id} has updated their bio.",
+    "setbio_fail": "Invalid bio. Must be 1-100 characters.",
+    "shutdown_permission": "You don't have permission to do that.",
+    "shutdown_success": "Shutting down the system...",
+    "kick_permission": "You don't have permission or invalid syntax. Use: kick <player_id>",
+    "kick_success": "You kicked {id}.",
+    "kick_broadcast": "{id} has been kicked by {admin}.",
+    "kick_fail": "Player not found.",
+    "weather_permission": "You don't have permission or invalid syntax. Use: weather set <sunny/rainy>",
+    "weather_success": "Weather set to {weather}.",
+    "weather_broadcast": "The weather has been set to {weather} by {id}.",
+    "weather_update": "The weather is now {weather} and it is {time}.",
+    "setlang_success": "Language set to {lang}.",
+    "setlang_fail": "Invalid language choice. Available languages: en, zh",
+    "please_enter_username": "請輸入您的用戶名：",
+    "please_enter_username": "Please enter username:",
+    "welcome_user": "welcome user."
+}
+
 function i18n(key, params = {}) {
-    let msg = messages[key] || key;
+    let msg = messages[key] || defaultMessage[key] || key;
+
+    const conditionRegex = /{([^|]+)\|([^}]+)}/g;
+    let match;
+    while ((match = conditionRegex.exec(msg)) !== null) {
+        const [fullMatch, conditionVar, options] = match;
+        const conditionPairs = options.split("|").map(opt => opt.split(":"));
+        const value = params[conditionVar];
+        const replacement = conditionPairs.find(pair => pair[0] === value)?.[1] || "";
+        msg = msg.replace(fullMatch, replacement);
+    }
+
     for (let [param, value] of Object.entries(params)) {
         msg = msg.replace(`{${param}}`, value);
     }
     return msg;
 }
-
-function loadLanguage() {
-    let langData = loadFile("domain/lang/zh_TW.json");
+function loadLanguage(lang = "en") {
+    let langData = loadFile(`domain/lang/${lang}.json`);
     if (langData) {
         messages = langData;
+        currentLang = lang;
+        log(`Loaded language: ${lang}`);
     } else {
-        log("Failed to load language file, using default messages.");
+        messages = defaultMessages;
+        currentLang = "en";
+        log(`Failed to load ${lang} language file, using default English.`);
     }
 }
 
@@ -97,16 +166,12 @@ function preloadCache() {
 
 function loadObject(type, name) {
     let filePath = `domain/${type}/${name}.json`;
-    log("loadObject", "cache", type, cache[type]);
     if (!cache[type][name]) {
-        log("loadObject", type, name, filePath);
         cache[type][name] = loadFile(filePath);
         if (!cache[type][name]) {
             log(`Failed to load ${type}/${name}`);
             return null;
         }
-	} else {
-        log("loadObject", "cache", JSON.stringify(cache[type][name])); 
     }
     return JSON.parse(JSON.stringify(cache[type][name]));
 }
@@ -254,6 +319,8 @@ function processCommand(playerID, cmd) {
             return player.setnick(parts[1]);
         case "setbio":
             return player.setbio(parts.slice(1).join(" "));
+        case "setlang":
+            return player.setlang(parts[1]);
         default:
             return i18n("unknown_command");
     }

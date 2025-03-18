@@ -22,9 +22,7 @@ function attack(target) {
         if (weather === "rainy") damage = Math.floor(damage * 0.8);
 
         npc.hp -= damage;
-        let attackMsg = i18n("attack_hit", { id: this.id, npc: npc.name, damage });
-        if (isCritical) attackMsg += i18n("attack_critical");
-        broadcastToRoom(attackMsg, this.room);
+        broadcastToRoom(i18n("attack_hit", { id:this.id, npc: npc.name, damage, isCritical: isCritical.toString() }), this.room);
 
         if (npc.hp <= 0) {
             room.npcs = room.npcs.filter(n => n !== target);
