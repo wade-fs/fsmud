@@ -12,7 +12,6 @@ import (
 	"path/filepath"
 	"strings"
     "sync"
-	"time"
 
     v8 "fsmud/utils/v8go"
 	"github.com/gin-gonic/gin"
@@ -29,10 +28,6 @@ var (
         WriteBufferSize: 1024,
         CheckOrigin: func(r *http.Request) bool { return true },
     }
-	shutdownChan = make(chan struct{})
-	timers       = sync.Map{} // 儲存定時器
-    timerID      int64    = 0 // 定時器 ID
-    timerMu      sync.Mutex
 )
 
 func listFiles(dir string, ext string) []string {
@@ -74,152 +69,18 @@ func broadcastMessage(msg string, room string, isGlobal bool) {
     }
 }
 
-func logFunction(info *v8.FunctionCallbackInfo) *v8.Value {
-	// 用於保存所有傳入的參數
-	var args []interface{}
-
-	// 遍歷所有傳入的參數
-	for _, arg := range info.Args() {
-		// 轉換每個參數為字串
-		args = append(args, arg.String())
-	}
-
-	// 使用 fmt.Printf 格式化並打印所有參數，類似 fmt.Println
-	fmt.Println("[JS Log]:", args)
-
-	// 返回 `undefined`
-	iso := info.Context().Isolate()
-	undefined := v8.Undefined(iso)
-	return undefined
-}
 // 初始化 V8 並載入 mudlib
 func initV8() {
     global := v8.NewObjectTemplate(iso)
 
-    logFunc := v8.NewFunctionTemplate(iso, logFunction)
-	global.Set("log", logFunc)
-
-    global.Set("loadFile", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) < 1 {
-            return nil
-        }
-        filePath := args[0].String()
-		fmt.Println("loadFile", "filePath", filePath)
-        data, err := ioutil.ReadFile(filePath)
-        if err != nil {
-            log.Println("Load file error:", err)
-            return nil
-        }
-
-        val, err := v8.JSONParse(info.Context(), string(data))
-        if err != nil {
-            log.Println("Parse JSON error:", err)
-            return nil
-        }
-        return val
-    }))
-
-    // 注入檔案保存函數
-    global.Set("saveFile", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) < 2 {
-            return nil
-        }
-        filePath := args[0].String()
-        data := args[1]
-        jsonStr, err := v8.JSONStringify(info.Context(), data)
-        if err != nil {
-            log.Println("Stringify error:", err)
-            return nil
-        }
-        err = ioutil.WriteFile(filePath, []byte(jsonStr), 0644)
-        if err != nil {
-            log.Println("Save file error:", err)
-            return nil
-        }
-        return nil
-    }))
-
-    global.Set("broadcastToRoom", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) < 2 {
-            return nil
-        }
-        msg := args[0].String()
-        room := args[1].String()
-        broadcastMessage(msg, room, false)
-        return nil
-    }))
-
-    global.Set("broadcastGlobal", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) > 0 {
-            msg := args[0].String()
-            broadcastMessage(msg, "", true)
-        }
-        return nil
-    }))
-
-    global.Set("shutdown", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        broadcastMessage("System is shutting down...", "", true)
-        close(shutdownChan)
-        return nil
-    }))
-
-	global.Set("setInterval", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) < 2 {
-            return nil
-        }
-        callback := args[0]
-        intervalMs := args[1].Int32()
-
-        timerMu.Lock()
-        id := timerID
-        timerID++
-        timerMu.Unlock()
-
-        ticker := time.NewTicker(time.Duration(intervalMs) * time.Millisecond)
-        timers.Store(id, ticker)
-
-        go func() {
-            for {
-                select {
-                case <-ticker.C:
-                    if _, err := info.Context().RunScript("("+callback.String()+")()", "timer.js"); err != nil {
-                        log.Printf("Timer execution error: %v", err)
-                    }
-                case <-shutdownChan:
-                    ticker.Stop()
-                    timers.Delete(id)
-                    return
-                }
-            }
-        }()
-
-        val, err := v8.NewValue(iso, int32(id))
-        if err != nil {
-            log.Printf("Failed to create timer ID value: %v", err)
-            return nil
-        }
-        return val
-    }))
-
-    // 注入 clearInterval
-    global.Set("clearInterval", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
-        args := info.Args()
-        if len(args) < 1 {
-            return nil
-        }
-        id := args[0].Int32()
-
-        if ticker, ok := timers.Load(int32(id)); ok {
-            ticker.(*time.Ticker).Stop()
-            timers.Delete(int32(id))
-        }
-        return nil
-    }))
+	global.Set("log", v8.NewFunctionTemplate(iso, cb_log))
+    global.Set("loadFile", v8.NewFunctionTemplate(iso, cb_loadFile))
+    global.Set("saveFile", v8.NewFunctionTemplate(iso, cb_saveFile))
+    global.Set("broadcastToRoom", v8.NewFunctionTemplate(iso, cb_broadcastToRoom))
+    global.Set("broadcastGlobal", v8.NewFunctionTemplate(iso, cb_broadcastGlobal))
+    global.Set("shutdown", v8.NewFunctionTemplate(iso, cb_shutdown))
+	global.Set("setInterval", v8.NewFunctionTemplate(iso, cb_setInterval))
+    global.Set("clearInterval", v8.NewFunctionTemplate(iso, cb_clearInterval))
 
     ctx = v8.NewContext(iso, global)
 
@@ -245,7 +106,6 @@ func initV8() {
     if err != nil {
         log.Fatal("Failed to parse file lists JSON:", err)
     }
-	fmt.Println("filesVal", filesVal)
     ctx.Global().Set("fileLists", filesVal)
 
     for _, cmd := range cmdFiles {
