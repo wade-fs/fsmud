@@ -62,6 +62,11 @@
     - 請參考 rooms/main.js
 - v8-js-call-go: 在 golang 註冊 callback, 讓 js 可以呼叫 golang 函式
 	- make v8-js-call-go
+- mud: 使用 v8go 開發 mudlib.js
+    - make mud
+    - telnet localhost 2323
+    - browser : http://localhost:8080
+    - 參考 domain/*，尤其是 mudlib.js
 
 # [我在想什麼？][0]
 # [返回英文版](README.md)

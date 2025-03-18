@@ -1,0 +1,6 @@
+{
+    "desc": "A dark cave entrance in Area 2.",
+    "exits": { "west": "area1/room1" },
+    "items": [],
+    "npcs": []
+}

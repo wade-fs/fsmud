@@ -2,248 +2,413 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	"encoding/json"
+    "fmt"
+    "io/ioutil"
+    "log"
 	"net"
+	"net/http"
+	"os"
+	"path/filepath"
 	"strings"
-	"sync"
+    "sync"
 	"time"
 
-	"fsmud/utils/obj"
+    v8 "fsmud/utils/v8go"
+	"github.com/gin-gonic/gin"
+    "github.com/gorilla/websocket"
 )
 
-func loadRoomsFromScripts() {
-    loader := obj.NewObjectLoader()
-    err := loader.LoadJSONTree("rooms")
-    if err != nil {
-        fmt.Println("無法載入房間資料:", err)
-        return
+var (
+    iso          = v8.NewIsolate()
+    ctx          *v8.Context
+    clients      = make(map[interface{}]struct{ Conn interface{}; Room string })
+    clientsMu    sync.Mutex
+    upgrader     = websocket.Upgrader{
+        ReadBufferSize:  1024,
+        WriteBufferSize: 1024,
+        CheckOrigin: func(r *http.Request) bool { return true },
     }
+	shutdownChan = make(chan struct{})
+	timers       = sync.Map{} // 儲存定時器
+    timerID      int64    = 0 // 定時器 ID
+    timerMu      sync.Mutex
+)
 
-    // 輸出載入的房間資料以進行調試
-    jsonStr, err := loader.Dump("  ")
-    if err != nil {
-        fmt.Println("無法輸出房間資料:", err)
-        return
-    }
-    fmt.Println("載入的房間資料：", jsonStr)
-
-    // 直接訪問 loader.data，獲取房間資料
-    roomsData, ok := loader.GetData().(map[string]interface{})
-    if !ok {
-        fmt.Println("錯誤: 無法解析房間資料")
-        return
-    }
-
-    // 遍歷房間資料
-    for fileName, roomData := range roomsData {
-        cleanFileName := strings.TrimSuffix(fileName, ".json")
-        if roomMap, ok := roomData.(map[string]interface{}); ok {
-            // 使用文件名作為房間名稱
-            room := convertToLPCObject(cleanFileName, roomMap)
-            if room != nil {
-                rooms[cleanFileName] = room
-                fmt.Println("載入房間:", cleanFileName)
-            } else {
-                fmt.Println("警告: 無法轉換房間:", cleanFileName)
-            }
-        } else {
-            fmt.Println("警告: 文件", cleanFileName, "的資料格式無效")
+func listFiles(dir string, ext string) []string {
+    var files []string
+	dir = filepath.Join("domain", dir)
+    err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+        if err != nil {
+            return err
         }
-    }
-
-    // 列出所有載入的房間
-    fmt.Println("所有載入的房間：")
-    for roomName := range rooms {
-        fmt.Println(" -", roomName)
-    }
-
-    // 檢查是否成功載入起始房間
-    startRoomName := "start" // 使用文件名
-    if _, exists := rooms[startRoomName]; !exists {
-        fmt.Println("錯誤: 未找到起始房間 '", startRoomName, "'")
-    } else {
-        fmt.Println("成功載入起始房間 '", startRoomName, "'")
-    }
-}
-
-func convertToLPCObject(name string, data map[string]interface{}) *obj.LPCObject {
-    props := make(map[string]string)
-    methods := make(map[string]func(*obj.LPCObject, string) string)
-
-    // 設置名稱（使用文件名）
-    room := &obj.LPCObject{
-        FName:   name,
-		Name:    data["name"].(string),
-        Props:   props,
-        Methods: methods,
-    }
-
-    // 設置描述
-    if desc, ok := data["description"].(string); ok && desc != "" {
-        room.SetProp("description", desc)
-    } else {
-        fmt.Println("警告: 房間", name, "缺少或無效的描述")
+        if !info.IsDir() && strings.HasSuffix(info.Name(), ext) {
+            relPath, _ := filepath.Rel(dir, path)
+            name := strings.TrimSuffix(relPath, ext)
+            files = append(files, name)
+        }
         return nil
+    })
+    if err != nil {
+        log.Printf("Error walking directory %s: %v", dir, err)
     }
+    return files
+}
 
-    // 設置出口
-    if exits, ok := data["exits"].(map[string]interface{}); ok {
-        for dir, roomName := range exits {
-            if roomNameStr, ok := roomName.(string); ok && roomNameStr != "" {
-                room.SetProp(dir, roomNameStr)
-                fmt.Println("設置出口:", name, "方向:", dir, "目標房間:", roomNameStr)
-            } else {
-                fmt.Println("警告: 房間", name, "的出口", dir, "無效")
+func broadcastMessage(msg string, room string, isGlobal bool) {
+    clientsMu.Lock()
+    defer clientsMu.Unlock()
+    for client, info := range clients {
+        if isGlobal || (room != "" && info.Room == room) {
+            switch c := client.(type) {
+            case *websocket.Conn:
+                if err := c.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
+                    log.Printf("WebSocket write error: %v", err)
+                }
+            case net.Conn:
+                if _, err := fmt.Fprintf(c, "%s\r\n", msg); err != nil {
+                    log.Printf("Telnet write error: %v", err)
+                }
             }
         }
-    } else {
-        fmt.Println("警告: 房間", name, "缺少出口資料")
     }
+}
 
-    // 設置 look 方法
-	room.Methods["look"] = func(r *obj.LPCObject, _ string) string {
-	    desc := r.Props["description"]
-	    var exits []string
-	    for dir, roomName := range r.Props {
-	        if dir != "description" && roomName != "" {
-	            // 根據 roomName 查找目標房間
-	            if targetRoom, exists := rooms[roomName]; exists {
-	                exits = append(exits, dir+" -> "+targetRoom.Name)
-	            } else {
-	                exits = append(exits, dir+" -> 未知房間")
-	            }
-	        }
-	    }
-	    if len(exits) > 0 {
-	        desc += "\n出口: " + strings.Join(exits, ", ")
-	    }
-	    return desc
+func logFunction(info *v8.FunctionCallbackInfo) *v8.Value {
+	// 用於保存所有傳入的參數
+	var args []interface{}
+
+	// 遍歷所有傳入的參數
+	for _, arg := range info.Args() {
+		// 轉換每個參數為字串
+		args = append(args, arg.String())
 	}
 
-    return room
+	// 使用 fmt.Printf 格式化並打印所有參數，類似 fmt.Println
+	fmt.Println("[JS Log]:", args)
+
+	// 返回 `undefined`
+	iso := info.Context().Isolate()
+	undefined := v8.Undefined(iso)
+	return undefined
 }
+// 初始化 V8 並載入 mudlib
+func initV8() {
+    global := v8.NewObjectTemplate(iso)
 
-type Player struct {
-	Name     string
-	Location *obj.LPCObject
-	conn     net.Conn
-}
-var rooms = make(map[string]*obj.LPCObject)
-var players = make(map[string]*Player)
-var mutex sync.Mutex
+    logFunc := v8.NewFunctionTemplate(iso, logFunction)
+	global.Set("log", logFunc)
 
-func movePlayer(player *Player, direction string) string {
-    if player.Location == nil {
-        return "錯誤: 當前房間無效"
-    }
-
-    fmt.Println("嘗試移動:", player.Location.Name, "方向:", direction)
-    if newRoomName, exists := player.Location.Props[direction]; exists {
-        fmt.Println("找到出口:", direction, "目標房間:", newRoomName)
-        if newRoom, ok := rooms[newRoomName]; ok {
-            player.Location = newRoom
-            fmt.Println("成功移動到:", newRoom.Name)
-            return "你移動到了 " + newRoom.Name
-        } else {
-            fmt.Println("錯誤: 目標房間", newRoomName, "不存在")
+    global.Set("loadFile", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) < 1 {
+            return nil
         }
-    } else {
-        fmt.Println("錯誤: 方向", direction, "無效")
+        filePath := args[0].String()
+		fmt.Println("loadFile", "filePath", filePath)
+        data, err := ioutil.ReadFile(filePath)
+        if err != nil {
+            log.Println("Load file error:", err)
+            return nil
+        }
+
+        val, err := v8.JSONParse(info.Context(), string(data))
+        if err != nil {
+            log.Println("Parse JSON error:", err)
+            return nil
+        }
+        return val
+    }))
+
+    // 注入檔案保存函數
+    global.Set("saveFile", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) < 2 {
+            return nil
+        }
+        filePath := args[0].String()
+        data := args[1]
+        jsonStr, err := v8.JSONStringify(info.Context(), data)
+        if err != nil {
+            log.Println("Stringify error:", err)
+            return nil
+        }
+        err = ioutil.WriteFile(filePath, []byte(jsonStr), 0644)
+        if err != nil {
+            log.Println("Save file error:", err)
+            return nil
+        }
+        return nil
+    }))
+
+    global.Set("broadcastToRoom", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) < 2 {
+            return nil
+        }
+        msg := args[0].String()
+        room := args[1].String()
+        broadcastMessage(msg, room, false)
+        return nil
+    }))
+
+    global.Set("broadcastGlobal", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) > 0 {
+            msg := args[0].String()
+            broadcastMessage(msg, "", true)
+        }
+        return nil
+    }))
+
+    global.Set("shutdown", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        broadcastMessage("System is shutting down...", "", true)
+        close(shutdownChan)
+        return nil
+    }))
+
+	global.Set("setInterval", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) < 2 {
+            return nil
+        }
+        callback := args[0]
+        intervalMs := args[1].Int32()
+
+        timerMu.Lock()
+        id := timerID
+        timerID++
+        timerMu.Unlock()
+
+        ticker := time.NewTicker(time.Duration(intervalMs) * time.Millisecond)
+        timers.Store(id, ticker)
+
+        go func() {
+            for {
+                select {
+                case <-ticker.C:
+                    if _, err := info.Context().RunScript("("+callback.String()+")()", "timer.js"); err != nil {
+                        log.Printf("Timer execution error: %v", err)
+                    }
+                case <-shutdownChan:
+                    ticker.Stop()
+                    timers.Delete(id)
+                    return
+                }
+            }
+        }()
+
+        val, err := v8.NewValue(iso, int32(id))
+        if err != nil {
+            log.Printf("Failed to create timer ID value: %v", err)
+            return nil
+        }
+        return val
+    }))
+
+    // 注入 clearInterval
+    global.Set("clearInterval", v8.NewFunctionTemplate(iso, func(info *v8.FunctionCallbackInfo) *v8.Value {
+        args := info.Args()
+        if len(args) < 1 {
+            return nil
+        }
+        id := args[0].Int32()
+
+        if ticker, ok := timers.Load(int32(id)); ok {
+            ticker.(*time.Ticker).Stop()
+            timers.Delete(int32(id))
+        }
+        return nil
+    }))
+
+    ctx = v8.NewContext(iso, global)
+
+    roomFiles := listFiles("rooms", ".json")
+    npcFiles := listFiles("npcs", ".json")
+    itemFiles := listFiles("items", ".json")
+    methodFiles := listFiles("player_methods", ".js")
+    playerFiles := listFiles("players", ".json")
+
+    filesJSON := map[string][]string{
+        "rooms":   roomFiles,
+        "npcs":    npcFiles,
+        "items":   itemFiles,
+        "methods": methodFiles,
+        "players": playerFiles,
     }
-    return "你不能往這個方向移動。"
+	log.Println("filesJSON", filesJSON)
+    filesJSONBytes, err := json.Marshal(filesJSON)
+    if err != nil {
+        log.Fatal("Failed to marshal file lists:", err)
+    }
+    filesVal, err := v8.JSONParse(ctx, string(filesJSONBytes))
+    if err != nil {
+        log.Fatal("Failed to parse file lists JSON:", err)
+    }
+	fmt.Println("filesVal", filesVal)
+    ctx.Global().Set("fileLists", filesVal)
+
+    for _, method := range methodFiles {
+        scriptBytes, err := ioutil.ReadFile(fmt.Sprintf("domain/player_methods/%s.js", method))
+        if err != nil {
+            log.Printf("Failed to load player method %s.js: %v", method, err)
+            continue
+        }
+        script := fmt.Sprintf("this.%s = %s", method, string(scriptBytes))
+        if _, err := ctx.RunScript(script, fmt.Sprintf("%s.js", method)); err != nil {
+            log.Printf("Failed to execute player method %s.js: %v", method, err)
+        }
+    }
+
+    // 載入 mudlib
+    mudlibBytes, err := ioutil.ReadFile("domain/mudlib.js")
+    if err != nil {
+        log.Fatal("Failed to load mudlib:", err)
+    }
+    if _, err := ctx.RunScript(string(mudlibBytes), "mudlib.js"); err != nil {
+        log.Fatal("Failed to execute mudlib:", err)
+    }
 }
 
-func processCommand(player *Player, input string) string {
-	args := strings.SplitN(input, " ", 2)
-	if len(args) == 0 {
-		return "請輸入指令。"
-	}
+// WebSocket 處理
+func handleWebSocket(c *gin.Context) {
+	conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+    if err != nil {
+        log.Println("WebSocket upgrade failed:", err)
+        return
+    }
+    defer conn.Close()
 
-	command := strings.ToLower(args[0])
-	argument := ""
-	if len(args) > 1 {
-		argument = args[1]
-	}
+    clientsMu.Lock()
+    playerID := fmt.Sprintf("player_%d", len(clients)+1)
+    clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
+    clientsMu.Unlock()
 
-	switch command {
-	case "look":
-		return player.Location.CallMethod("look", "")
-	case "go":
-		if argument == "" {
-			return "請指定一個方向，例如: go north"
-		}
-		return movePlayer(player, argument)
-	case "say":
-		return fmt.Sprintf("%s 說: %s", player.Name, argument)
-	case "quit":
-		player.conn.Write([]byte("再見！\n"))
-		player.conn.Close()
-		return "離開遊戲..."
-	default:
-		return "未知的指令: " + command
-	}
+    ctx.RunScript(fmt.Sprintf("addPlayer('%s')", playerID), "init.js")
+
+    for {
+        _, message, err := conn.ReadMessage()
+        if err != nil {
+            clientsMu.Lock()
+            delete(clients, conn)
+            clientsMu.Unlock()
+            ctx.RunScript(fmt.Sprintf("removePlayer('%s')", playerID), "cleanup.js")
+            return
+        }
+
+        cmd := string(message)
+        script := fmt.Sprintf("processCommand('%s', '%s')", playerID, cmd)
+        val, err := ctx.RunScript(script, "cmd.js")
+        if err != nil {
+            conn.WriteMessage(websocket.TextMessage, []byte("Error: "+err.Error()))
+        } else {
+            conn.WriteMessage(websocket.TextMessage, []byte(val.String()))
+        }
+
+        // 查詢玩家房間並更新
+        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'area1/room1'", playerID, playerID)
+        roomVal, err := ctx.RunScript(roomScript, "get_room.js")
+        if err == nil && roomVal.IsString() {
+            clientsMu.Lock()
+            clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: roomVal.String()}
+            clientsMu.Unlock()
+        }
+    }
 }
-const timeoutDuration = 5 * time.Minute
-func handlePlayer(conn net.Conn) {
+
+// Telnet 處理
+func handleTelnet(conn net.Conn) {
 	defer conn.Close()
-	player := &Player{
-		Name:     "玩家",
-		Location: rooms["start"],
-		conn:     conn,
-	}
-	mutex.Lock()
-	players[conn.RemoteAddr().String()] = player
-	mutex.Unlock()
-	timeoutCh := make(chan bool, 1)
-	go func() {
-		for {
-			select {
-			case <-time.After(timeoutDuration):
-				player.conn.Write([]byte("你發呆太久，被踢出遊戲。\n"))
-				player.conn.Close()
-				mutex.Lock()
-				delete(players, conn.RemoteAddr().String())
-				mutex.Unlock()
-				return
-			case <-timeoutCh:
-			}
-		}
-	}()
-	conn.Write([]byte("歡迎來到 MUD 世界！輸入 'look' 查看，'quit' 退出。\n > "))
-	scanner := bufio.NewScanner(conn)
-	for scanner.Scan() {
-		input := strings.TrimSpace(scanner.Text())
-		select {
-		case timeoutCh <- true:
-		default:
-		}
-		response := processCommand(player, input)
-		if response == "離開遊戲..." {
-			break
-		}
-		conn.Write([]byte(response + "\n> "))
-	}
-	fmt.Println("玩家離開: ", conn.RemoteAddr())
-	mutex.Lock()
-	delete(players, conn.RemoteAddr().String())
-	mutex.Unlock()
-}
-func main() {
-	loadRoomsFromScripts()
-	listener, err := net.Listen("tcp", "0.0.0.0:4000")
-	if err != nil {
-		fmt.Println("無法啟動伺服器:", err)
-		return
-	}
-	defer listener.Close()
-	fmt.Println("MUD 伺服器啟動，等待連線...")
-	for {
-		conn, err := listener.Accept()
-		if err != nil {
-			fmt.Println("連線失敗:", err)
-			continue
-		}
-		go handlePlayer(conn)
-	}
+
+    clientsMu.Lock()
+    playerID := fmt.Sprintf("player_%d", len(clients)+1)
+    clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
+    clientsMu.Unlock()
+
+    ctx.RunScript(fmt.Sprintf("addPlayer('%s')", playerID), "init.js")
+
+    fmt.Fprintf(conn, "Welcome to the MUD! Type commands to play.\r\n> ")
+
+    scanner := bufio.NewScanner(conn)
+    for scanner.Scan() {
+        cmd := strings.TrimSpace(scanner.Text())
+        if cmd == "quit" {
+            clientsMu.Lock()
+            delete(clients, conn)
+            clientsMu.Unlock()
+            ctx.RunScript(fmt.Sprintf("removePlayer('%s')", playerID), "cleanup.js")
+            return
+        }
+
+        script := fmt.Sprintf("processCommand('%s', '%s')", playerID, cmd)
+        val, err := ctx.RunScript(script, "cmd.js")
+        if err != nil {
+            fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
+        } else {
+            fmt.Fprintf(conn, "%s\r\n> ", val.String())
+        }
+
+        // 查詢玩家房間並更新
+        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'area1/room1'", playerID, playerID)
+        roomVal, err := ctx.RunScript(roomScript, "get_room.js")
+        if err == nil && roomVal.IsString() {
+            clientsMu.Lock()
+            clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: roomVal.String()}
+            clientsMu.Unlock()
+        }
+    }
+
+    if err := scanner.Err(); err != nil {
+        log.Println("Telnet read error:", err)
+        clientsMu.Lock()
+        delete(clients, conn)
+        clientsMu.Unlock()
+        ctx.RunScript(fmt.Sprintf("removePlayer('%s')", playerID), "cleanup.js")
+    }
 }
 
+// 啟動 Telnet 伺服器
+func startTelnetServer() {
+    listener, err := net.Listen("tcp", ":2323") // 使用 2323 端口，避免與系統預設 Telnet 衝突
+    if err != nil {
+        log.Fatal("Telnet server failed:", err)
+    }
+    log.Println("Telnet server started at :2323")
+	defer listener.Close()
+
+    for {
+        select {
+        case <-shutdownChan:
+            return
+        default:
+            conn, err := listener.Accept()
+            if err != nil {
+                log.Println("Telnet accept error:", err)
+                continue
+            }
+            go handleTelnet(conn)
+        }
+    }
+}
+
+func main() {
+    initV8()
+    r := gin.Default()
+
+    // 設定靜態文件路由
+    r.Static("/domain/static", "./domain/static")
+
+    // 提供首頁
+    r.GET("/", func(c *gin.Context) {
+        c.File("./domain/static/index.html")
+    })
+
+    // WebSocket 路由
+    r.GET("/ws", handleWebSocket)
+    go r.Run(":8080")
+	go startTelnetServer()
+
+	<-shutdownChan
+    log.Println("Server started at :8080")
+	os.Exit(0)
+}

@@ -9,6 +9,7 @@ out/
 
 *.out
 
+go.sum
 go.work
 go.work.sum
 

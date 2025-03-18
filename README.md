@@ -59,6 +59,11 @@
   - Please read rooms/main.js too.
 - v8-js-call-go: regist golang callback, so in js can call func from golang
     - make v8-js-call-go
+- mud: use v8 as mudlib.js
+	- make mud
+	- telnet localhost 2323
+	- browser : http://localhost:8080
+	- refer to domain/*
 
 # [What's I am thinking?][0]
 
