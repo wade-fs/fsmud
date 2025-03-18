@@ -44,6 +44,8 @@
     "weather_permission": "你沒有權限或語法錯誤。用法：weather set <sunny/rainy>",
     "weather_success": "天氣已設定為 {weather}。",
     "weather_broadcast": "{id} 設定天氣為 {weather}。",
-    "weather_update": "現在的天氣是 {weather}，時間為 {time}。"
+    "weather_update": "現在的天氣是 {weather}，時間為 {time}。",
+    "please_enter_username": "請輸入您的用戶名：",
+    "welcome_user": "歡迎，{username}！您已成功登入遊戲。"
 }
 

@@ -284,7 +284,7 @@ func handleWebSocket(c *gin.Context) {
     clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
     clientsMu.Unlock()
 
-    ctx.RunScript(fmt.Sprintf("addPlayer('%s')", playerID), "init.js")
+    conn.WriteMessage(websocket.TextMessage, []byte("Please enter your username:"))
 
     for {
         _, message, err := conn.ReadMessage()
@@ -325,9 +325,7 @@ func handleTelnet(conn net.Conn) {
     clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
     clientsMu.Unlock()
 
-    ctx.RunScript(fmt.Sprintf("addPlayer('%s')", playerID), "init.js")
-
-    fmt.Fprintf(conn, "Welcome to the MUD! Type commands to play.\r\n> ")
+    fmt.Fprintf(conn, "Please enter your username:\r\n> ")
 
     scanner := bufio.NewScanner(conn)
     for scanner.Scan() {

@@ -139,8 +139,9 @@ function loadPlayerMethods(player) {
 }
 
 class Player {
-    constructor(id, race = "Human") {
+    constructor(id, username, race = "Human") {
         this.id = id;
+        this.username = username;
         this.room = "area1/room1";
         this.race = races[race] ? race : "Human";
         this.hp = races[this.race].hp;
@@ -156,7 +157,11 @@ class Player {
     }
 }
 
-function addPlayer(id) {
+function addPlayer(id, username = null) {
+    if (!username) {
+        return i18n("please_enter_username");
+    }
+
     if (!players[id]) {
         let savedData = loadObject("players", id);
         if (savedData) {
@@ -176,10 +181,10 @@ function addPlayer(id) {
             let raceList = Object.keys(races);
             let randomRace = raceList[Math.floor(Math.random() * raceList.length)];
             players[id] = new Player(id, randomRace);
-            broadcastToRoom(i18n("joined_game", { id, race: randomRace }), players[id].room);
+            broadcastToRoom(i18n("joined_game", { id:username, race: randomRace }), players[id].room);
         }
     } else {
-        broadcastToRoom(i18n("rejoined_game", { id }), players[id].room);
+        broadcastToRoom(i18n("rejoined_game", { id:username }), players[id].room);
     }
 }
 
@@ -191,7 +196,8 @@ function removePlayer(id) {
 
 function processCommand(playerID, cmd) {
     if (!players[playerID]) {
-        addPlayer(playerID);
+        addPlayer(playerID, cmd);
+		return i18n("welcome_user", { username: cmd });
     }
 
     let player = players[playerID];

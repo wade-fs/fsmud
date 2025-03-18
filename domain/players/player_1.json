@@ -1,5 +1,6 @@
 {
     "id": "player_1",
+    "username": "wade",
     "race": "Human",
     "room": "area1/room1",
     "hp": 100,

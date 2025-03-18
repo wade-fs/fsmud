@@ -44,5 +44,7 @@
     "weather_permission": "You don't have permission or invalid syntax. Use: weather set <sunny/rainy>",
     "weather_success": "Weather set to {weather}.",
     "weather_broadcast": "The weather has been set to {weather} by {id}.",
-    "weather_update": "The weather is now {weather} and it is {time}."
+    "weather_update": "The weather is now {weather} and it is {time}.",
+    "please_enter_username": "Please enter username:",
+    "welcome_user": "welcome user."
 }
