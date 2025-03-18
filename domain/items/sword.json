@@ -1,6 +1,7 @@
 {
+    "name": "短劍",
     "damage": 10,
     "desc": "A sharp blade forged by ancient smiths.",
-    "weight": 5,  // 新增：重量（單位：任意）
-    "value": 50   // 新增：價值（單位：金幣）
+    "weight": 5,
+    "value": 50
 }

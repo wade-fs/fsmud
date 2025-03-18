@@ -226,14 +226,14 @@ func initV8() {
     roomFiles := listFiles("rooms", ".json")
     npcFiles := listFiles("npcs", ".json")
     itemFiles := listFiles("items", ".json")
-    methodFiles := listFiles("player_methods", ".js")
+    cmdFiles := listFiles("cmds", ".js")
     playerFiles := listFiles("players", ".json")
 
     filesJSON := map[string][]string{
         "rooms":   roomFiles,
         "npcs":    npcFiles,
         "items":   itemFiles,
-        "methods": methodFiles,
+        "cmds": cmdFiles,
         "players": playerFiles,
     }
 	log.Println("filesJSON", filesJSON)
@@ -248,15 +248,15 @@ func initV8() {
 	fmt.Println("filesVal", filesVal)
     ctx.Global().Set("fileLists", filesVal)
 
-    for _, method := range methodFiles {
-        scriptBytes, err := ioutil.ReadFile(fmt.Sprintf("domain/player_methods/%s.js", method))
+    for _, cmd := range cmdFiles {
+        scriptBytes, err := ioutil.ReadFile(fmt.Sprintf("domain/cmds/%s.js", cmd))
         if err != nil {
-            log.Printf("Failed to load player method %s.js: %v", method, err)
+            log.Printf("Failed to load player cmd %s.js: %v", cmd, err)
             continue
         }
-        script := fmt.Sprintf("this.%s = %s", method, string(scriptBytes))
-        if _, err := ctx.RunScript(script, fmt.Sprintf("%s.js", method)); err != nil {
-            log.Printf("Failed to execute player method %s.js: %v", method, err)
+        script := fmt.Sprintf("this.%s = %s", cmd, string(scriptBytes))
+        if _, err := ctx.RunScript(script, fmt.Sprintf("%s.js", cmd)); err != nil {
+            log.Printf("Failed to execute player cmd %s.js: %v", cmd, err)
         }
     }
 

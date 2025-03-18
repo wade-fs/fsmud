@@ -3,7 +3,7 @@ let cache = {
     rooms: {},
     npcs: {},
     items: {},
-    methods: {},
+    cmds: {},
     players: {}
 };
 let timers = {};
@@ -35,11 +35,13 @@ const defaultMessage = {
     "left_game": "{id} has left the game.",
     "goodbye": "Goodbye.",
     "look_room": "[{area}] {desc} (Weather: {weather}, Time: {time}) Exits: {exits}",
-    "look_items": " Items: {items}",
+    "look_item": "{item}: {desc} (Weight: {weight}, Value: {value})",
+    "get_success": "You got {item}.",
+    "stats": "Stats for {id}{nick}:\nRace: {race}\nHP: {hp}\nMana: {mana}\nInt: {int}\nSpi: {spi}\nLuck: {luck}\nInventory: {inventory}",
     "look_npcs": " NPCs: {npcs}",
     "look_players": " Players here: {players}",
     "look_player": "{id}{nick} [{race}]{bio}\nHP: {hp}, Mana: {mana}, Int: {int}, Spi: {spi}, Luck: {luck}",
-    "look_item": "{item}: {desc} (Weight: {weight}, Value: {value})",
+    "look_item": "{item}: {desc}",
     "look_no_target": "No such target here.",
     "go_success": "{desc}",
     "go_fail": "You can't go that way!",
@@ -65,7 +67,6 @@ const defaultMessage = {
     "cast_no_mana": "Not enough mana to cast {spell}!",
     "cast_fail": "Invalid spell or target!",
     "combatlog_empty": "No combat history available.",
-    "stats": "Stats for {id}{nick}:\nRace: {race}\nHP: {hp}\nMana: {mana}\nInt: {int}\nSpi: {spi}\nLuck: {luck}\nInventory: {inventory}",
     "save_success": "Your progress has been saved.",
     "setnick_success": "Nickname set to {nick}.",
     "setnick_broadcast": "{id} has set their nickname to {nick}.",
@@ -199,14 +200,14 @@ function parseRoomPath(roomPath) {
 
 function loadPlayerMethods(player) {
     let global = this;
-    if (fileLists && fileLists.methods && Array.isArray(fileLists.methods)) {
-        fileLists.methods.forEach(method => {
-            if (typeof global[method] === "function") {
-                player[method] = global[method].bind(player);
+    if (fileLists && fileLists.cmds && Array.isArray(fileLists.cmds)) {
+        fileLists.cmds.forEach(cmd => {
+            if (typeof global[cmd] === "function") {
+                player[cmd] = global[cmd].bind(player);
             }
         });
     } else {
-        log("fileLists.methods is not available or not an array.");
+        log("fileLists.cmds is not available or not an array.");
     }
 }
 
