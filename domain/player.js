@@ -81,6 +81,8 @@ function loadPlayerMethods(player) {
         fileLists.cmds.forEach(cmd => {
             if (typeof global[cmd] === "function") {
                 player[cmd] = global[cmd].bind(player);
+            } else {
+                log(`Command ${cmd} is not a function or not loaded.`);
             }
         });
     } else {

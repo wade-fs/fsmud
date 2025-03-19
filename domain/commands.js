@@ -36,32 +36,8 @@ function processCommand(playerID, cmd) {
     if (room.hide_exits && room.hide_exits[0] && room.hide_exits[0].cmd === action) {
         return executeRoomCommand(player, action);
     }
+
     switch (action) {
-        case "say":
-            return player.say(parts.slice(1).join(" "));
-        case "search":
-            return player.search();
-        case "l":
-        case "look":
-            return player.look(parts[1]);
-        case "go":
-            return player.go(parts[1]);
-        case "get":
-            return player.get(parts[1]);
-        case "drop":
-            return player.drop(parts[1]);
-        case "attack":
-            return player.attack(parts[1]);
-        case "flee":
-            return player.flee(parts[1]);
-        case "cast":
-            return player.cast(parts[1]);
-        case "combatlog":
-            return player.combatlog(parts[1]);
-        case "stats":
-            return player.stats(parts[1]);
-        case "save":
-            return player.save();
         case "quit":
             removePlayer(playerID);
             return i18n("goodbye");
@@ -89,23 +65,17 @@ function processCommand(playerID, cmd) {
                 return i18n("weather_success", { weather });
             }
             return i18n("weather_permission");
-        case "setnick":
-            return player.setnick(parts[1]);
-        case "setbio":
-            return player.setbio(parts.slice(1).join(" "));
-        case "setlang":
-            return player.setlang(parts[1]);
-        case "n":
-            return player.go("north");
-        case "e":
-            return player.go("east");
-        case "w":
-            return player.go("west");
-        case "s":
-            return player.go("south");
-        default:
-            return i18n("unknown_command");
     }
+
+    if (player[action] && typeof player[action] === "function") {
+        try {
+            return player[action](parts.slice(1).join(" "));
+        } catch (e) {
+            log(`Error executing ${action}: ${e}`);
+            return i18n("unknown_command");
+        }
+    }
+    return i18n("unknown_command");
 }
 
 function parseRoomPath(roomPath) {
