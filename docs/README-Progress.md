@@ -1,0 +1,45 @@
+- mud1: Supports telnet 4000, commands: look, go north, quit
+  - make mud1 && ./out/mud1 & telnet localhost 4000
+  - look
+  - go north
+  - quit
+- mud2: Extend basic object properties and methods
+  - make mud2 && ./out/mud2
+- mud3: Integrate LPCObject with the player system, enabling basic interaction
+  - make mud3 && ./out/mud3 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - quit
+- mud4: Isolate LPCObject under rooms/, not yet a complete LPC object
+  - make mud4 && ./out/mud4 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - go east ....
+  - quit
+- lpc: Implement a simple LPC parser
+  - make lpc && ./out/lpc
+- v8: Bind V8 engine
+  - make v8 && ./out/v8
+- obj: Write JSON loader
+  - make obj
+  - ./out/obj -d ./json_data -k config.name -k settings.app.theme
+  - ./out/obj -d ./json_data -s "settings/hello"
+- mud5: convert rooms/*.c to *.json to represent new LPC object
+  - make mud5 && ./out/mud5 & telnet localhost 4000
+  - look
+  - go north
+  - go south
+  - go east ....
+  - quit
+- v8-tree: recurssive read rooms/, and run main.js
+  - make v8-tree && ./out/v8-tree
+  - Please read rooms/main.js too.
+- v8-js-call-go: regist golang callback, so in js can call func from golang
+    - make v8-js-call-go
+- mud: use v8 as mudlib.js
+	- make mud
+	- telnet localhost 2323
+	- browser : http://localhost:8080
+	- refer to domain/*
