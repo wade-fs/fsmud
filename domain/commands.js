@@ -41,6 +41,7 @@ function processCommand(playerID, cmd) {
             return player.say(parts.slice(1).join(" "));
         case "search":
             return player.search();
+        case "l":
         case "look":
             return player.look(parts[1]);
         case "go":
@@ -94,6 +95,14 @@ function processCommand(playerID, cmd) {
             return player.setbio(parts.slice(1).join(" "));
         case "setlang":
             return player.setlang(parts[1]);
+        case "n":
+            return player.go("north");
+        case "e":
+            return player.go("east");
+        case "w":
+            return player.go("west");
+        case "s":
+            return player.go("south");
         default:
             return i18n("unknown_command");
     }
