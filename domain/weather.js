@@ -11,7 +11,3 @@ function updateWeatherAndTime() {
         broadcastGlobal(i18n("weather_update", { weather, time }));
     }, 30000);
 }
-
-function getWeather() {
-    return weather;
-}

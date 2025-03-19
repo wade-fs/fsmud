@@ -84,3 +84,11 @@ function processCommand(playerID, cmd) {
             return i18n("unknown_command");
     }
 }
+
+function parseRoomPath(roomPath) {
+    let parts = roomPath.split("/");
+    return { 
+        area: parts[0],
+        room: parts[1]
+    };
+}

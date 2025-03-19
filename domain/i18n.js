@@ -4,31 +4,94 @@ let messages = {};
 let currentLang = "en";
 
 const defaultMessage = {
-    "welcome_user": "Welcome, {username}!",
+    "welcome": "Welcome to the MUD! Type commands to play.",
     "player_not_found": "Player not found.",
     "unknown_command": "Unknown command.",
+    "joined_game": "{id} has joined the game as a {race}.",
+    "rejoined_game": "{id} has rejoined the game.",
+    "left_game": "{id} has left the game.",
     "goodbye": "Goodbye.",
-    "shutdown_success": "Shutting down the system...",
+    "look_room": "[{area}] {desc} (Weather: {weather}, Time: {time}) Exits: {exits}",
+    "look_item": "{item}: {desc} (Weight: {weight}, Value: {value})",
+    "get_success": "You got {item}.",
+    "stats": "Stats for {id}{nick}:\nRace: {race}\nHP: {hp}\nMana: {mana}\nInt: {int}\nSpi: {spi}\nLuck: {luck}\nInventory: {inventory}",
+    "look_npcs": " NPCs: {npcs}",
+    "look_players": " Players here: {players}",
+    "look_player": "{id}{nick} [{race}]{bio}\nHP: {hp}, Mana: {mana}, Int: {int}, Spi: {spi}, Luck: {luck}",
+    "look_item": "{item}: {desc}",
+    "look_no_target": "No such target here.",
+    "go_success": "{desc}",
+    "go_fail": "You can't go that way!",
+    "get_success": "You got {item}.",
+    "get_broadcast": "{id} got {item}.",
+    "get_fail": "No such item here.",
+    "drop_success": "You dropped {item}. It will vanish in 10 seconds.",
+    "drop_broadcast": "{id} dropped {item}.",
+    "drop_vanish": "{item} has vanished from {room}.",
+    "drop_fail": "You don't have that item.",
+    "attack_start": "{id} engaged {npc} in combat! Their turn begins.",
+    "attack_no_mana": "You don't have enough mana to attack!",
+    "attack_hit": "{id} attacked {npc} for {damage} damage!{isCritical|true: (Critical Hit!)|false:}",
+    "attack_npc_turn": "{npc} hits {id} for {damage} damage! {id}'s HP: {hp}, Mana: {mana}",
+    "attack_defeat": "{npc} is defeated! Combat ends.",
+    "attack_flee_success": "{id} fled from combat with {npc}.",
+    "attack_flee_fail": "{id} failed to flee from {npc}!",
+    "attack_continue": "{npc} has {hp} HP left. {id}'s turn.",
+    "attack_fail": "No such target here.",
+    "attack_in_combat": "You are already in combat with {npc}!",
+    "combat_restrict": "You can't do that while in combat!",
+    "cast_success": "{id} cast {spell} on {npc} for {damage} damage!",
+    "cast_no_mana": "Not enough mana to cast {spell}!",
+    "cast_fail": "Invalid spell or target!",
+    "combatlog_empty": "No combat history available.",
+    "save_success": "Your progress has been saved.",
+    "setnick_success": "Nickname set to {nick}.",
+    "setnick_broadcast": "{id} has set their nickname to {nick}.",
+    "setnick_fail": "Invalid nickname. Must be 1-20 characters.",
+    "setbio_success": "Bio updated.",
+    "setbio_broadcast": "{id} has updated their bio.",
+    "setbio_fail": "Invalid bio. Must be 1-100 characters.",
     "shutdown_permission": "You don't have permission to do that.",
+    "shutdown_success": "Shutting down the system...",
+    "kick_permission": "You don't have permission or invalid syntax. Use: kick <player_id>",
+    "kick_success": "You kicked {id}.",
+    "kick_broadcast": "{id} has been kicked by {admin}.",
+    "kick_fail": "Player not found.",
+    "weather_permission": "You don't have permission or invalid syntax. Use: weather set <sunny/rainy>",
+    "weather_success": "Weather set to {weather}.",
+    "weather_broadcast": "The weather has been set to {weather} by {id}.",
     "weather_update": "The weather is now {weather|sunny:bright and sunny|rainy: wet and rainy} and it is {time}.",
-    "combat_restrict": "You can't do that while in combat!"
-};
+    "setlang_success": "Language set to {lang}.",
+    "setlang_fail": "Invalid language choice. Available languages: en, zh"
+}
 
 function i18n(key, params = {}) {
     let msg = messages[key] || defaultMessage[key] || key;
+
+    const conditionRegex = /{([^|]+)\|([^}]+)}/g;
+    let match;
+    while ((match = conditionRegex.exec(msg)) !== null) {
+        const [fullMatch, conditionVar, options] = match;
+        const conditionPairs = options.split("|").map(opt => opt.split(":"));
+        const value = params[conditionVar];
+        const replacement = conditionPairs.find(pair => pair[0] === value)?.[1] || "";
+        msg = msg.replace(fullMatch, replacement);
+    }
+
     for (let [param, value] of Object.entries(params)) {
         msg = msg.replace(`{${param}}`, value);
     }
     return msg;
 }
-
 function loadLanguage(lang = "en") {
     let langData = loadFile(`domain/lang/${lang}.json`);
     if (langData) {
         messages = langData;
         currentLang = lang;
+        log(`Loaded language: ${lang}`);
     } else {
-        messages = defaultMessage;
+        messages = defaultMessages;
         currentLang = "en";
+        log(`Failed to load ${lang} language file, using default English.`);
     }
 }
