@@ -57,5 +57,6 @@
     "weather_broadcast": "The weather has been set to {weather} by {id}.",
     "weather_update": "The weather is now {weather|sunny:bright and sunny|rainy: wet and rainy} and it is {time}.",
     "setlang_success": "Language set to {lang}.",
-    "setlang_fail": "Invalid language choice. Available languages: en, zh"
+    "setlang_fail": "Invalid language choice. Available languages: en, zh",
+    "look_items": "\nItems: "
 }

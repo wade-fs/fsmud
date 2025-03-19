@@ -1,0 +1,6 @@
+{
+    "desc": "A bustling village square in Area 1.",
+    "exits": { "north": "area1/room1", "east": "area2/room1" },
+    "items": ["sword"],
+    "npcs": ["goblin"]
+}

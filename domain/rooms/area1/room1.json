@@ -1,6 +1,6 @@
 {
-    "desc": "A bustling village square in Area 1.",
-    "exits": { "north": "area1/room2", "east": "area2/room1" },
-    "items": ["sword"],
-    "npcs": ["goblin"]
+    "desc": "A quiet garden in Area 1.",
+    "exits": { "south": "entrance" },
+    "items": [],
+    "npcs": []
 }

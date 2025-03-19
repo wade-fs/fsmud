@@ -2,7 +2,7 @@
     "id": "player_1",
     "username": "wade",
     "race": "Human",
-    "room": "area1/room1",
+    "room": "entrance",
     "hp": 100,
     "mana": 50,
     "int": 10,

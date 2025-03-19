@@ -55,5 +55,6 @@
     "weather_broadcast": "天氣被 {id} 設置為 {weather}。",
     "weather_update": "現在的天氣是 {weather|sunny:晴朗|rainy:下雨}，時間是 {time}。",
     "setlang_success": "語言設置為 {lang}。",
-    "setlang_fail": "無效的語言選擇。可用語言: en, zh"
+    "setlang_fail": "無效的語言選擇。可用語言: en, zh",
+    "look_items": "\n物品: ",
 }

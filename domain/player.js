@@ -14,7 +14,7 @@ class Player {
     constructor(id, username, race = "Human") {
         this.id = id;
         this.username = username;
-        this.room = "area1/room1";
+        this.room = "entrance";
         this.race = races[race] ? race : "Human";
         this.hp = races[this.race].hp;
         this.mana = races[this.race].mana;

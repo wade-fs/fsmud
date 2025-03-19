@@ -1,6 +1,0 @@
-{
-    "desc": "A quiet garden in Area 1.",
-    "exits": { "south": "area1/room1" },
-    "items": [],
-    "npcs": []
-}
