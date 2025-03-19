@@ -1,22 +1,64 @@
-# fsmud Introduction
-- I will only write comments and documentation in Chinese.
-- Abandon LPC and use [JSON][10] to represent objects, ultimately hoping to define Actions/Cmds through [JavaScript][11]/[v8go][9] with [JSON][10].
+# Project Introduction
 
-# Goals
+This project is a MUD (Multi-User Dungeon) game server built based on Golang and V8go. A MUD is a text adventure game where players can explore a virtual world, interact with NPCs (non-player characters), engage in combat, etc. by entering text commands. This project uses Golang as the backend core and integrates V8go to run JavaScript scripts to achieve flexible game logic. Players can connect to the server via WebSocket or Telnet to play games.
 
-## Short-term
-- Implement a simple telnet-enabled environment.
-  - Considered modifying existing environments like [TalesMud][3], but later felt it was meaningless. Rewriting from scratch is also a great learning process.
-- Create a basic [MUD][7] environment.
+# Features
 
-## Mid-term
-- Implement a web UI environment for a graphical virtual world.
-- Build a complete game world with Mudlib, similar to [TalesMud][3].
+- Multiple connection methods: Supports WebSocket and Telnet connection methods to meet the needs of different players.
+- Dynamic command system: Command functions are implemented by dynamically loading cmds/*.js files, and new commands can be added without modifying the core code.
+- International support: Supports multi-language display, English is the default, and other languages ​​can be expanded as needed.
+- Weather and time system: simulate the passage of time and weather changes in the game to enhance immersion.
+- Combat system: Provides turn-based combat function, players can fight against NPCs.
+- Admin functions: Admins can use special commands, such as kicking players, modifying the weather, etc.
 
-## Long-term
-- Utilize AI to make characters in the MUD intelligent.
-- Provide map creation tools.
-- If possible, include 3D effects, similar to [Minecraft][8].
+# Setup and Run
+##Install dependencies:
+- Make sure you have Golang and Node.js (for V8go support) installed on your system.
+- Install V8go dependency library:
+- go get -u github.com/robertkrimen/otto
+##Clone the project:
+<PRE>
+git clone <repository-url>
+cd <project-directory>
+</PRE>
+## Compile and run:
+<PRE>
+go build
+./<executable-name>
+</PRE>
+## Connection method:
+- WebSocket: Open a browser and visit http://localhost:8080, and connect using a WebSocket client.
+- Telnet: Use a Telnet client to connect to localhost:2323.
+## Developing new commands
+To add new game commands, simply create a new .js file in the domain/cmds directory. The file name will be used as the command name, and the file content must define a JavaScript function that accepts parameters and returns results.
+
+# Example:
+
+## Create the file domain/cmds/say.js:
+<PRE>
+function say(message) {
+ if (!message) return "Say what?";
+ broadcastToRoom(`${this.id} says: ${message}`, this.room);
+ return `You say: ${message}`;
+}
+</PRE>
+- When a player types say Hello, all players in the room will see the broadcast message and the person who typed it will receive personal feedback.
+
+##Directory Structure
+<PRE>
+domain/: Contains game logic and related resources.
+cmds/: Stores command script files.
+lang/: stores multi-language files.
+npcs/: stores NPC data.
+items/: Stores item data.
+players/: Stores player data.
+rooms/: stores room data.
+static/: stores static files (such as front-end resources).
+main.go: The main entry file of the program.
+</PRE>
+
+# contribute
+Welcome to participate in project development and improvement by submitting Pull Request or Issue!
 
 # [Progress and Testing][100]
 # [What's I am thinking?][101]
