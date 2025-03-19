@@ -97,7 +97,7 @@ func initV8() {
         "cmds": cmdFiles,
         "players": playerFiles,
     }
-	log.Println("filesJSON", filesJSON)
+
     filesJSONBytes, err := json.Marshal(filesJSON)
     if err != nil {
         log.Fatal("Failed to marshal file lists:", err)
@@ -107,6 +107,27 @@ func initV8() {
         log.Fatal("Failed to parse file lists JSON:", err)
     }
     ctx.Global().Set("fileLists", filesVal)
+
+    mudlibFiles := []string{
+        "domain/cache.js",
+        "domain/i18n.js",
+        "domain/objects.js",
+        "domain/player.js",
+        "domain/weather.js",
+        "domain/combat.js",
+        "domain/commands.js",
+        "domain/mudlib.js",
+    }
+
+    for _, file := range mudlibFiles {
+        scriptBytes, err := ioutil.ReadFile(file)
+        if err != nil {
+            log.Fatalf("Failed to load %s: %v", file, err)
+        }
+        if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
+            log.Fatalf("Failed to execute %s: %v", file, err)
+        }
+    }
 
     for _, cmd := range cmdFiles {
         scriptBytes, err := ioutil.ReadFile(fmt.Sprintf("domain/cmds/%s.js", cmd))
@@ -118,15 +139,6 @@ func initV8() {
         if _, err := ctx.RunScript(script, fmt.Sprintf("%s.js", cmd)); err != nil {
             log.Printf("Failed to execute player cmd %s.js: %v", cmd, err)
         }
-    }
-
-    // 載入 mudlib
-    mudlibBytes, err := ioutil.ReadFile("domain/mudlib.js")
-    if err != nil {
-        log.Fatal("Failed to load mudlib:", err)
-    }
-    if _, err := ctx.RunScript(string(mudlibBytes), "mudlib.js"); err != nil {
-        log.Fatal("Failed to execute mudlib:", err)
     }
 }
 
