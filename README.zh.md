@@ -21,57 +21,11 @@
 - 提供地圖製作
 - 可以的話具備3D效果，類似[minecraft][8]
 
-# 歷程與測試
-- mud1: 支援 telnet 4000, look, go north, quit 命令
-	- make mud1 & telnet localhost 4000
-	- look
-	- go north
-	- quit
-- mud2: 擴展基本物件屬性與方法
-	- make mud2
-- mud3: 結合 LPCObject 與 玩家系統，具有基本的互動
-	- make mud3 & telnet localhost 4000
-	- look
-	- go north
-	- go south
-	- quit
-- mud4: 將 LPCObject 獨立在 rooms/ 下，還不是完整的 lpc object
-	- make mud4 & telnet localhost 4000
-	- look
-	- go north
-	- go south
-	- go east ....
-	- quit
-- lpc: 實作簡易的 LPC parser
-	- make lpc
-- v8: bind v8 engine
-    - make v8 && ./out/v8
-- obj: 撰寫 json loader 
-    - make obj
-    - ./out/obj -d ./json_data -k config.name -k settings.app.theme
-    - ./out/obj -d ./json_data -s "settings/hello"
-- mud5: 將 rooms/ 下 *.c 轉成 .json, 並轉換成 LPCObject
-	- make mud5 & telnet localhost 4000
-	- look
-	- go north
-	- go south
-	- go east ....
-	- quit
-- v8-tree: 讀樹狀目錄，執行 main.js
-    - make v8-tree
-    - 請參考 rooms/main.js
-- v8-js-call-go: 在 golang 註冊 callback, 讓 js 可以呼叫 golang 函式
-	- make v8-js-call-go
-- mud: 使用 v8go 開發 mudlib.js
-    - make mud
-    - telnet localhost 2323
-    - browser : http://localhost:8080
-    - 參考 domain/*，尤其是 mudlib.js
-
-# [我在想什麼？][0]
+# [歷程與測試][100]
+# [我在想什麼？][101]
+# [我想做什麼？][102]
 # [返回英文版](README.md)
 
-[0]: docs/README-Thinking.md
 [1]: https://www.fluffos.info/lpc/
 [2]: https://interpreterbook.com/
 [3]: https://github.com/TalesMUD/talesmud
@@ -83,3 +37,6 @@
 [9]: https://github.com/rogchap/v8go
 [10]: https://en.wikipedia.org/wiki/JSON
 [11]: https://en.wikipedia.org/wiki/JavaScript
+[100]: docs/README-Progress.zh.md
+[101]: docs/README-Thinking.md
+[102]: docs/README-Whats-TODO.zh.md
