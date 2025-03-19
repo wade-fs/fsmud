@@ -21,7 +21,7 @@ import (
 var (
     iso          = v8.NewIsolate()
     ctx          *v8.Context
-    clients      = make(map[interface{}]struct{ Conn interface{}; Room string })
+    clients      = make(map[interface{}]struct{ Conn interface{}; Room string; PlayerID string })
     clientsMu    sync.Mutex
     upgrader     = websocket.Upgrader{
         ReadBufferSize:  1024,
@@ -50,23 +50,25 @@ func listFiles(dir string, ext string) []string {
     return files
 }
 
-func broadcastMessage(msg string, room string, isGlobal bool) {
-    clientsMu.Lock()
-    defer clientsMu.Unlock()
-    for client, info := range clients {
-        if isGlobal || (room != "" && info.Room == room) {
-            switch c := client.(type) {
-            case *websocket.Conn:
-                if err := c.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
-                    log.Printf("WebSocket write error: %v", err)
-                }
-            case net.Conn:
-                if _, err := fmt.Fprintf(c, "%s\r\n", msg); err != nil {
-                    log.Printf("Telnet write error: %v", err)
-                }
-            }
-        }
-    }
+func broadcastMessage(msg string, room string, isGlobal bool, excludePlayerID string) {
+	clientsMu.Lock()
+	defer clientsMu.Unlock()
+	for client, info := range clients {
+		if isGlobal || (room != "" && info.Room == room) {
+			if excludePlayerID == "" || info.PlayerID != excludePlayerID { // Skip the sender
+				switch c := client.(type) {
+				case *websocket.Conn:
+					if err := c.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
+						log.Printf("WebSocket write error: %v", err)
+					}
+				case net.Conn:
+					if _, err := fmt.Fprintf(c, "%s\r\n", msg); err != nil {
+						log.Printf("Telnet write error: %v", err)
+					}
+				}
+			}
+		}
+	}
 }
 
 // 初始化 V8 並載入 mudlib
@@ -153,7 +155,10 @@ func handleWebSocket(c *gin.Context) {
 
     clientsMu.Lock()
     playerID := fmt.Sprintf("player_%d", len(clients)+1)
-    clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
+    clients[conn] = struct{ Conn interface{}; Room string; PlayerID string }{
+		Conn: conn,
+		Room: "entrance",
+		PlayerID: playerID }
     clientsMu.Unlock()
 
     conn.WriteMessage(websocket.TextMessage, []byte("Please enter your username:"))
@@ -169,7 +174,7 @@ func handleWebSocket(c *gin.Context) {
         }
 
         cmd := string(message)
-        script := fmt.Sprintf("processCommand('%s', '%s')", playerID, cmd)
+        script := fmt.Sprintf(`processCommand("%s", "%s")`, playerID, cmd)
         val, err := ctx.RunScript(script, "cmd.js")
         if err != nil {
             conn.WriteMessage(websocket.TextMessage, []byte("Error: "+err.Error()))
@@ -178,11 +183,11 @@ func handleWebSocket(c *gin.Context) {
         }
 
         // 查詢玩家房間並更新
-        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'area1/room1'", playerID, playerID)
+        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'entrance'", playerID, playerID)
         roomVal, err := ctx.RunScript(roomScript, "get_room.js")
         if err == nil && roomVal.IsString() {
             clientsMu.Lock()
-            clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: roomVal.String()}
+            clients[conn] = struct{ Conn interface{}; Room string; PlayerID string }{Conn: conn, Room: roomVal.String(), PlayerID:playerID}
             clientsMu.Unlock()
         }
     }
@@ -194,7 +199,7 @@ func handleTelnet(conn net.Conn) {
 
     clientsMu.Lock()
     playerID := fmt.Sprintf("player_%d", len(clients)+1)
-    clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: "area1/room1"}
+    clients[conn] = struct{ Conn interface{}; Room string; PlayerID string }{Conn: conn, Room: "entrance", PlayerID: playerID}
     clientsMu.Unlock()
 
     fmt.Fprintf(conn, "Please enter your username:\r\n> ")
@@ -210,7 +215,7 @@ func handleTelnet(conn net.Conn) {
             return
         }
 
-        script := fmt.Sprintf("processCommand('%s', '%s')", playerID, cmd)
+        script := fmt.Sprintf(`processCommand("%s", "%s")`, playerID, cmd)
         val, err := ctx.RunScript(script, "cmd.js")
         if err != nil {
             fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
@@ -219,11 +224,11 @@ func handleTelnet(conn net.Conn) {
         }
 
         // 查詢玩家房間並更新
-        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'area1/room1'", playerID, playerID)
+        roomScript := fmt.Sprintf("players['%s'] ? players['%s'].room : 'entrance'", playerID, playerID)
         roomVal, err := ctx.RunScript(roomScript, "get_room.js")
         if err == nil && roomVal.IsString() {
             clientsMu.Lock()
-            clients[conn] = struct{ Conn interface{}; Room string }{Conn: conn, Room: roomVal.String()}
+            clients[conn] = struct{ Conn interface{}; Room string; PlayerID string}{Conn: conn, Room: roomVal.String(), PlayerID: playerID }
             clientsMu.Unlock()
         }
     }

@@ -4,6 +4,9 @@ let messages = {};
 let currentLang = "en";
 
 const defaultMessage = {
+    "say_empty": "What do you want to say?",
+    "say_self": "You say: {message}",
+    "say_broadcast": "{id} says: {message}",
     "welcome": "Welcome to the MUD! Type commands to play.",
     "player_not_found": "Player not found.",
     "unknown_command": "Unknown command.",

@@ -1,4 +1,7 @@
 {
+    "say_empty": "你喃喃自語著。",
+    "say_self": "你說: {message}",
+    "say_broadcast": "{id} 說: {message}",
     "welcome": "歡迎來到 MUD！輸入指令開始遊戲。",
     "player_not_found": "找不到玩家。",
     "unknown_command": "未知指令。",

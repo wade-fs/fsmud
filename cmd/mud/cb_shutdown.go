@@ -8,7 +8,7 @@ var (
 )
 
 func cb_shutdown(info *v8.FunctionCallbackInfo) *v8.Value {
-        broadcastMessage("System is shutting down...", "", true)
+        broadcastMessage("System is shutting down...", "", true, "")
         close(shutdownChan)
         return nil
 }

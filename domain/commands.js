@@ -15,6 +15,11 @@ function processCommand(playerID, cmd) {
     let player = players[playerID];
     if (!player) return i18n("player_not_found");
 
+	if (cmd.startsWith("'")) {
+        let message = cmd.slice(1);
+        return player.say(message);
+    }
+
     let parts = cmd.split(" ");
     let action = parts[0].toLowerCase();
 
@@ -31,8 +36,9 @@ function processCommand(playerID, cmd) {
     if (room.hide_exits && room.hide_exits[0] && room.hide_exits[0].cmd === action) {
         return executeRoomCommand(player, action);
     }
-
     switch (action) {
+        case "say":
+            return player.say(parts.slice(1).join(" "));
         case "search":
             return player.search();
         case "look":
