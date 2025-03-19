@@ -9,7 +9,7 @@ const commandAliases = {
 function processCommand(playerID, cmd) {
     if (!players[playerID]) {
         addPlayer(playerID, cmd);
-		return i18n("welcome_user", { username: cmd });
+		return i18n("welcome", { username: cmd });
     }
 
     let player = players[playerID];
@@ -26,7 +26,15 @@ function processCommand(playerID, cmd) {
         return i18n("combat_restrict");
     }
 
+    // Check for room-specific command using hide_exits[0].cmd
+    let room = loadObject("rooms", player.room);
+    if (room.hide_exits && room.hide_exits[0] && room.hide_exits[0].cmd === action) {
+        return executeRoomCommand(player, action);
+    }
+
     switch (action) {
+        case "search":
+            return player.search();
         case "look":
             return player.look(parts[1]);
         case "go":

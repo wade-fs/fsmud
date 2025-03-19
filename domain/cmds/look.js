@@ -1,4 +1,59 @@
 function look(target) {
+    // Check if the player is in a virtual maze
+    if (this.virtualRoom) {
+        let [roomId, cmd, coords] = this.virtualRoom.split("/");
+        let [x, y] = coords.split(",").map(Number);
+        let room = loadObject("rooms", roomId);
+        let hideExit = room.hide_exits[0]; // Use hide_exits[0] as per your specification
+        let map = hideExit.map.split(";"); // 3x3 map rows
+        let syms = hideExit.syms;
+        let sym = map[x][y];
+        let desc = syms[sym] || "An undefined area.";
+        let time = isDay ? "day" : "night";
+
+        if (!target) {
+            // Display maze room description
+            return i18n("look_room", {
+                area: `${roomId}/${cmd}`, // Use virtual room path as area
+                desc: desc, // Use syms[sym] as description
+                weather,
+                time,
+                exits: "north, south, east, west" // Assume all directions are valid in maze
+            });
+        }
+
+        // Handle looking at players or items (same logic as below, no maze-specific items yet)
+        let targetPlayer = Object.values(players).find(p => p.id === target && p.virtualRoom === this.virtualRoom);
+        if (targetPlayer) {
+            let nick = targetPlayer.nickname ? ` (${targetPlayer.nickname})` : "";
+            let bio = targetPlayer.bio ? ` - ${targetPlayer.bio}` : "";
+            return i18n("look_player", {
+                id: targetPlayer.id,
+                nick,
+                race: targetPlayer.race,
+                bio,
+                hp: targetPlayer.hp,
+                mana: targetPlayer.mana,
+                int: targetPlayer.int,
+                spi: targetPlayer.spi,
+                luck: targetPlayer.luck
+            });
+        }
+
+        if (this.inventory.includes(target)) {
+            let item = loadObject("items", target);
+            return i18n("look_item", {
+                item: target,
+                desc: item.desc || "A common item.",
+                weight: item.weight || 0,
+                value: item.value || 0
+            });
+        }
+
+        return i18n("look_no_target");
+    }
+
+    // Original logic for non-virtual rooms
     let room = loadObject("rooms", this.room);
     let { area } = parseRoomPath(this.room);
     let time = isDay ? "day" : "night";

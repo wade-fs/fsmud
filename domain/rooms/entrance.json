@@ -2,5 +2,11 @@
     "desc": "A bustling village square in Area 1.",
     "exits": { "north": "area1/room1", "east": "area2/room1" },
     "items": ["sword"],
-    "npcs": ["goblin"]
+    "npcs": ["goblin"],
+    "hide_exits": [{
+        "desc": "There is a hole in the distance, you really want to dig it out",
+        "cmd": "dig",
+        "map": "*##;^-_;-_x",
+        "syms": {"*":"A little map", "#":"grassland", "^":"terrace", "-": "flatlang", "_":"depression"}
+    }]
 }

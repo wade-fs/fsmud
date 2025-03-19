@@ -15,6 +15,7 @@ class Player {
         this.id = id;
         this.username = username;
         this.room = "entrance";
+        this.virtualRoom = null;
         this.race = races[race] ? race : "Human";
         this.hp = races[this.race].hp;
         this.mana = races[this.race].mana;
