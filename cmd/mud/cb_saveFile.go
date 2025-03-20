@@ -62,10 +62,6 @@ func cb_saveFile(info *v8.FunctionCallbackInfo) *v8.Value {
     }
 
     // Return undefined on success
-    val, err := v8.NewValue(info.Context().Isolate(), nil)
-    if err != nil {
-        log.Printf("Failed to create undefined value: %v", err)
-        return nil
-    }
+    val := v8.Undefined(info.Context().Isolate())
     return val
 }

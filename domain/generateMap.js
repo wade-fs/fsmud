@@ -41,6 +41,6 @@ function generateMap(areaName, mapFile) {
     // Save room files
     for (let roomId in rooms) {
         const filePath = `domain/rooms/${roomId}.json`;
-        saveFile(filePath, JSON.stringify(rooms[roomId], null, 4));
+        saveFile(filePath, JSON.stringify(rooms[roomId], null, 2));
     }
 }
