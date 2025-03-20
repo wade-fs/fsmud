@@ -1,0 +1,1 @@
+cat domain/cache.js domain/i18n.js domain/objects.js domain/player.js domain/weather.js domain/combat.js domain/commands.js domain/mudlib.js > mudlib-all.js

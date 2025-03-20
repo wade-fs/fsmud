@@ -19,3 +19,6 @@ ENVW := $(ENV) CGO_ENABLED=1 CGO_CFLAGS="-Wno-return-local-addr" GOOS=windows GO
 	$(GOROOT)/bin/go get && \
 	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@ && \
 	cd $(TOP) && $(OUT)/$@
+
+mudlib:
+	@ ./merge-mudlib && echo 'less mudlib-all.js'
