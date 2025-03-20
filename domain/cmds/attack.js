@@ -9,7 +9,7 @@ function attack(target) {
     } else {
         this.inCombat = true;
         this.combatTarget = target;
-        broadcastToRoom(i18n("attack_start", { npc: target }), this.room);
+        broadcastToRoom(i18n("attack_start", { npc: target }), this.room, "");
     }
 
     let npc = loadObject("npcs", this.combatTarget);
@@ -33,7 +33,7 @@ function attack(target) {
     if (isCritical) damage += 2;
 
     npc.hp -= damage;
-    broadcastToRoom(i18n("attack_hit", { id: this.id, npc: npc.name, damage, isCritical: isCritical.toString() }), this.room);
+    broadcastToRoom(i18n("attack_hit", { id: this.id, npc: npc.name, damage, isCritical: isCritical.toString() }), this.room, "");
 
     if (npc.hp < 5) {
         room.npcs = rooms.npcs.filter(n => n !== this.combatTarget);
@@ -49,10 +49,10 @@ function attack(target) {
         let updateNpc = loadObject("npcs", this.combatTarget);
         let npcDamage = updateNpc.attack;
         this.hp -= npcDamage;
-        broadcastToRoom(i18n("attack_npc_turn", { npc: updateNpc.name, id: this.id, damage: npcDamage, hp: this.hp, mana: this.mana }), this.room);
+        broadcastToRoom(i18n("attack_npc_turn", { npc: updateNpc.name, id: this.id, damage: npcDamage, hp: this.hp, mana: this.mana }), this.room, "");
 
         if (this.hp < 0) {
-            broadcastToRoom(`${this.id} has been defeated by ${updateNpc.name}!`, this.room);
+            broadcastToRoom(`${this.id} has been defeated by ${updateNpc.name}!`, this.room, "");
             this.inCombat = false;
             this.combatTarget = null;
             clearTimeout(this.combatTimer);
@@ -60,7 +60,7 @@ function attack(target) {
         }
 
         saveObject("npcs", this.combatTarget, updateNpc);
-        broadcastToRoom(i18n("attack_continue", { npc: updateNpc.name, hp: updateNpc.hp }), this.room);
+        broadcastToRoom(i18n("attack_continue", { npc: updateNpc.name, hp: updateNpc.hp }), this.room, "");
     }, 2000);
 
     saveObject("players", this.id, this);

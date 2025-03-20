@@ -51,15 +51,15 @@ function addPlayer(id, username = null) {
             players[id].nickname = savedData.nickname;
             players[id].bio = savedData.bio;
             players[id].combatLog = savedData.combatLog || [];
-            broadcastToRoom(i18n("rejoined_game", { id }), players[id].room);
+            broadcastToRoom(i18n("rejoined_game", { id }), players[id].room, "");
         } else {
             let raceList = Object.keys(races);
             let randomRace = raceList[Math.floor(Math.random() * raceList.length)];
             players[id] = new Player(id, randomRace);
-            broadcastToRoom(i18n("joined_game", { id:username, race: randomRace }), players[id].room);
+            broadcastToRoom(i18n("joined_game", { id:username, race: randomRace }), players[id].room, "");
         }
     } else {
-        broadcastToRoom(i18n("rejoined_game", { id:username }), players[id].room);
+        broadcastToRoom(i18n("rejoined_game", { id:username }), players[id].room, "");
     }
 }
 
@@ -72,7 +72,7 @@ function removePlayer(id) {
     }
     let room = players[id] ? players[id].room : "";
     delete players[id];
-    broadcastToRoom(`${id} has left the game`, room);
+    broadcastToRoom(`${id} has left the game`, room, "");
 }
 
 function loadPlayerMethods(player) {

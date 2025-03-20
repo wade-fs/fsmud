@@ -1,6 +1,10 @@
 // domain/commands.js
 
 const commandAliases = {
+	"e": "go east",
+	"n": "go north",
+	"s": "go south",
+	"w": "go west",
     "take": "get",
     "pickup": "get",
     "exit": "quit"
@@ -14,6 +18,10 @@ function processCommand(playerID, cmd) {
 
     let player = players[playerID];
     if (!player) return i18n("player_not_found");
+
+    if (commandAliases[cmd]) {
+        cmd = commandAliases[cmd];
+	}
 
 	if (cmd.startsWith("'")) {
         let message = cmd.slice(1);
@@ -52,7 +60,7 @@ function processCommand(playerID, cmd) {
                 if (players[parts[1]]) {
                     let targetRoom = players[parts[1]].room;
                     removePlayer(parts[1]);
-                    broadcastToRoom(i18n("kick_broadcast", { id: parts[1], admin: playerID }), targetRoom);
+                    broadcastToRoom(i18n("kick_broadcast", { id: parts[1], admin: playerID }), targetRoom, this.id);
                     return i18n("kick_success", { id: parts[1] });
                 }
                 return i18n("kick_fail");

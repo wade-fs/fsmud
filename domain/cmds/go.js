@@ -6,7 +6,7 @@ function go(direction) {
     if (room.exits[direction]) {
         this.room = room.exits[direction];
         let { area } = parseRoomPath(this.room);
-        broadcastToRoom(`${this.id} moved to ${area}`, this.room);
+        broadcastToRoom(`${this.id} moved to ${area}`, this.room, "");
         return this.look();
     }
     return i18n("go_fail");
@@ -32,7 +32,7 @@ function moveInVirtualMap(player, direction) {
     let row = map[x];
     let sym = row[y];
 
-    broadcastToRoom(`newPos(${x}, ${y}): '${sym}'`);
+    broadcastToRoom(`newPos(${x}, ${y}): '${sym}'`, roomId, "");
     // Check for exit
     if (sym === "x") {
         player.virtualRoom = null;

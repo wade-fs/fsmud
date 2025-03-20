@@ -1,0 +1,9 @@
+{
+  "desc": "廣場",
+  "exits": {
+    "east": "area3/1-2",
+    "south": "area3/2-1"
+  },
+  "items": [],
+  "npcs": []
+}

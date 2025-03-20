@@ -18,15 +18,15 @@ function processCombatTurn(npcId, roomId) {
         let npcDamage = npc.attack;
         player.hp -= npcDamage;
         player.combatLog.push(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }));
-        broadcastToRoom(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }), roomId);
+        broadcastToRoom(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }), roomId, "");
 
         if (player.hp <= 0) {
-            broadcastToRoom(`${player.id} has been defeated by ${npc.name}!`, roomId);
+            broadcastToRoom(`${player.id} has been defeated by ${npc.name}!`, roomId, "");
             player.inCombat = false;
             player.combatTarget = null;
         } else {
             queue.push(player);
-            broadcastToRoom(i18n("attack_continue", { npc: npc.name, hp: npc.hp, id: player.id }), roomId);
+            broadcastToRoom(i18n("attack_continue", { npc: npc.name, hp: npc.hp, id: player.id }), roomId, "");
         }
     }
 

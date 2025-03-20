@@ -1,0 +1,9 @@
+{
+  "desc": "草地",
+  "exits": {
+    "west": "area3/1-2",
+    "south": "area3/2-3"
+  },
+  "items": [],
+  "npcs": []
+}

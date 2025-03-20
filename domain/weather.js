@@ -9,5 +9,5 @@ function updateWeatherAndTime() {
         isDay = !isDay;
         let time = isDay ? "day" : "night";
         broadcastGlobal(i18n("weather_update", { weather, time }));
-    }, 30000);
+    }, 300000);
 }

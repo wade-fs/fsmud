@@ -5,7 +5,7 @@ function drop(itemName) {
         let room = loadObject("rooms", this.room);
         room.items.push(itemName);
         saveObject("rooms", this.room, room);
-        broadcastToRoom(i18n("drop_broadcast", { id: this.id, item: itemName }), this.room);
+        broadcastToRoom(i18n("drop_broadcast", { id: this.id, item: itemName }), this.room, "");
 
         let timerKey = `${this.room}/${itemName}`;
         if (timers[timerKey]) {
@@ -17,7 +17,7 @@ function drop(itemName) {
             if (idx !== -1) {
                 updatedRoom.items.splice(idx, 1);
                 saveObject("rooms", this.room, updatedRoom);
-                broadcastToRoom(i18n("drop_vanish", { item: itemName, room: this.room }), this.room);
+                broadcastToRoom(i18n("drop_vanish", { item: itemName, room: this.room }), this.room, "");
             }
             delete timers[timerKey];
         }, 10000);

@@ -1,0 +1,10 @@
+{
+  "desc": "平地",
+  "exits": {
+    "west": "area3/2-1",
+    "east": "area3/2-3",
+    "north": "area3/1-2"
+  },
+  "items": [],
+  "npcs": []
+}

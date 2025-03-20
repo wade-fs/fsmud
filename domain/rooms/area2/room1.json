@@ -1,6 +1,6 @@
 {
     "desc": "A dark cave entrance in Area 2.",
-    "exits": { "west": "entrance" },
+    "exits": { "west": "entrance", "east": "area3/1-1" },
     "items": [],
     "npcs": []
 }

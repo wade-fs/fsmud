@@ -12,19 +12,17 @@ This project is a MUD (Multi-User Dungeon) game server built based on Golang and
 - Admin functions: Admins can use special commands, such as kicking players, modifying the weather, etc.
 
 # Setup and Run
-##Install dependencies:
+## Install dependencies:
 - Make sure you have Golang and Node.js (for V8go support) installed on your system.
-- Install V8go dependency library:
-- go get -u github.com/robertkrimen/otto
-##Clone the project:
+
+## Clone the project:
 <PRE>
-git clone <repository-url>
-cd <project-directory>
+git clone &lt;repository-url&gt;
+cd &lt;project-directory&gt;
 </PRE>
 ## Compile and run:
 <PRE>
-go build
-./<executable-name>
+make mud
 </PRE>
 ## Connection method:
 - WebSocket: Open a browser and visit http://localhost:8080, and connect using a WebSocket client.
@@ -44,7 +42,7 @@ function say(message) {
 </PRE>
 - When a player types say Hello, all players in the room will see the broadcast message and the person who typed it will receive personal feedback.
 
-##Directory Structure
+## Directory Structure
 <PRE>
 domain/: Contains game logic and related resources.
 cmds/: Stores command script files.

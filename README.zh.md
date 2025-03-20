@@ -12,19 +12,16 @@
 - 管理員功能：管理員可使用特殊命令，例如踢出玩家、修改天氣等。
 
 # 設置和運行
-##安裝依賴：
+## 安裝依賴：
 - 確保您的系統已安裝 Golang 和 Node.js（用於支援 V8go）。
-- 安裝 V8go 依賴庫：
-- go get -u github.com/robertkrimen/otto
-##克隆項目：
+## 克隆項目：
 <PRE>
-git clone <repository-url>
-cd <project-directory>
+git clone &lt;repository-url&gt;
+cd &lt;project-directory&gt;
 </PRE>
 ## 編譯和運行：
 <PRE>
-go build
-./<executable-name>
+make mud
 </PRE>
 ## 連接方式：
 - WebSocket：打開瀏覽器訪問 http://localhost:8080，並使用 WebSocket 客戶端連接。
@@ -44,7 +41,7 @@ function say(message) {
 </PRE>
 - 當玩家輸入 say Hello 時，房間內的所有玩家將看到廣播消息，而輸入者會收到個人回饋。
 
-##目錄結構
+## 目錄結構
 <PRE>
 domain/：包含遊戲邏輯和相關資源。
 cmds/：存放命令腳本檔案。

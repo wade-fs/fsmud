@@ -4,6 +4,6 @@ function say(message) {
     }
 
     let roomId = this.virtualRoom || this.room;
-    broadcastToRoom(i18n("say_broadcast", { id: this.nickname, message }), roomId);
+    broadcastToRoom(i18n("say_broadcast", { id: this.nickname, message }), roomId, this.id);
     return i18n("say_self", { message });
 }
