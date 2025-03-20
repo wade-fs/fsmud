@@ -58,13 +58,29 @@ function processCommand(playerID, cmd) {
                 return i18n("kick_fail");
             }
             return i18n("kick_permission");
-        case "weather":
-            if (player.admin && parts[1] === "set" && parts[2]) {
-                weather = parts[2].toLowerCase();
-                broadcastGlobal(i18n("weather_broadcast", { weather, id: playerID }));
-                return i18n("weather_success", { weather });
+        case "set":
+            if (parts.length < 2) {
+                return i18n("unknown_command");
             }
-            return i18n("weather_permission");
+            let subcommand = parts[1].toLowerCase();
+            let value = parts.slice(2).join(" ");
+            switch (subcommand) {
+                case "lang":
+                    return player.setlang(value);
+                case "nick":
+                    return player.setnick(value);
+                case "bio":
+                    return player.setbio(value);
+                case "weather":
+                    if (player.admin) {
+                        weather = value.toLowerCase();
+                        broadcastGlobal(i18n("weather_broadcast", { weather, id: playerID }));
+                        return i18n("weather_success", { weather });
+                    }
+                    return i18n("weather_permission");
+                default:
+                    return i18n("unknown_command");
+            }
     }
 
     if (player[action] && typeof player[action] === "function") {
