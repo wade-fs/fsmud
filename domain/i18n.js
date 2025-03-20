@@ -87,14 +87,23 @@ function i18n(key, params = {}) {
     return msg;
 }
 function loadLanguage(lang = "en") {
-    let langData = loadFile(`domain/lang/${lang}.json`);
-    if (langData) {
-        messages = langData;
-        currentLang = lang;
-        log(`Loaded language: ${lang}`);
+    let rawData = loadFile(`domain/lang/${lang}.json`);
+    let langData;
+    
+    if (rawData && typeof rawData === 'string') {
+        try {
+            langData = JSON.parse(rawData);
+            messages = langData;
+            currentLang = lang;
+            log(`Loaded language: ${lang}`);
+        } catch (e) {
+            messages = defaultMessages;
+            currentLang = "en";
+            log(`Failed to parse ${lang} language file as JSON: ${e.message}, using default English`);
+        }
     } else {
         messages = defaultMessages;
         currentLang = "en";
-        log(`Failed to load ${lang} language file, using default English.`);
+        log(`Failed to load ${lang} language file (received: ${rawData}), using default English`);
     }
 }

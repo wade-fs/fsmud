@@ -117,6 +117,8 @@ func initV8() {
         "domain/player.js",
         "domain/weather.js",
         "domain/combat.js",
+		"domain/loadMapData.js",
+        "domain/generateMap.js",
         "domain/commands.js",
         "domain/mudlib.js",
     }

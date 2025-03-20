@@ -81,6 +81,23 @@ function processCommand(playerID, cmd) {
                 default:
                     return i18n("unknown_command");
             }
+        case "genmap":
+            if (!player.admin) {
+                return i18n("genmap_permission");
+            }
+            if (parts.length < 3) {
+                return i18n("genmap_syntax", { syntax: "genmap <area> <mapfile>" });
+            }
+            let areaName = parts[1];
+            let mapFile = parts[2];
+            try {
+                generateMap(areaName, mapFile);
+                broadcastGlobal(i18n("genmap_success", { area: areaName, id: playerID }));
+                return i18n("genmap_success_admin", { area: areaName });
+            } catch (e) {
+                log(`Error generating map for ${areaName} from ${mapFile}: ${e}`);
+                return i18n("genmap_error", { error: e.message });
+            }
     }
 
     if (player[action] && typeof player[action] === "function") {
