@@ -1,114 +1,61 @@
-MUD Server
+# Project Introduction
 
-Overview
---------
-This project is a Multi-User Dungeon (MUD) server built with Go and JavaScript (using the V8 engine). It supports both WebSocket and Telnet clients, allowing players to interact with a text-based, multiplayer game world. The server uses the Gin web framework for HTTP/WebSocket handling, V8Go for JavaScript execution, and a custom `mudlib.js` to manage game logic, including rooms, NPCs, items, players, weather, and combat.
+This project is a MUD (Multi-User Dungeon) game server built based on Golang and V8go. A MUD is a text adventure game where players can explore a virtual world, interact with NPCs (non-player characters), engage in combat, etc. by entering text commands. This project uses Golang as the backend core and integrates V8go to run JavaScript scripts to achieve flexible game logic. Players can connect to the server via WebSocket or Telnet to play games.
 
-The project is designed to be cross-platform, with a `Makefile` that supports building for both native (Linux/macOS) and Windows environments. Game data (rooms, NPCs, items, players) is stored in JSON files, and commands are extensible via JavaScript.
+# Features
 
-Features
---------
-- Multi-Protocol Support: Connect via WebSocket (port 8080) or Telnet (port 2323).
-- Dynamic Game World: Rooms, NPCs, items, and players are loaded from JSON files, with a caching system for performance.
-- JavaScript Game Logic: Powered by V8Go, with `mudlib.js` handling commands, combat, weather, and more.
-- Combat System: Turn-based combat with NPCs, including critical hits and fleeing mechanics.
-- Localization: Supports multiple languages (default: English) via `i18n.js`.
-- Admin Commands: Shutdown, kick players, and set weather (admin-only).
-- Cross-Platform Builds: Build for Linux/macOS or Windows using the provided `Makefile`.
+- Multiple connection methods: Supports WebSocket and Telnet connection methods to meet the needs of different players.
+- Dynamic command system: Command functions are implemented by dynamically loading cmds/*.js files, and new commands can be added without modifying the core code.
+- International support: Supports multi-language display, English is the default, and other languages ​​can be expanded as needed.
+- Weather and time system: simulate the passage of time and weather changes in the game to enhance immersion.
+- Combat system: Provides turn-based combat function, players can fight against NPCs.
+- Admin functions: Admins can use special commands, such as kicking players, modifying the weather, etc.
 
-Prerequisites
--------------
-- Go: Version 1.23.0 (specified in the `Makefile`).
-- V8Go: Required for JavaScript execution (install via `go get`).
-- GCC: For native builds.
-- MinGW: For Windows cross-compilation (`x86_64-w64-mingw32-gcc`).
-- Node.js: Optional, for merging `mudlib` files (if using the `mudlib` target).
-
-Directory Structure
--------------------
+# Setup and Run
+##Install dependencies:
+- Make sure you have Golang and Node.js (for V8go support) installed on your system.
+- Install V8go dependency library:
+- go get -u github.com/robertkrimen/otto
+##Clone the project:
 <PRE>
-.
-├── cmd/              # Go command-line entry points
-├── domain/           # Game data and logic
-│   ├── cmds/         # JavaScript command files (*.js)
-│   ├── items/        # Item definitions (*.json)
-│   ├── npcs/         # NPC definitions (*.json)
-│   ├── players/      # Player save data (*.json)
-│   ├── rooms/        # Room definitions (*.json)
-│   ├── lang/         # Language files (*.json)
-│   ├── static/       # Static web files (e.g., index.html)
-│   └── *.js          # Core mudlib files (cache.js, i18n.js, etc.)
-├── out/              # Build output directory
-├── Makefile          # Build configuration
-└── main.go           # Main server code
+git clone <repository-url>
+cd <project-directory>
 </PRE>
-Installation
-------------
-1. Install Go 1.23.0:
-   - Download and install Go 1.23.0 from https://golang.org/dl/.
-   - Set `GOROOT` to `/usr/local/go-1.23.0` and ensure it’s in your PATH.
+## Compile and run:
+<PRE>
+go build
+./<executable-name>
+</PRE>
+## Connection method:
+- WebSocket: Open a browser and visit http://localhost:8080, and connect using a WebSocket client.
+- Telnet: Use a Telnet client to connect to localhost:2323.
+## Developing new commands
+To add new game commands, simply create a new .js file in the domain/cmds directory. The file name will be used as the command name, and the file content must define a JavaScript function that accepts parameters and returns results.
 
-2. Clone the Repository:
-   git clone <repository-url>
-   cd mud-server
+# Example:
 
-3. Install Dependencies:
-   go get
+## Create the file domain/cmds/say.js:
+<PRE>
+function say(message) {
+ if (!message) return "Say what?";
+ broadcastToRoom(`${this.id} says: ${message}`, this.room);
+ return `You say: ${message}`;
+}
+</PRE>
+- When a player types say Hello, all players in the room will see the broadcast message and the person who typed it will receive personal feedback.
 
-4. (Optional) Install MinGW for Windows Builds:
-   - On Linux/macOS, install `mingw-w64`:
-     sudo apt install mingw-w64  # Debian/Ubuntu
-     sudo yum install mingw64-gcc  # CentOS/RHEL
-
-5. Build the Server:
-   - For native (Linux/macOS): Please try "make mud"
-     make <binary_name>
-   - Replace `<binary_name>` with the name of the binary in the `cmd/` directory (e.g., `mudserver`).
-
-6. (Optional) Merge Mudlib Files:
-   - Run the `mudlib` target to merge JavaScript files into `mudlib-all.js`:
-     make mudlib
-
-Usage
------
-1. Run the Server:
-   - After building, the binary is placed in the `out/` directory. Run it:
-     ./out/<binary_name>  # Native
-     ./out/<binary_name>.exe  # Windows
-
-2. Connect to the Server:
-   - WebSocket: Open a browser to `http://localhost:8080/` and use the provided `index.html` interface.
-   - Telnet: Use a Telnet client:
-     telnet localhost 2323
-
-3. Gameplay:
-   - Enter a username when prompted.
-   - Use commands like `look`, `go`, `get`, `attack`, `say`, etc. (see `domain/cmds/` for full list).
-   - Admin commands: `shutdown`, `kick <player_id>`, `weather set <sunny/rainy>` (player_1 is admin by default).
-
-Configuration
--------------
-- Ports:
-  - WebSocket: `:8080` (configurable in `main.go` via `r.Run()`).
-  - Telnet: `:2323` (configurable in `startTelnetServer()`).
-- Game Data: Edit JSON files in `domain/{rooms,npcs,items,players}/`.
-- Commands: Add or modify JavaScript files in `domain/cmds/`.
-
-Extending the Game
-------------------
-- Add Commands: Create a new `.js` file in `domain/cmds/` with a function (e.g., `function myCommand(args) {...}`).
-- Add Content: Add JSON files to `domain/{rooms,npcs,items}/` following the existing structure.
-- Localization: Add language files to `domain/lang/` and update `mudlib.js` to load them.
-
-Notes
------
-- The server assigns a unique `player_<n>` ID to each client.
-- Player data is saved to `domain/players/<player_id>.json` on exit or via the `save` command.
-- Combat is turn-based and managed via JavaScript timeouts.
-
-License
--------
-MIT license
+##Directory Structure
+<PRE>
+domain/: Contains game logic and related resources.
+cmds/: Stores command script files.
+lang/: stores multi-language files.
+npcs/: stores NPC data.
+items/: Stores item data.
+players/: Stores player data.
+rooms/: stores room data.
+static/: stores static files (such as front-end resources).
+main.go: The main entry file of the program.
+</PRE>
 
 # Contribute
 Welcome to participate in project development and improvement by submitting Pull Request or Issue!
@@ -135,4 +82,3 @@ Welcome to participate in project development and improvement by submitting Pull
 [100]: docs/README-Progress.md
 [101]: docs/README-Thinking.md
 [102]: docs/README-Whats-TODO.md
-
