@@ -1,5 +1,6 @@
 // domain/map.js
-class Map {
+class GameMap {
+	static cache = new GameMap();
     constructor(id, description, width, height) {
         this.id = id;
         this.description = description;
@@ -58,6 +59,11 @@ class Map {
 
     static load(id) {
         log(`Attempting to load map: domain/maps/${id}.json`);
+        if (GameMap.cache.has(id)) {
+            log(`Returning cached map: ${id}`);
+            return GameMap.cache.get(id).clone(); // 返回深拷貝
+        }
+
         let data = loadFile(`domain/maps/${id}.json`);
         if (!data) {
             log(`Failed to load map file: domain/maps/${id}.json - No data returned`);
@@ -69,12 +75,19 @@ class Map {
             .join('\n');
         try {
             let mapData = JSON.parse(data);
-            let map = new Map(mapData.id, mapData.description, mapData.width, mapData.height);
+            let map = new GameMap(mapData.id, mapData.description, mapData.width, mapData.height);
             map.initializeGrid(mapData.grid);
+            GameMap.cache.set(id, map);
             return map;
         } catch (e) {
             log(`Error parsing map ${id}: ${e.message}`);
             return null;
         }
+    }
+
+    clone() {
+        let clonedMap = new GameMap(this.id, this.description, this.width, this.height);
+        clonedMap.grid = JSON.parse(JSON.stringify(this.grid)); // 深拷貝網格
+        return clonedMap;
     }
 }

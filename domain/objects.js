@@ -1,14 +1,17 @@
 // domain/objects.js
 
 function loadObject(type, name) {
-    let filePath = `domain/${type}/${name}.json`;
     if (!cache[type][name]) {
+        let filePath = `domain/${type}/${name}.json`;
         const rawData = loadFile(filePath);
         if (typeof rawData !== 'string' || rawData.trim() === '') {
             log(`Failed to load ${type}/${name} from ${filePath} (received: '${rawData}', type: ${typeof rawData})`);
             cache[type][name] = null;
             return null;
         }
+        rawData = rawData.split('\n')
+            .filter(line => !line.trim().startsWith('//'))
+            .join('\n');
         
         try {
             const data = JSON.parse(rawData);

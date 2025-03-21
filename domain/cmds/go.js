@@ -15,7 +15,7 @@ function go(player, direction) {
         } else if (exit.map) {
             player.room = null;
             player.location = { map: exit.map, x: exit.x || 0, y: exit.y || 0 };
-            let newMap = Map.load(exit.map);
+            let newMap = GameMap.load(exit.map);
             if (!newMap) {
                 return `Failed to enter ${exit.map}. The map is inaccessible.`;
             }
@@ -31,7 +31,7 @@ function go(player, direction) {
         return "You are lost in a void.";
     }
 
-    let map = Map.load(player.location.map);
+    let map = GameMap.load(player.location.map);
     if (!map) {
         return "You are lost in a void.";
     }
@@ -63,7 +63,7 @@ function go(player, direction) {
             }
         } else if (exit.map) {
             player.location = { map: exit.map, x: exit.x || 0, y: exit.y || 0 };
-            let newMap = Map.load(exit.map);
+            let newMap = GameMap.load(exit.map);
             if (!newMap) {
                 return `Failed to enter ${exit.map}. The map is inaccessible.`;
             }

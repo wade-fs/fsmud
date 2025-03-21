@@ -8,12 +8,19 @@ let cache = {
 };
 
 function preloadCache() {
-    const { rooms = [], npcs = [], items = [], players = [] } = fileLists;
+    let {
+        rooms = [],
+        npcs = [],
+        items = [],
+        players = [],
+        maps = []
+    } = fileLists;
     log("Preloading cache...");
     log("Rooms:", rooms);
     log("NPCs:", npcs);
     log("Items:", items);
     log("Players:", players);
+    log("Maps:", maps);
 
     rooms.forEach(name => {
         cache.rooms[name] = loadObject("rooms", name); // 現在返回 Room 實例

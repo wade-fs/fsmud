@@ -7,10 +7,10 @@
   "mp": 50,
   "strength": 10,
   "agility": 10,
-  "room": "entrance",
+  "room": null,
   "location": {
     "map": "forest",
-    "x": 0,
+    "x": 1,
     "y": 1
   },
   "isAdmin": true,

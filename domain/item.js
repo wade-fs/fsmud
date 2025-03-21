@@ -8,13 +8,9 @@ class Item {
     }
 
     static load(id) {
-        let data = loadFile(`domain/items/${id}.json`);
-        data = data.split('\n')
-                .filter(line => !line.trim().startsWith('//')) // Remove lines starting with //
-                .join('\n');
-        if (data) {
-            let itemData = JSON.parse(data);
-            return new Item(itemData.id, itemData.name, itemData.description);
+        let item = loadObject("items", id);
+        if (item) {
+            return item;
         }
         return null;
     }

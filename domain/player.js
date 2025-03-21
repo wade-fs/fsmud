@@ -45,32 +45,20 @@ class Player {
             strength: this.strength,
             agility: this.agility,
             room: this.room,
-            location: this.location, // 包括 Map 的位置
+            location: this.location,
             isAdmin: this.isAdmin,
             aliases: this.aliases,
             inventory: this.inventory
         };
-        let data = JSON.stringify(playerData, null, 2);
-        log("player.save()", data);
-        saveFile(`domain/players/${this.username}.json`, data);
+        saveObject("players", this.username, playerData);
         log(`Saved player ${this.username} to domain/players/${this.username}.json`);
     }
 
     static load(username) {
-        let data = loadFile(`domain/players/${username}.json`);
-        if (data) {
-            data = data.split('\n')
-                .filter(line => !line.trim().startsWith('//'))
-                .join('\n');
-            try {
-                const playerData = JSON.parse(data);
-                return new Player(playerData);
-            } catch (e) {
-                log("Error parsing player data for username", username, ":", e.message);
-                return null;
-            }
+        let player = loadObject("players", username);
+        if (player) {
+            return player;
         }
-        log("No player data found for username:", username);
         return null;
     }
 }

@@ -66,7 +66,7 @@ func initV8(m *client.ClientManager) *v8.Context {
 
 	ctx := v8.NewContext(iso, global)
 
-    dirs := []string{"rooms", "npcs", "items", "players"}
+    dirs := []string{"rooms", "npcs", "items", "players", "maps"}
     filesJSON := make(map[string][]string)
 
     for _, dir := range dirs {
@@ -117,6 +117,10 @@ func initV8(m *client.ClientManager) *v8.Context {
         if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
             log.Printf("Failed to execute %s: %v", file, err)
         }
+    }
+
+	if _, err := ctx.RunScript("preloadCache();", "preloadCache"); err != nil {
+        log.Fatalf("Failed to preload cache: %v", err)
     }
 
 	return ctx

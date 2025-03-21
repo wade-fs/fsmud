@@ -18,7 +18,7 @@ function look(player, args) {
         return description;
     }
 
-    let map = Map.load(player.location.map);
+    let map = GameMap.load(player.location.map);
     if (!map) {
         return "You are in a void.";
     }

@@ -1,3 +1,5 @@
+// domain/generateMap.js
+
 function generateMap(areaName, mapFile) {
     const { map, desc: descMap, null: nullPoints } = loadMapData(areaName, mapFile);
 

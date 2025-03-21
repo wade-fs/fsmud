@@ -36,7 +36,7 @@ function processCommand(playerId, input) {
             return "";
         }
 
-        log("processCommand", playerId, cmd);
+        log("processCommand", player.username, cmd);
         let result = this[cmd](player, args);
         // 在執行命令後將玩家存入全局 players（特別是登入後）
         if (player.username && !players[playerId]) {
