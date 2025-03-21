@@ -1,7 +1,0 @@
-{
-  "name": "森林小徑",
-  "description": "眼前是一片茂密的森林。",
-  "exits": {
-    "south": "start"
-  }
-}
