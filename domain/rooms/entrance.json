@@ -4,7 +4,7 @@
     "id": "entrance",
     "description": "你站在一個神秘森林的入口，北邊有一條通往樹林的小路。",
     "exits": {
-        "north": "forest"
+        "north": { "map": "forest", "x": 0, "y": 0 }
     },
     "npcs": [],
     "items": ["sword"]

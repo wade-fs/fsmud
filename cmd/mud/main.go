@@ -87,6 +87,7 @@ func initV8(m *client.ClientManager) *v8.Context {
 		"domain/npc.js",
 		"domain/room.js",
 		"domain/player.js",
+		"domain/map.js",
 	}
 	for _, file := range mudlibFiles {
 		scriptBytes, err := ioutil.ReadFile(file)

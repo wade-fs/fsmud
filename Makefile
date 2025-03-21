@@ -21,4 +21,4 @@ ENVW := $(ENV) CGO_ENABLED=1 CGO_CFLAGS="-Wno-return-local-addr" GOOS=windows GO
 	cd $(TOP) && $(OUT)/$@
 
 mudlib:
-	@ ./merge-mudlib && echo 'less mudlib-all.js'
+	@ ./mudlib.sh && echo 'less mudlib.txt'

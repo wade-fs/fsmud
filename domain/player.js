@@ -24,6 +24,7 @@ class Player {
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
         this.room = data.room || "entrance";
+        this.location = data.location || null;
         this.isAdmin = data.isAdmin || false;
         this.aliases = data.aliases || {};
         this.inventory = data.inventory || [];

@@ -1,0 +1,34 @@
+// domain/maps/mountain.json
+
+{
+    "id": "mountain",
+    "description": "A rugged mountain range with steep cliffs and rocky paths.",
+    "width": 4,
+    "height": 4,
+    "grid": [
+        [
+            {"description": "A steep cliff.", "passable": false, "items": [], "npcs": []},
+            {"description": "A rocky outcrop.", "passable": true, "items": ["stone"], "npcs": []},
+            {"description": "A cave opening.", "passable": true, "items": [], "npcs": ["bear"], "exit": {"direction": "up", "target": {"map": "forest", "x": 2, "y": 2}}},
+            {"description": "A sheer drop.", "passable": false, "items": [], "npcs": []}
+        ],
+        [
+            {"description": "A narrow ledge.", "passable": true, "items": [], "npcs": []},
+            {"description": "A winding path.", "passable": true, "items": [], "npcs": []},
+            {"description": "A rocky slope.", "passable": true, "items": ["pebble"], "npcs": []},
+            {"description": "A jagged peak.", "passable": false, "items": [], "npcs": []}
+        ],
+        [
+            {"description": "A flat plateau.", "passable": true, "items": [], "npcs": []},
+            {"description": "A small cave.", "passable": true, "items": ["torch"], "npcs": []},
+            {"description": "A mountain trail.", "passable": true, "items": [], "npcs": []},
+            {"description": "A crumbling edge.", "passable": false, "items": [], "npcs": []}
+        ],
+        [
+            {"description": "A hidden crevice.", "passable": true, "items": [], "npcs": []},
+            {"description": "A rocky descent.", "passable": true, "items": [], "npcs": [], "exit": {"direction": "south", "target": "village"}},
+            {"description": "A wind-swept ridge.", "passable": true, "items": [], "npcs": []},
+            {"description": "A steep incline.", "passable": false, "items": [], "npcs": []}
+        ]
+    ]
+}
