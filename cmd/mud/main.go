@@ -4,7 +4,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"fsmud/utils/client"
 	"fsmud/utils/handlers"
 	"fsmud/utils/v8funcs"
@@ -15,32 +14,41 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 )
 
-var (
-    clients   = make(map[interface{}]client.ClientInfo)
-    clientsMu sync.Mutex
-)
-
-func listFiles(dir, ext string) []string {
-	var files []string
-	dir = filepath.Join("domain", dir)
-	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() && strings.HasSuffix(info.Name(), ext) {
-			relPath, _ := filepath.Rel(dir, path)
-			name := strings.TrimSuffix(relPath, ext)
-			files = append(files, name)
-		}
-		return nil
-	})
-	if err != nil {
-		log.Printf("Error walking directory %s: %v", dir, err)
-	}
-	return files
+func listFilesWithDepth(dir, ext string, depth int) ([]string, error) {
+    var files []string
+    err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+        if err != nil {
+            return err
+        }
+        // 計算相對路徑以確定深度
+        relPath, err := filepath.Rel(dir, path)
+        if err != nil {
+            return err
+        }
+        // 計算目錄深度
+        dirDepth := strings.Count(relPath, string(os.PathSeparator))
+        if info.IsDir() {
+            // 如果 depth != -1 且當前目錄深度大於 depth - 1，則跳過子目錄
+            if depth != -1 && dirDepth >= depth {
+                return filepath.SkipDir
+            }
+            return nil
+        }
+        // 只收集符合擴展名的文件
+        if strings.HasSuffix(info.Name(), ext) {
+            // 對於 depth = -1，收集所有文件；對於 depth = 1，只收集 dirDepth == 0 的文件
+            if depth == -1 || dirDepth == 0 {
+                files = append(files, path)
+            }
+        }
+        return nil
+    })
+    if err != nil {
+        return nil, err
+    }
+    return files, nil
 }
 
 func initV8(m *client.ClientManager) *v8.Context {
@@ -58,19 +66,17 @@ func initV8(m *client.ClientManager) *v8.Context {
 
 	ctx := v8.NewContext(iso, global)
 
-	roomFiles := listFiles("rooms", ".json")
-	npcFiles := listFiles("npcs", ".json")
-	itemFiles := listFiles("items", ".json")
-	cmdFiles := listFiles("cmds", ".js")
-	playerFiles := listFiles("players", ".json")
+    dirs := []string{"rooms", "npcs", "items", "players"}
+    filesJSON := make(map[string][]string)
 
-	filesJSON := map[string][]string{
-		"rooms":   roomFiles,
-		"npcs":    npcFiles,
-		"items":   itemFiles,
-		"cmds":    cmdFiles,
-		"players": playerFiles,
-	}
+    for _, dir := range dirs {
+        dirPath := filepath.Join("domain", dir)
+        fileList, err := listFilesWithDepth(dirPath, ".json", -1)
+        if err != nil {
+            log.Fatalf("Failed to list .json files in %s: %v", dirPath, err)
+        }
+        filesJSON[dir] = fileList
+    }
 	filesJSONBytes, err := json.Marshal(filesJSON)
 	if err != nil {
 		log.Fatal("Failed to marshal file lists:", err)
@@ -81,35 +87,37 @@ func initV8(m *client.ClientManager) *v8.Context {
 	}
 	ctx.Global().Set("fileLists", filesVal)
 
-	mudlibFiles := []string{
-		"domain/item.js",
-		"domain/command.js",
-		"domain/npc.js",
-		"domain/room.js",
-		"domain/player.js",
-		"domain/map.js",
-	}
-	for _, file := range mudlibFiles {
-		scriptBytes, err := ioutil.ReadFile(file)
-		if err != nil {
-			log.Fatalf("Failed to load %s: %v", file, err)
-		}
-		if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
-			log.Fatalf("Failed to execute %s: %v", file, err)
-		}
-	}
+    // 獲取 domain 目錄下的一級 .js 文件
+    domainJsFiles, err := listFilesWithDepth("domain", ".js", 1)
+    if err != nil {
+        log.Fatalf("Failed to list .js files in domain: %v", err)
+    }
+    for _, file := range domainJsFiles {
+        scriptBytes, err := ioutil.ReadFile(file)
+        if err != nil {
+            log.Printf("Failed to read %s: %v", file, err)
+            continue
+        }
+        if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
+            log.Printf("Failed to execute %s: %v", file, err)
+        }
+    }
 
-	for _, cmd := range cmdFiles {
-		scriptBytes, err := ioutil.ReadFile(fmt.Sprintf("domain/cmds/%s.js", cmd))
-		if err != nil {
-			log.Printf("Failed to load player cmd %s.js: %v", cmd, err)
-			continue
-		}
-		script := fmt.Sprintf("this.%s = %s", cmd, string(scriptBytes))
-		if _, err := ctx.RunScript(script, fmt.Sprintf("%s.js", cmd)); err != nil {
-			log.Printf("Failed to execute player cmd %s.js: %v", cmd, err)
-		}
-	}
+    // 獲取 domain 目錄下的一級 .js 文件
+    cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
+    if err != nil {
+        log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
+    }
+    for _, file := range cmdJsFiles {
+        scriptBytes, err := ioutil.ReadFile(file)
+        if err != nil {
+            log.Printf("Failed to read %s: %v", file, err)
+            continue
+        }
+        if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
+            log.Printf("Failed to execute %s: %v", file, err)
+        }
+    }
 
 	return ctx
 }
