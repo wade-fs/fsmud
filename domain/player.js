@@ -28,6 +28,7 @@ class Player {
         this.isAdmin = data.isAdmin || false;
         this.aliases = data.aliases || {};
         this.inventory = data.inventory || [];
+        this.lang = data.lang || "en";
     }
 
     save() {
@@ -48,7 +49,8 @@ class Player {
             location: this.location,
             isAdmin: this.isAdmin,
             aliases: this.aliases,
-            inventory: this.inventory
+            inventory: this.inventory,
+            lang: this.lang
         };
         saveObject("players", this.username, playerData);
         log(`Saved player ${this.username} to domain/players/${this.username}.json`);

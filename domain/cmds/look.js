@@ -2,33 +2,35 @@
 function look(player, args) {
     let room = Room.load(player.room);
     if (room) {
-        let description = room.description;
+        let description = room.description; // 假設 description 已根據語言儲存或動態生成
         let exits = Object.keys(room.exits).join(", ");
         if (exits) {
-            description += `\nExits: ${exits}`;
+            description += `\n${i18n(player.lang, "look_exits", { exits })}`;
         } else {
-            description += "\nNo obvious exits.";
+            description += `\n${i18n(player.lang, "look_no_exits")}`;
         }
         if (room.items.length > 0) {
-            description += `\nItems: ${room.items.join(", ")}`;
+            let items = room.items.map(item => item.name || item).join(", "); // 假設 items 是對象或字符串
+            description += `\n${i18n(player.lang, "look_items", { items })}`;
         }
         if (room.npcs.length > 0) {
-            description += `\nNPCs: ${room.npcs.join(", ")}`;
+            let npcs = room.npcs.map(npc => npc.name || npc).join(", "); // 假設 npcs 是對象或字符串
+            description += `\n${i18n(player.lang, "look_npcs", { npcs })}`;
         }
         return description;
     }
 
     let map = GameMap.load(player.location.map);
     if (!map) {
-        return "You are in a void.";
+        return i18n(player.lang, "look_void");
     }
 
     let cell = map.getCell(player.location.x, player.location.y);
     if (!cell) {
-        return "You are lost.";
+        return i18n(player.lang, "look_lost");
     }
 
-    let description = `${map.description}\n${cell.description}`;
+    let description = `${map.description}\n${cell.description}`; // 假設這些描述已根據語言處理
     if (!args) {
         let exits = [];
         if (map.isPassable(player.location.x, player.location.y - 1)) exits.push("north");
@@ -37,15 +39,17 @@ function look(player, args) {
         if (map.isPassable(player.location.x - 1, player.location.y)) exits.push("west");
         if (cell.exit && !exits.includes(cell.exit.direction)) exits.push(cell.exit.direction);
         if (exits.length > 0) {
-            description += `\nExits: ${exits.join(", ")}`;
+            description += `\n${i18n(player.lang, "look_exits", { exits: exits.join(", ") })}`;
         } else {
-            description += "\nNo obvious exits.";
+            description += `\n${i18n(player.lang, "look_no_exits")}`;
         }
         if (cell.items.length > 0) {
-            description += `\nItems: ${cell.items.join(", ")}`;
+            let items = cell.items.map(item => item.name || item).join(", ");
+            description += `\n${i18n(player.lang, "look_items", { items })}`;
         }
         if (cell.npcs.length > 0) {
-            description += `\nNPCs: ${cell.npcs.join(", ")}`;
+            let npcs = cell.npcs.map(npc => npc.name || npc).join(", ");
+            description += `\n${i18n(player.lang, "look_npcs", { npcs })}`;
         }
     }
     return description;
