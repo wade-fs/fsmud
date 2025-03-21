@@ -1,29 +1,29 @@
 function loadMapData(area, mapFile) {
     mapFile = "domain/rooms/"+area+"/"+mapFile;
     log(`Attempting to load map file: ${mapFile}`);
-    const rawData = loadFile(mapFile);
+    let rawData = loadFile(mapFile);
     log(`Raw data from loadFile: ${rawData} (type: ${typeof rawData})`);
     
     if (!rawData || typeof rawData !== 'string') {
         throw new Error(`Failed to load or invalid map file: ${mapFile} (received: ${rawData})`);
     }
 
-    const lines = rawData.split('\n').map(line => line.replace(/\r/g, '')).filter(line => line.trim());
+    let lines = rawData.split('\n').map(line => line.replace(/\r/g, '')).filter(line => line.trim());
     
     let currentSection = '';
-    const mapData = { map: [], desc: {}, null: new Set() };
+    let mapData = { map: [], desc: {}, null: new Set() };
 
-    for (const line of lines) {
+    for (let line of lines) {
         if (line.startsWith('-')) {
             currentSection = line.slice(1).trim();
             log(`Switching to section: ${currentSection}`);
         } else if (currentSection && (line.startsWith('\t') || line.startsWith(' '))) {
-            const content = line.trim();
+            let content = line.trim();
             log(`Processing line in ${currentSection}: ${content}`);
             if (currentSection === 'map') {
                 mapData.map.push(content);
             } else if (currentSection === 'desc') {
-                const [symbol, description] = content.split('\t').map(s => s.trim());
+                let [symbol, description] = content.split('\t').map(s => s.trim());
                 if (symbol && description) {
                     mapData.desc[symbol] = description;
                 } else {

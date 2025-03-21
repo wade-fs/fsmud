@@ -14,4 +14,12 @@ class Item {
         }
         return null;
     }
+
+    clone() {
+        return new Item({
+            id : this.id,
+            name : this.name,
+            description : this.description
+        });
+    }
 }

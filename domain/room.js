@@ -16,4 +16,13 @@ class Room {
         }
         return null;
     }
+    clone() {
+        return new Room({
+            id : this.id,
+            description : this.description,
+            exits : this.exits,
+            npcs : this.npcs,
+            items : this.items
+        });
+    }
 }

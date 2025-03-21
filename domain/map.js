@@ -1,6 +1,6 @@
 // domain/map.js
 class GameMap {
-	static cache = new GameMap();
+	static cache = new Map();
     constructor(id, description, width, height) {
         this.id = id;
         this.description = description;
@@ -53,7 +53,7 @@ class GameMap {
     }
 
     isPassable(x, y) {
-        const cell = this.getCell(x, y);
+        let cell = this.getCell(x, y);
         return cell ? cell.passable : false;
     }
 

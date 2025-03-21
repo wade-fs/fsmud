@@ -1,7 +1,7 @@
 // domain/player.js
 function generateUniqueId() {
-    const timestamp = Date.now().toString(36);
-    const random = Math.random().toString(36).substr(2, 5);
+    let timestamp = Date.now().toString(36);
+    let random = Math.random().toString(36).substr(2, 5);
     return `${timestamp}-${random}`;
 }
 
@@ -60,5 +60,23 @@ class Player {
             return player;
         }
         return null;
+    }
+
+    clone() {
+        return new Player({
+            id: this.id,
+            username: this.username,
+            password: this.password,
+            level: this.level,
+            hp: this.hp,
+            mp: this.mp,
+            strength: this.strength,
+            agility: this.agility,
+            room: this.room,
+            location: this.location,
+            isAdmin: this.isAdmin,
+            aliases: this.aliases,
+            inventory: this.inventory
+        });
     }
 }

@@ -1,20 +1,20 @@
 // domain/generateMap.js
 
 function generateMap(areaName, mapFile) {
-    const { map, desc: descMap, null: nullPoints } = loadMapData(areaName, mapFile);
+    let { map, desc: descMap, null: nullPoints } = loadMapData(areaName, mapFile);
 
-    const rows = map.length;
+    let rows = map.length;
     if (rows === 0) throw new Error("Empty map data");
-    const cols = map[0].length;
+    let cols = map[0].length;
 
     // Generate room objects
     let rooms = {};
     for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
-            const symbol = map[y][x];
+            let symbol = map[y][x];
             if (nullPoints.has(symbol)) continue;
 
-            const roomId = `${areaName}/${y+1}-${x+1}`;
+            let roomId = `${areaName}/${y+1}-${x+1}`;
             let room = {
                 desc: descMap[symbol] || "未知區域",
                 exits: {},
@@ -42,7 +42,7 @@ function generateMap(areaName, mapFile) {
 
     // Save room files
     for (let roomId in rooms) {
-        const filePath = `domain/rooms/${roomId}.json`;
+        let filePath = `domain/rooms/${roomId}.json`;
         saveFile(filePath, JSON.stringify(rooms[roomId], null, 2));
     }
 }

@@ -9,7 +9,7 @@
         [
             {"description": "A steep cliff.", "passable": false, "items": [], "npcs": []},
             {"description": "A rocky outcrop.", "passable": true, "items": ["stone"], "npcs": []},
-            {"description": "A cave opening.", "passable": true, "items": [], "npcs": ["bear"], "exit": {"direction": "up", "target": {"map": "forest", "x": 2, "y": 2}}},
+            {"description": "A cave opening.", "passable": true, "items": [], "npcs": ["bear"], "exit": {"direction": "up", "target": {"map": "forest", "x": 0, "y": 0}}},
             {"description": "A sheer drop.", "passable": false, "items": [], "npcs": []}
         ],
         [

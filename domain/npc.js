@@ -16,6 +16,14 @@ class NPC {
         if (data) return Object.assign(new NPC(), JSON.parse(data));
         return null;
     }
+    clone() {
+        return new NPC({
+            id: this.id,
+            name: this.name,
+            hp: this.hp,
+            defense: this.defense
+        })
+    }
 }
 
 function attack(playerId, npcId) {

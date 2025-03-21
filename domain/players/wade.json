@@ -10,8 +10,8 @@
   "room": null,
   "location": {
     "map": "forest",
-    "x": 1,
-    "y": 1
+    "x": 0,
+    "y": 0
   },
   "isAdmin": true,
   "aliases": {},

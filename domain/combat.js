@@ -15,7 +15,7 @@ function processCombatTurn(npcId, roomId) {
 
     let npc = cache.npcs[npcId]; // 直接從 cache 取 NPC 實例
     if (npc.hp > 0) {
-        const result = npc.attackPlayer(player);
+        let result = npc.attackPlayer(player);
         player.combatLog.push(result);
         broadcastToRoom(result, roomId, "");
 

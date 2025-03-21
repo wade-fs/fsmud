@@ -4,6 +4,7 @@ let cache = {
     npcs: {},
     items: {},
     cmds: {},
+    maps: {},
     players: {}
 };
 
@@ -12,8 +13,9 @@ function preloadCache() {
         rooms = [],
         npcs = [],
         items = [],
-        players = [],
-        maps = []
+        cmds = [],
+        maps = [],
+        players = []
     } = fileLists;
     log("Preloading cache...");
     log("Rooms:", rooms);
@@ -23,16 +25,24 @@ function preloadCache() {
     log("Maps:", maps);
 
     rooms.forEach(name => {
-        cache.rooms[name] = loadObject("rooms", name); // 現在返回 Room 實例
+        cache.rooms[name] = loadObject("rooms", name);
         log(`Loaded room: ${name}`, cache.rooms[name]);
     });
     npcs.forEach(name => {
-        cache.npcs[name] = loadObject("npcs", name); // 現在返回 NPC 實例
+        cache.npcs[name] = loadObject("npcs", name);
         log(`Loaded NPC: ${name}`, cache.npcs[name]);
     });
     items.forEach(name => {
-        cache.items[name] = loadObject("items", name); // 現在返回 Item 實例
+        cache.items[name] = loadObject("items", name);
         log(`Loaded item: ${name}`, cache.items[name]);
+    });
+    players.forEach(name => {
+        cache.items[name] = loadObject("players", name);
+        log(`Loaded player: ${name}`, cache.players[name]);
+    });
+    maps.forEach(name => {
+        cache.maps[name] = loadObject("maps", name);
+        log(`Loaded game map: ${name}`, cache.maps[name]);
     });
 
     if (players.length > 0) {

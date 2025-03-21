@@ -2,7 +2,7 @@
 let messages = {};
 let currentLang = "en";
 
-const defaultMessage = {
+let defaultMessage = {
     "say_empty": "What do you want to say?",
     "say_self": "You say: {message}",
     "say_broadcast": "{id} says: {message}",
@@ -54,13 +54,13 @@ const defaultMessage = {
 function i18n(key, params = {}) {
     let msg = messages[key] || defaultMessage[key] || key;
 
-    const conditionRegex = /{([^|]+)\|([^}]+)}/g;
+    let conditionRegex = /{([^|]+)\|([^}]+)}/g;
     let match;
     while ((match = conditionRegex.exec(msg)) !== null) {
-        const [fullMatch, conditionVar, options] = match;
-        const conditionPairs = options.split("|").map(opt => opt.split(":"));
-        const value = params[conditionVar];
-        const replacement = conditionPairs.find(pair => pair[0] === value)?.[1] || "";
+        let [fullMatch, conditionVar, options] = match;
+        let conditionPairs = options.split("|").map(opt => opt.split(":"));
+        let value = params[conditionVar];
+        let replacement = conditionPairs.find(pair => pair[0] === value)?.[1] || "";
         msg = msg.replace(fullMatch, replacement);
     }
 

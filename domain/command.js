@@ -23,7 +23,7 @@ function processCommand(playerId, input) {
     }
 
     if (typeof this[cmd] === "function") {
-        const adminCommands = ["shutdown", "priv"];
+        let adminCommands = ["shutdown", "priv"];
         if (adminCommands.includes(cmd) && !player.isAdmin) {
             return "You are not authorized to use this command.";
         }
