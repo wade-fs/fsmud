@@ -8,45 +8,34 @@ let cache = {
 };
 
 function preloadCache() {
-    let roomFiles = fileLists.rooms;
-    let npcFiles = fileLists.npcs;
-    let itemFiles = fileLists.items;
-    let playerFiles = fileLists.players;
-    log("roomFiles", roomFiles);
-    log("npcFiles", npcFiles);
-    log("itemFiles", itemFiles);
-    log("playerFiles", playerFiles);
-
     const { rooms = [], npcs = [], items = [], players = [] } = fileLists;
+    log("Preloading cache...");
+    log("Rooms:", rooms);
+    log("NPCs:", npcs);
+    log("Items:", items);
+    log("Players:", players);
 
     rooms.forEach(name => {
-        cache.rooms[name] = loadObject("rooms", name);
+        cache.rooms[name] = loadObject("rooms", name); // 現在返回 Room 實例
+        log(`Loaded room: ${name}`, cache.rooms[name]);
     });
     npcs.forEach(name => {
-        cache.npcs[name] = loadObject("npcs", name);
+        cache.npcs[name] = loadObject("npcs", name); // 現在返回 NPC 實例
+        log(`Loaded NPC: ${name}`, cache.npcs[name]);
     });
     items.forEach(name => {
-        cache.items[name] = loadObject("items", name);
+        cache.items[name] = loadObject("items", name); // 現在返回 Item 實例
+        log(`Loaded item: ${name}`, cache.items[name]);
     });
 
-	if (playerFiles != null) {
-	    playerFiles.forEach(id => {
-            log("loadObject(players)", id);
-	        let savedData = loadObject("players", id);
-	        if (savedData) {
-	            players[id] = new Player(id, savedData.race);
-	            players[id].room = savedData.room;
-	            players[id].hp = savedData.hp;
-	            players[id].mana = savedData.mana;
-	            players[id].int = savedData.int;
-	            players[id].spi = savedData.spi;
-	            players[id].luck = savedData.luck;
-	            players[id].inventory = savedData.inventory;
-	            players[id].admin = savedData.admin || false;
-	            players[id].nickname = savedData.nickname;
-	            players[id].bio = savedData.bio;
-	            log(`${id} preloaded from saved data.`);
-	        }
-	    });
-	}
+    if (players.length > 0) {
+        players.forEach(id => {
+            let savedData = loadObject("players", id);
+            if (savedData) {
+                players[id] = new Player(id, savedData.race);
+                Object.assign(players[id], savedData); // 直接賦值屬性
+                log(`${id} preloaded from saved data.`);
+            }
+        });
+    }
 }

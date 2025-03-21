@@ -1,7 +1,8 @@
+// domain/items/sword.json
+
 {
-    "name": "短劍",
-    "damage": 10,
-    "desc": "A sharp blade forged by ancient smiths.",
-    "weight": 5,
-    "value": 50
+    "id": "sword",
+    "name": "生鏽的劍",
+    "description": "一把老舊、生鏽的劍，雖然破舊但仍可使用。",
+    "damage": 10
 }

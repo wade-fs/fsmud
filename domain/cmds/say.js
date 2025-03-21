@@ -1,9 +1,8 @@
-function say(message) {
-    if (!message) {
-        return i18n("say_empty");
-    }
+// domain/cmds/say.js
 
-    let roomId = this.virtualRoom || this.room;
-    broadcastToRoom(i18n("say_broadcast", { id: this.nickname, message }), roomId, this.id);
-    return i18n("say_self", { message });
+function say(player, args) {
+    if (!args) {
+        return "Say what?";
+    }
+    return `${player.username} says: ${args}`;
 }

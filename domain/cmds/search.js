@@ -1,7 +1,11 @@
-function search() {
-    let room = loadObject("rooms", this.room);
-    if (room.hide_exits && room.hide_exits.length > 0) {
-        return room.hide_exits[0].desc; // Display the first hide_exits description
+// domain/cmds/search.js
+
+search(player, args) {
+    let room = Room.load(player.room);
+    if (room.items.length > 0) {
+        let items = room.items.map(i => i.name).join(", ");
+        broadcastToRoom(`You found: ${items}`, player.room, false, player.id);
+    } else {
+        broadcastToRoom("You found nothing.", player.room, false, player.id);
     }
-    return "You search around but find nothing of interest.";
 }

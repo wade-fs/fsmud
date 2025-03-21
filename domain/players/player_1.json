@@ -3,13 +3,18 @@
     "username": "wade",
     "race": "Human",
     "room": "entrance",
+    "virtualRoom": null,
     "hp": 100,
     "mana": 50,
     "int": 10,
     "spi": 10,
     "luck": 10,
-    "inventory": ["items/sword"],
+    "inventory": ["sword"],
     "admin": true,
     "nickname": "Hero",
-    "bio": "A brave adventurer exploring the realms."
+    "bio": "A brave adventurer exploring the realms.",
+    "isCombat": false,
+    "combatTarget": null,
+    "combatTimer": null,
+    "combatLog": []
 }

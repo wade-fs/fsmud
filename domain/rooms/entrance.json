@@ -1,12 +1,11 @@
+// domain/rooms/entrance.json
+
 {
-    "desc": "A bustling village square in Area 1.",
-    "exits": { "north": "area1/room1", "east": "area2/room1" },
-    "items": ["sword"],
-    "npcs": ["goblin"],
-    "hide_exits": [{
-        "desc": "There is a hole in the distance, you really want to dig it out",
-        "cmd": "dig",
-        "map": "*##;^-_;-_x",
-        "syms": {"*":"A little map", "#":"grassland", "^":"terrace", "-": "flatlang", "_":"depression"}
-    }]
+    "id": "entrance",
+    "description": "你站在一個神秘森林的入口，北邊有一條通往樹林的小路。",
+    "exits": {
+        "north": "forest"
+    },
+    "npcs": [],
+    "items": ["sword"]
 }

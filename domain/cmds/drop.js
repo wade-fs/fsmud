@@ -1,28 +1,20 @@
-function drop(itemName) {
-    let itemIndex = this.inventory.indexOf(itemName);
-    if (itemIndex !== -1) {
-        this.inventory.splice(itemIndex, 1);
-        let room = loadObject("rooms", this.room);
-        room.items.push(itemName);
-        saveObject("rooms", this.room, room);
-        broadcastToRoom(i18n("drop_broadcast", { id: this.id, item: itemName }), this.room, "");
+// domain/cmds/drop.js
 
-        let timerKey = `${this.room}/${itemName}`;
-        if (timers[timerKey]) {
-            clearTimeout(timers[timerKey]);
-        }
-        timers[timerKey] = setTimeout(() => {
-            let updatedRoom = loadObject("rooms", this.room);
-            let idx = updatedRoom.items.indexOf(itemName);
-            if (idx !== -1) {
-                updatedRoom.items.splice(idx, 1);
-                saveObject("rooms", this.room, updatedRoom);
-                broadcastToRoom(i18n("drop_vanish", { item: itemName, room: this.room }), this.room, "");
-            }
-            delete timers[timerKey];
-        }, 10000);
-
-        return i18n("drop_success", { item: itemName });
+function drop(player, args) {
+    if (!args) {
+        broadcastToRoom("Drop what?", player.room, false, player.id);
+        return;
     }
-    return i18n("drop_fail");
+    player.inventory = player.inventory || [];
+    let itemIndex = player.inventory.findIndex(i => i.name === args);
+    if (itemIndex === -1) {
+        broadcastToRoom("You don't have that item.", player.room, false, player.id);
+        return;
+    }
+    let item = player.inventory.splice(itemIndex, 1)[0];
+    let room = Room.load(player.room);
+    room.items.push(item);
+    player.save();
+    room.save();
+    broadcastToRoom(`${player.username} dropped ${item.name}.`, player.room, false, player.id);
 }

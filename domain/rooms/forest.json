@@ -1,0 +1,11 @@
+// domain/rooms/forest.json
+
+{
+    "id": "forest",
+    "description": "你身處森林深處，周圍黑暗而安靜，偶爾能聽到樹葉的沙沙聲。",
+    "exits": {
+        "south": "entrance"
+    },
+    "npcs": ["goblin"],
+    "items": []
+}

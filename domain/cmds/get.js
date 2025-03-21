@@ -1,13 +1,20 @@
-function get(itemName) {
-    let room = loadObject("rooms", this.room);
-    let itemIndex = room.items.indexOf(itemName);
-    if (itemIndex !== -1) {
-        let item = loadObject("items", itemName);
-        room.items.splice(itemIndex, 1);
-        this.inventory.push(itemName);
-        saveObject("rooms", this.room, room);
-        broadcastToRoom(i18n("get_broadcast", { id: this.id, item: itemName }), this.room, "");
-        return i18n("get_success", { item: `${itemName} (Weight: ${item.weight}, Value: ${item.value})` });
+// domain/cmds/get.js
+
+function get(player, args) {
+    if (!args) {
+        broadcastToRoom("Get what?", player.room, false, player.id);
+        return;
     }
-    return i18n("get_fail");
+    let room = Room.load(player.room);
+    let itemIndex = room.items.findIndex(i => i.name === args);
+    if (itemIndex === -1) {
+        broadcastToRoom("That item is not here.", player.room, false, player.id);
+        return;
+    }
+    let item = room.items.splice(itemIndex, 1)[0];
+    player.inventory = player.inventory || [];
+    player.inventory.push(item);
+    player.save();
+    room.save();
+    broadcastToRoom(`${player.username} picked up ${item.name}.`, player.room, false, player.id);
 }

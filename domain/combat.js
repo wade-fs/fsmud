@@ -8,21 +8,20 @@ function processCombatTurn(npcId, roomId) {
     }
 
     let player = queue.shift();
-    if (!player.inCombat || player.combatTarget !== npcId) {
+    if (!player.isCombat || player.combatTarget !== npcId) {
         processCombatTurn(npcId, roomId);
         return;
     }
 
-    let npc = loadObject("npcs", npcId);
+    let npc = cache.npcs[npcId]; // 直接從 cache 取 NPC 實例
     if (npc.hp > 0) {
-        let npcDamage = npc.attack;
-        player.hp -= npcDamage;
-        player.combatLog.push(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }));
-        broadcastToRoom(i18n("attack_npc_turn", { npc: npc.name, id: player.id, damage: npcDamage, hp: player.hp, mana: player.mana }), roomId, "");
+        const result = npc.attackPlayer(player);
+        player.combatLog.push(result);
+        broadcastToRoom(result, roomId, "");
 
         if (player.hp <= 0) {
             broadcastToRoom(`${player.id} has been defeated by ${npc.name}!`, roomId, "");
-            player.inCombat = false;
+            player.isCombat = false;
             player.combatTarget = null;
         } else {
             queue.push(player);
@@ -39,7 +38,7 @@ function processCombatTurn(npcId, roomId) {
         delete combatQueues[npcId];
         for (let p of Object.values(players)) {
             if (p.combatTarget === npcId) {
-                p.inCombat = false;
+                p.isCombat = false;
                 p.combatTarget = null;
             }
         }

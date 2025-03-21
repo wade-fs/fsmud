@@ -1,14 +1,13 @@
-// domain/cmds/go.js
+// domain/go.js
 
-function go(player, direction) {
+commands.go = function(player, direction) {
     let room = Room.load(player.room);
     if (room.exits[direction]) {
         player.room = room.exits[direction];
         player.save();
         broadcastToRoom(`${player.username} moved to ${player.room}`, player.room, false, player.id);
-        this.look(player, false, player.id); // Use this.look instead of commands.look
+        commands.look(player, ""); // 進入新房間後自動看房間
     } else {
         broadcastToRoom("No exit in that direction", player.room, false, player.id);
     }
-    return `你往 ${direction} 離開，前往 ${player.room}。`;
-}
+};
