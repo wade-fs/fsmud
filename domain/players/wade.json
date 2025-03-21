@@ -1,1 +1,19 @@
-{"id":"player_1","username":"wade","password":"jj","level":1,"hp":100,"mp":50,"strength":10,"agility":10,"room":"entrance","location":{"map":"mountain","x":0,"y":0},"isAdmin":true,"aliases":{},"inventory":[]}
+{
+  "id": "wade",
+  "username": "wade",
+  "password": "jj",
+  "level": 1,
+  "hp": 100,
+  "mp": 50,
+  "strength": 10,
+  "agility": 10,
+  "room": "entrance",
+  "location": {
+    "map": "forest",
+    "x": 0,
+    "y": 1
+  },
+  "isAdmin": true,
+  "aliases": {},
+  "inventory": []
+}

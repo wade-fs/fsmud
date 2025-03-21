@@ -31,10 +31,29 @@ class Player {
     }
 
     save() {
-        if (this.username) {
-            saveFile(`domain/players/${this.username}.json`, JSON.stringify(this));
+        if (!this.username) {
+            log(`Can not save player ${this.id}`);
+            return;
         }
-        // 未登入的臨時玩家不儲存
+        let playerData = {
+            id: this.id,
+            username: this.username,
+            password: this.password,
+            level: this.level,
+            hp: this.hp,
+            mp: this.mp,
+            strength: this.strength,
+            agility: this.agility,
+            room: this.room,
+            location: this.location, // 包括 Map 的位置
+            isAdmin: this.isAdmin,
+            aliases: this.aliases,
+            inventory: this.inventory
+        };
+        let data = JSON.stringify(playerData, null, 2);
+        log("player.save()", data);
+        saveFile(`domain/players/${this.username}.json`, data);
+        log(`Saved player ${this.username} to domain/players/${this.username}.json`);
     }
 
     static load(username) {
