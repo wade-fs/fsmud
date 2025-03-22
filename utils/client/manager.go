@@ -45,6 +45,12 @@ func NewClientManager(ctx *v8go.Context) *ClientManager {
 	}
 }
 
+func (m *ClientManager) SetV8Context(ctx *v8go.Context) {
+	m.mu.Lock()
+	defer m.mu.Unlock()
+	m.v8Ctx = ctx
+}
+
 func (m *ClientManager) Add(conn interface{}, room string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
@@ -131,5 +137,5 @@ func (m *ClientManager) SendToClient(playerID, msg string) {
 }
 
 func (m *ClientManager) GeneratePlayerID() string {
-	return fmt.Sprintf("player_%d_%d", len(m.clients)+1, time.Now().UnixNano())
+	return fmt.Sprintf("temp_%d_%d", len(m.clients)+1, time.Now().UnixNano())
 }

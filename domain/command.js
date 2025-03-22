@@ -17,6 +17,11 @@ function processCommand(playerId, input) {
         }
     }
 
+    if (player.username && !players[playerId]) {
+        players[playerId] = player;
+        players[player.uuid] = player; // 添加 uuid 索引
+    }
+
     // 檢查玩家自訂別名
     if (player.aliases[cmd]) {
         cmd = player.aliases[cmd];

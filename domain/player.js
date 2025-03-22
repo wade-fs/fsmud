@@ -4,6 +4,13 @@ if (typeof players === "undefined") {
     var players = {};
 }
 
+function generateUUID() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 function addPlayer(playerId, room) {
     if (!players[playerId]) {
         players[playerId] = new Player({ id: playerId, room });
@@ -16,7 +23,11 @@ function addPlayer(playerId, room) {
 
 function removePlayer(playerId) {
     if (players[playerId]) {
+        const uuid = players[playerId].uuid;
         delete players[playerId];
+        if (uuid && players[uuid]) {
+            delete players[uuid];
+        }
         log("removePlayer", `Player ${playerId} removed`);
     }
 }
@@ -24,6 +35,7 @@ function removePlayer(playerId) {
 class Player {
     constructor(data) {
         this.id = data.id;
+        this.uuid = data.uuid || generateUUID();
         this.username = data.username || '';
         this.password = data.password || ''; // 應加密
         this.level = data.level || 1;
@@ -51,6 +63,7 @@ class Player {
         }
         let playerData = {
             id: this.id,
+            uuid: this.uuid,
             username: this.username,
             password: this.password,
             level: this.level,
@@ -65,14 +78,21 @@ class Player {
             inventory: this.inventory,
             lang: this.lang
         };
-        saveObject("players", this.username, playerData);
+        saveObject("players", this.uuid, playerData);
         log(`Saved player ${this.username} to domain/players/${this.username}.json`);
     }
 
     static load(username) {
-        let player = loadObject("players", username);
-        if (player) {
-            return player;
+        for (let playerId in players) {
+            if (players[playerId].username === username) {
+                return players[playerId];
+            }
+        }
+        for (let file of fileLists.players || []) {
+            let playerData = loadObject("players", file.split('/').pop().replace('.json', ''));
+            if (playerData && playerData.username === username) {
+                return playerData;
+            }
         }
         return null;
     }

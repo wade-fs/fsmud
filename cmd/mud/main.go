@@ -16,74 +16,68 @@ import (
 )
 
 var (
-	iso          = v8.NewIsolate()                                              
-    ctx          *v8.Context
+	iso = v8.NewIsolate()
+	ctx *v8.Context
 )
 
 func listFilesWithDepth(dir, ext string, depth int) ([]string, error) {
-    var files []string
-    err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
-        if err != nil {
-            return err
-        }
-        // 計算相對路徑以確定深度
-        relPath, err := filepath.Rel(dir, path)
-        if err != nil {
-            return err
-        }
-        // 計算目錄深度
-        dirDepth := strings.Count(relPath, string(os.PathSeparator))
-        if info.IsDir() {
-            // 如果 depth != -1 且當前目錄深度大於 depth - 1，則跳過子目錄
-            if depth != -1 && dirDepth >= depth {
-                return filepath.SkipDir
-            }
-            return nil
-        }
-        // 只收集符合擴展名的文件
-        if strings.HasSuffix(info.Name(), ext) {
-            // 對於 depth = -1，收集所有文件；對於 depth = 1，只收集 dirDepth == 0 的文件
-            if depth == -1 || dirDepth == 0 {
-                files = append(files, path)
-            }
-        }
-        return nil
-    })
-    if err != nil {
-        return nil, err
-    }
-    return files, nil
+	var files []string
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		relPath, err := filepath.Rel(dir, path)
+		if err != nil {
+			return err
+		}
+		dirDepth := strings.Count(relPath, string(os.PathSeparator))
+		if info.IsDir() {
+			if depth != -1 && dirDepth >= depth {
+				return filepath.SkipDir
+			}
+			return nil
+		}
+		if strings.HasSuffix(info.Name(), ext) {
+			if depth == -1 || dirDepth == 0 {
+				files = append(files, path)
+			}
+		}
+		return nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return files, nil
 }
 
-func createV8Context() {
-    global := v8.NewObjectTemplate(iso)
-    global.Set("log", v8.NewFunctionTemplate(iso, v8funcs.Log()))
-    global.Set("loadFile", v8.NewFunctionTemplate(iso, v8funcs.LoadFile()))
-    global.Set("saveFile", v8.NewFunctionTemplate(iso, v8funcs.SaveFile()))
-    global.Set("setInterval", v8.NewFunctionTemplate(iso, v8funcs.SetInterval()))
-    global.Set("clearInterval", v8.NewFunctionTemplate(iso, v8funcs.ClearInterval()))
-    ctx = v8.NewContext(iso, global)
-}
+func createV8Context(m *client.ClientManager) {
+	global := v8.NewObjectTemplate(iso)
+	// 基礎函數
+	global.Set("log", v8.NewFunctionTemplate(iso, v8funcs.Log()))
+	global.Set("loadFile", v8.NewFunctionTemplate(iso, v8funcs.LoadFile()))
+	global.Set("saveFile", v8.NewFunctionTemplate(iso, v8funcs.SaveFile()))
+	global.Set("setInterval", v8.NewFunctionTemplate(iso, v8funcs.SetInterval()))
+	global.Set("clearInterval", v8.NewFunctionTemplate(iso, v8funcs.ClearInterval()))
+	// ClientManager 相關函數
+	global.Set("sendToPlayer", v8.NewFunctionTemplate(iso, v8funcs.SendToPlayer(m)))
+	global.Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.Shutdown(m)))
 
-func setupV8Functions(ctx *v8.Context, m *client.ClientManager) {
-	log.Println("Setting up V8 functions...")
-    ctx.Global().Set("sendToPlayer", v8.NewFunctionTemplate(iso, v8funcs.SendToPlayer(m)))
-    ctx.Global().Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.Shutdown(m)))
-	log.Println("V8 functions set up successfully.")
+	ctx = v8.NewContext(iso, global)
+	log.Println("V8 context created with all functions set up.")
 }
 
 func loadV8Scripts(ctx *v8.Context) {
-    dirs := []string{"rooms", "npcs", "items", "players", "maps"}
-    filesJSON := make(map[string][]string)
+	dirs := []string{"rooms", "npcs", "items", "players", "maps"}
+	filesJSON := make(map[string][]string)
 
-    for _, dir := range dirs {
-        dirPath := filepath.Join("domain", dir)
-        fileList, err := listFilesWithDepth(dirPath, ".json", -1)
-        if err != nil {
-            log.Fatalf("Failed to list .json files in %s: %v", dirPath, err)
-        }
-        filesJSON[dir] = fileList
-    }
+	for _, dir := range dirs {
+		dirPath := filepath.Join("domain", dir)
+		fileList, err := listFilesWithDepth(dirPath, ".json", -1)
+		if err != nil {
+			log.Fatalf("Failed to list .json files in %s: %v", dirPath, err)
+		}
+		filesJSON[dir] = fileList
+	}
 	filesJSONBytes, err := json.Marshal(filesJSON)
 	if err != nil {
 		log.Fatal("Failed to marshal file lists:", err)
@@ -94,48 +88,46 @@ func loadV8Scripts(ctx *v8.Context) {
 	}
 	ctx.Global().Set("fileLists", filesVal)
 
-    // 獲取 domain 目錄下的一級 .js 文件
-    domainJsFiles, err := listFilesWithDepth("domain", ".js", 1)
-    if err != nil {
-        log.Fatalf("Failed to list .js files in domain: %v", err)
-    }
-    for _, file := range domainJsFiles {
-        scriptBytes, err := os.ReadFile(file)
-        if err != nil {
-            log.Printf("Failed to read %s: %v", file, err)
-            continue
-        }
-        if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
-            log.Printf("Failed to execute %s: %v", file, err)
-        }
-    }
+	domainJsFiles, err := listFilesWithDepth("domain", ".js", 1)
+	if err != nil {
+		log.Fatalf("Failed to list .js files in domain: %v", err)
+	}
+	for _, file := range domainJsFiles {
+		scriptBytes, err := os.ReadFile(file)
+		if err != nil {
+			log.Printf("Failed to read %s: %v", file, err)
+			continue
+		}
+		if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
+			log.Printf("Failed to execute %s: %v", file, err)
+		}
+	}
 
-    // 獲取 domain 目錄下的一級 .js 文件
-    cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
-    if err != nil {
-        log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
-    }
-    for _, file := range cmdJsFiles {
-        scriptBytes, err := os.ReadFile(file)
-        if err != nil {
-            log.Printf("Failed to read %s: %v", file, err)
-            continue
-        }
-        if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
-            log.Printf("Failed to execute %s: %v", file, err)
-        }
-    }
+	cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
+	if err != nil {
+		log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
+	}
+	for _, file := range cmdJsFiles {
+		scriptBytes, err := os.ReadFile(file)
+		if err != nil {
+			log.Printf("Failed to read %s: %v", file, err)
+			continue
+		}
+		if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
+			log.Printf("Failed to execute %s: %v", file, err)
+		}
+	}
 
 	if _, err := ctx.RunScript("preloadCache();", "preloadCache"); err != nil {
-        log.Fatalf("Failed to preload cache: %v", err)
-    }
+		log.Fatalf("Failed to preload cache: %v", err)
+	}
 }
 
 func main() {
-	createV8Context()
-    manager := client.NewClientManager(ctx) // 假設 NewClientManager 需要 ctx
-    setupV8Functions(ctx, manager)
-    loadV8Scripts(ctx)
+	manager := client.NewClientManager(nil) // 先創建 manager，ctx 稍後設置
+	createV8Context(manager)                // 使用 manager 初始化上下文
+	manager.SetV8Context(ctx)               // 回設 ctx 到 manager
+	loadV8Scripts(ctx)
 
 	r := gin.Default()
 	r.Static("/domain/static", "./domain/static")

@@ -26,20 +26,22 @@ function talk(player, args) {
     }
 
     // 生成訊息並發送給目標玩家
-    let targetMsg = i18n(targetPlayer.lang, "talk_received", { 
-        sender: player.username, 
-        message 
+    let targetMsg = i18n(targetPlayer.lang, "talk_received", {
+        sender: player.username,
+        message
     });
 
     if (typeof sendToPlayer !== 'function') {
         log("Error: sendToPlayer is not defined. Cannot send message.");
         return "Error: Unable to send message due to system configuration.";
     }
-    sendToPlayer(targetPlayer.id, targetMsg);
+
+    log("Info", "talk", `sendToPlayer(${targetPlayer.id})`, targetMsg);
+    sendToPlayer(targetPlayer.id, targetMsg); // 使用臨時 PlayerID
 
     // 返回發送者確認訊息
-    return i18n(player.lang, "talk_sent", { 
-        target: targetUsername, 
-        message 
+    return i18n(player.lang, "talk_sent", {
+        target: targetUsername,
+        message
     });
 }
