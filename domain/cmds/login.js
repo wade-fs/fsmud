@@ -24,9 +24,7 @@ function login(player, args) {
             player.room = "entrance";
         }
         players[player.id] = player;
-        // 使用發送者的語言生成廣播訊息
-        let broadcastMsg = i18n(player.lang, "player_logged_in", { username: player.username });
-        broadcastToRoom(broadcastMsg, player.room || player.location.map, "");
+        broadcastToRoom("player_logged_in", { username: player.username }, player.room || player.location.map, "");
         return i18n(player.lang, "welcome_back", { username: player.username });
     } else {
         player.username = username;
@@ -34,9 +32,7 @@ function login(player, args) {
         player.room = "entrance";
         player.location = null;
         players[player.id] = player;
-        // 使用發送者的語言生成廣播訊息
-        let broadcastMsg = i18n(player.lang, "player_joined", { username: player.username });
-        broadcastToRoom(broadcastMsg, player.room, "");
+        broadcastToRoom("player_joined", { username: player.username }, player.room, "");
         return i18n(player.lang, "welcome_new", { username });
     }
 }

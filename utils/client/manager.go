@@ -1,46 +1,91 @@
-// cmd/mud/client/manager.go
+// utils/client/manager.go
 
 package client
 
 import (
 	"fmt"
-	"github.com/gorilla/websocket"
 	"log"
 	"net"
 	"sync"
+	"time"
+
+	"github.com/gorilla/websocket"
+	"fsmud/utils/v8go"
 )
 
 type ClientInfo struct {
-    Conn       interface{}
-    Room       string
-    PlayerID   string
+	Conn     interface{} // WebSocket 或 Telnet 連接
+	Room     string      // 當前房間
+	PlayerID string      // 玩家的唯一 ID
 }
 
-type ClientManager struct {
-	clients map[interface{}]ClientInfo
-	mu      sync.Mutex
-}
-
-func NewClientManager() *ClientManager {
-	return &ClientManager{
-		clients: make(map[interface{}]ClientInfo),
+func (ci *ClientInfo) Send(msg string) {
+	switch c := ci.Conn.(type) {
+	case *websocket.Conn:
+		if err := c.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
+			log.Printf("WebSocket write error: %v", err)
+		}
+	case net.Conn:
+		if _, err := fmt.Fprintf(c, "%s\r\n", msg); err != nil {
+			log.Printf("Telnet write error: %v", err)
+		}
 	}
 }
 
-func (m *ClientManager) Add(conn interface{}, room, playerID string) {
+type ClientManager struct {
+	clients map[interface{}]ClientInfo // 鍵是連接（Conn），值是 ClientInfo
+	mu      sync.Mutex
+	v8Ctx   *v8go.Context // 保存 V8 上下文以便調用 JavaScript
+}
+
+func NewClientManager(ctx *v8go.Context) *ClientManager {
+	return &ClientManager{
+		clients: make(map[interface{}]ClientInfo),
+		v8Ctx:   ctx, // 初始化時傳入 V8 上下文
+	}
+}
+
+func (m *ClientManager) Add(conn interface{}, room string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
+
+	playerID := m.GeneratePlayerID()
 	m.clients[conn] = ClientInfo{
-		Conn:       conn,
-		Room:       room,
-		PlayerID:   playerID,
+		Conn:     conn,
+		Room:     room,
+		PlayerID: playerID,
+	}
+
+	// 通過 v8go 將玩家資訊注入 Mudlib
+	if m.v8Ctx != nil {
+		_, err := m.v8Ctx.RunScript(
+			fmt.Sprintf(`addPlayer("%s", "%s");`, playerID, room),
+			"injectPlayer.js",
+		)
+		if err != nil {
+			log.Printf("Failed to inject player %s into Mudlib: %v", playerID, err)
+		}
 	}
 }
 
 func (m *ClientManager) Remove(conn interface{}) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	delete(m.clients, conn)
+
+	if info, exists := m.clients[conn]; exists {
+		delete(m.clients, conn)
+
+		// 通過 v8go 通知 Mudlib 移除玩家
+		if m.v8Ctx != nil {
+			_, err := m.v8Ctx.RunScript(
+				fmt.Sprintf(`removePlayer("%s");`, info.PlayerID),
+				"removePlayer.js",
+			)
+			if err != nil {
+				log.Printf("Failed to remove player %s from Mudlib: %v", info.PlayerID, err)
+			}
+		}
+	}
 }
 
 func (m *ClientManager) Get(conn interface{}) (ClientInfo, bool) {
@@ -62,26 +107,29 @@ func (m *ClientManager) UpdateRoom(conn interface{}, room string) {
 func (m *ClientManager) Broadcast(msg, room string, isGlobal bool, excludePlayerID string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	for client, info := range m.clients {
+	for _, info := range m.clients {
 		if isGlobal || (room != "" && info.Room == room) {
 			if excludePlayerID == "" || info.PlayerID != excludePlayerID {
-				switch c := client.(type) {
-				case *websocket.Conn:
-					if err := c.WriteMessage(websocket.TextMessage, []byte(msg)); err != nil {
-						log.Printf("WebSocket write error: %v", err)
-					}
-				case net.Conn:
-					if _, err := fmt.Fprintf(c, "%s\r\n", msg); err != nil {
-						log.Printf("Telnet write error: %v", err)
-					}
-				}
+				info.Send(msg)
 			}
 		}
 	}
 }
 
-func (m *ClientManager) GeneratePlayerID() string {
+func (m *ClientManager) SendToClient(playerID, msg string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	return fmt.Sprintf("player_%d", len(m.clients)+1)
+
+	for _, info := range m.clients {
+		log.Printf("SendToClient(%s, %s): %s\n", playerID, info.PlayerID, msg)
+		if info.PlayerID == playerID {
+			info.Send(msg)
+			return
+		}
+	}
+	log.Printf("Player %s not found for sending message", playerID)
+}
+
+func (m *ClientManager) GeneratePlayerID() string {
+	return fmt.Sprintf("player_%d_%d", len(m.clients)+1, time.Now().UnixNano())
 }

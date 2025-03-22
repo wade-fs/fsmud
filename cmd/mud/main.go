@@ -9,11 +9,15 @@ import (
 	"fsmud/utils/v8funcs"
 	"github.com/gin-gonic/gin"
 	v8 "fsmud/utils/v8go"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+)
+
+var (
+	iso          = v8.NewIsolate()                                              
+    ctx          *v8.Context
 )
 
 func listFilesWithDepth(dir, ext string, depth int) ([]string, error) {
@@ -51,21 +55,24 @@ func listFilesWithDepth(dir, ext string, depth int) ([]string, error) {
     return files, nil
 }
 
-func initV8(m *client.ClientManager) *v8.Context {
-	iso := v8.NewIsolate()
-	global := v8.NewObjectTemplate(iso)
+func createV8Context() {
+    global := v8.NewObjectTemplate(iso)
+    global.Set("log", v8.NewFunctionTemplate(iso, v8funcs.Log()))
+    global.Set("loadFile", v8.NewFunctionTemplate(iso, v8funcs.LoadFile()))
+    global.Set("saveFile", v8.NewFunctionTemplate(iso, v8funcs.SaveFile()))
+    global.Set("setInterval", v8.NewFunctionTemplate(iso, v8funcs.SetInterval()))
+    global.Set("clearInterval", v8.NewFunctionTemplate(iso, v8funcs.ClearInterval()))
+    ctx = v8.NewContext(iso, global)
+}
 
-	global.Set("log", v8.NewFunctionTemplate(iso, v8funcs.Log()))
-	global.Set("loadFile", v8.NewFunctionTemplate(iso, v8funcs.LoadFile()))
-	global.Set("saveFile", v8.NewFunctionTemplate(iso, v8funcs.SaveFile()))
-	global.Set("broadcastToRoom", v8.NewFunctionTemplate(iso, v8funcs.BroadcastToRoom(m)))
-	global.Set("broadcastGlobal", v8.NewFunctionTemplate(iso, v8funcs.BroadcastGlobal(m)))
-	global.Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.Shutdown(m)))
-	global.Set("setInterval", v8.NewFunctionTemplate(iso, v8funcs.SetInterval()))
-	global.Set("clearInterval", v8.NewFunctionTemplate(iso, v8funcs.ClearInterval()))
+func setupV8Functions(ctx *v8.Context, m *client.ClientManager) {
+	log.Println("Setting up V8 functions...")
+    ctx.Global().Set("sendToPlayer", v8.NewFunctionTemplate(iso, v8funcs.SendToPlayer(m)))
+    ctx.Global().Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.Shutdown(m)))
+	log.Println("V8 functions set up successfully.")
+}
 
-	ctx := v8.NewContext(iso, global)
-
+func loadV8Scripts(ctx *v8.Context) {
     dirs := []string{"rooms", "npcs", "items", "players", "maps"}
     filesJSON := make(map[string][]string)
 
@@ -93,7 +100,7 @@ func initV8(m *client.ClientManager) *v8.Context {
         log.Fatalf("Failed to list .js files in domain: %v", err)
     }
     for _, file := range domainJsFiles {
-        scriptBytes, err := ioutil.ReadFile(file)
+        scriptBytes, err := os.ReadFile(file)
         if err != nil {
             log.Printf("Failed to read %s: %v", file, err)
             continue
@@ -109,7 +116,7 @@ func initV8(m *client.ClientManager) *v8.Context {
         log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
     }
     for _, file := range cmdJsFiles {
-        scriptBytes, err := ioutil.ReadFile(file)
+        scriptBytes, err := os.ReadFile(file)
         if err != nil {
             log.Printf("Failed to read %s: %v", file, err)
             continue
@@ -122,13 +129,13 @@ func initV8(m *client.ClientManager) *v8.Context {
 	if _, err := ctx.RunScript("preloadCache();", "preloadCache"); err != nil {
         log.Fatalf("Failed to preload cache: %v", err)
     }
-
-	return ctx
 }
 
 func main() {
-	manager := client.NewClientManager()
-	ctx := initV8(manager)
+	createV8Context()
+    manager := client.NewClientManager(ctx) // 假設 NewClientManager 需要 ctx
+    setupV8Functions(ctx, manager)
+    loadV8Scripts(ctx)
 
 	r := gin.Default()
 	r.Static("/domain/static", "./domain/static")

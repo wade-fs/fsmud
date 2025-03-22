@@ -2,7 +2,17 @@
 
 function loadObject(type, name) {
     if (!cache[type][name]) {
-        let filePath = `domain/${type}/${name}.json`;
+        let filePath = name;
+        log("loadObject", type, name);
+        if (!name.startsWith(`domain/${type}`)) {
+            log("loadObject", `add domain/${type}`, filePath);
+            filePath = `domain/${type}/${name}`;
+        }
+        if (!filePath.includes(".")) {
+            log("loadObject", `append .json`, filePath);
+            filePath = filePath + ".json";
+        }
+        log("loadObject", "type", type, "name", name, "filePath", filePath);
         let rawData = loadFile(filePath);
         if (typeof rawData !== 'string' || rawData.trim() === '') {
             log(`Failed to load ${type}/${name} from ${filePath} (received: '${rawData}', type: ${typeof rawData})`);

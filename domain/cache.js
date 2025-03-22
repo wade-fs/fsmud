@@ -26,26 +26,27 @@ function preloadCache() {
 
     rooms.forEach(name => {
         cache.rooms[name] = loadObject("rooms", name);
-        log(`Loaded room: ${name}`, cache.rooms[name]);
     });
     npcs.forEach(name => {
         cache.npcs[name] = loadObject("npcs", name);
-        log(`Loaded NPC: ${name}`, cache.npcs[name]);
     });
     items.forEach(name => {
         cache.items[name] = loadObject("items", name);
-        log(`Loaded item: ${name}`, cache.items[name]);
-    });
-    players.forEach(name => {
-        cache.items[name] = loadObject("players", name);
-        log(`Loaded player: ${name}`, cache.players[name]);
     });
     maps.forEach(name => {
+        log("maps.forEach", name);
+        if (name.startsWith("domains/map/")) {
+            name = name.substring("domains/map/".length);
+        }
         cache.maps[name] = loadObject("maps", name);
-        log(`Loaded game map: ${name}`, cache.maps[name]);
     });
 
+/*
+    players.forEach(name => {
+        cache.items[name] = loadObject("players", name);
+    });
     if (players.length > 0) {
+        log("players", JSON.stringify(players));
         players.forEach(id => {
             let savedData = loadObject("players", id);
             if (savedData) {
@@ -55,4 +56,5 @@ function preloadCache() {
             }
         });
     }
+*/
 }

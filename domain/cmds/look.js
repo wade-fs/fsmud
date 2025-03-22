@@ -1,7 +1,11 @@
 // domain/cmds/look.js
 function look(player, args) {
-    let room = Room.load(player.room);
-    if (room) {
+    let room = null;
+    if ("room" in player && player.room !== null) {
+        log("Info", "look", player.room);
+        room = Room.load(player.room);
+    }
+    if (room !== null) {
         let description = room.description; // 假設 description 已根據語言儲存或動態生成
         let exits = Object.keys(room.exits).join(", ");
         if (exits) {
@@ -18,6 +22,8 @@ function look(player, args) {
             description += `\n${i18n(player.lang, "look_npcs", { npcs })}`;
         }
         return description;
+    } else {
+        log("Error", "look", "no room");
     }
 
     let map = GameMap.load(player.location.map);

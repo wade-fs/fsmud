@@ -1,6 +1,7 @@
 // domain/generateMap.js
 
 function generateMap(areaName, mapFile) {
+    log("generateMap", areaName, mapFile);
     let { map, desc: descMap, null: nullPoints } = loadMapData(areaName, mapFile);
 
     let rows = map.length;

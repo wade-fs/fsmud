@@ -1,21 +1,29 @@
 // domain/player.js
-function generateUniqueId() {
-    let timestamp = Date.now().toString(36);
-    let random = Math.random().toString(36).substr(2, 5);
-    return `${timestamp}-${random}`;
-}
 
 if (typeof players === "undefined") {
     var players = {};
 }
 
+function addPlayer(playerId, room) {
+    if (!players[playerId]) {
+        players[playerId] = new Player({ id: playerId, room });
+        log("addPlayer", `Player ${playerId} added to room ${room}`);
+    } else {
+        players[playerId].room = room; // 更新房間
+        log("addPlayer", `Player ${playerId} already exists, updated room to ${room}`);
+    }
+}
+
 function removePlayer(playerId) {
-    delete players[playerId];
+    if (players[playerId]) {
+        delete players[playerId];
+        log("removePlayer", `Player ${playerId} removed`);
+    }
 }
 
 class Player {
     constructor(data) {
-        this.id = data.id || generateUniqueId(); // 臨時 ID，由 Go 端傳入
+        this.id = data.id;
         this.username = data.username || '';
         this.password = data.password || ''; // 應加密
         this.level = data.level || 1;
@@ -29,6 +37,11 @@ class Player {
         this.aliases = data.aliases || {};
         this.inventory = data.inventory || [];
         this.lang = data.lang || "en";
+        if (!this.id) {
+            log("Player constructor", "Error: No player ID provided");
+            log(JSON.stringify(data));
+            throw new Error("Player ID is required");
+        }
     }
 
     save() {

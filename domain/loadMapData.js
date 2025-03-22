@@ -1,4 +1,5 @@
 function loadMapData(area, mapFile) {
+    log("loadMapData", area, mapFile);
     mapFile = "domain/rooms/"+area+"/"+mapFile;
     log(`Attempting to load map file: ${mapFile}`);
     let rawData = loadFile(mapFile);
@@ -14,6 +15,7 @@ function loadMapData(area, mapFile) {
     let mapData = { map: [], desc: {}, null: new Set() };
 
     for (let line of lines) {
+        log("loadMapData", area, mapFile, line);
         if (line.startsWith('-')) {
             currentSection = line.slice(1).trim();
             log(`Switching to section: ${currentSection}`);

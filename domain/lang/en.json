@@ -65,5 +65,9 @@
     "look_items": "Items: {items}",
     "look_npcs": "NPCs: {npcs}",
     "look_void": "You are in a void.",
-    "look_lost": "You are lost."
+    "look_lost": "You are lost.",
+    "talk_usage": "Usage: talk <player> <message>",
+    "talk_player_not_found": "Player '{target}' not found.",
+    "talk_received": "{sender} whispers to you: {message}",
+    "talk_sent": "You whispered to {target}: {message}"
 }

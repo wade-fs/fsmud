@@ -19,7 +19,7 @@ func LoadFile() v8.FunctionCallback {
 			return val
 		}
 		filePath := args[0].String()
-		data, err := ioutil.ReadFile(filePath)
+		data, err := os.ReadFile(filePath)
 		if err != nil {
 			log.Printf("Load file error for %s: %v", filePath, err)
 			val, _ := v8.NewValue(info.Context().Isolate(), "")
