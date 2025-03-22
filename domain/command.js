@@ -10,10 +10,9 @@ function processCommand(playerId, input) {
     let cmd = parts[0];
     let args = parts.slice(1).join(" ");
 
-    // 未登入時限制命令
-    if (!player.username) {
+    if (!player.username && cmd !== "login") {
         if (cmd !== "login") {
-            return "Please login first using: login <username> <password>";
+            return formatOutput(player, "Please login first using: login <username> <password>");
         }
     }
 
@@ -30,7 +29,7 @@ function processCommand(playerId, input) {
     if (typeof this[cmd] === "function") {
         let adminCommands = ["shutdown", "priv"];
         if (adminCommands.includes(cmd) && !player.isAdmin) {
-            return "You are not authorized to use this command.";
+            return formatOutput(player, "You are not authorized to use this command.");
         }
 
         if (cmd === "shutdown") {
@@ -38,7 +37,7 @@ function processCommand(playerId, input) {
                 broadcastGlobal("System shutting down...");
                 shutdown();
             }
-            return "";
+            return formatOutput(player, "");
         }
 
         log("processCommand", player.username, cmd);
@@ -47,9 +46,20 @@ function processCommand(playerId, input) {
         if (player.username && !players[playerId]) {
             players[playerId] = player;
         }
-        return result;
+        return formatOutput(player, result);
     } else {
         log("processCommand", "Unknown command:", cmd);
-        return "Unknown command";
+        return formatOutput(player, "Unknown command");
     }
+}
+
+// Helper function to format output based on connectionType
+function formatOutput(player, result) {
+    if (player.connectionType === "websocket") {
+        if (typeof result === "object") {
+            return JSON.stringify(result); // Already structured
+        }
+        return JSON.stringify({ type: "command_result", message: result });
+    }
+    return typeof result === "string" ? result : result.message || "Unknown response";
 }

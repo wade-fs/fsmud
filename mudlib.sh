@@ -39,14 +39,17 @@ done
 
 # 處理 --v8
 if $V8_MODE; then
+    echo "// v8 mudlib" >> mudlib.txt
     cat $(find domain/ -name '*.js') >> mudlib.txt
-    [ -f "domain/mudlib.js" ] && cat domain/mudlib.js >> mudlib.txt
     echo "" >> mudlib.txt
+    echo "// domain/static" >> mudlib.txt
+    cat domain/static/* >> mudlib.txt
 fi
 
 # 處理 --go
 if $GO_MODE; then
-    echo "// golang" >> mudlib.txt
+    echo "" >> mudlib.txt
+    echo "// golang code" >> mudlib.txt
     cat utils/{client,handlers,v8funcs}/*.go cmd/mud/*.go >> mudlib.txt
 fi
 

@@ -9,8 +9,7 @@ function stats(player, args) {
         agility: player.agility
     };
     if (player.connectionType === "websocket") {
-        return JSON.stringify({ type: "stats", data: statsData }); // WebSocket 用 JSON
-    } else {
-        return `Level: ${player.level}, HP: ${player.hp}, MP: ${player.mp}, Strength: ${player.strength}, Agility: ${player.agility}`; // Telnet 用純文字
+        return { type: "stats", data: statsData };
     }
+    return `Level: ${player.level}, HP: ${player.hp}, MP: ${player.mp}, Strength: ${player.strength}, Agility: ${player.agility}`;
 }

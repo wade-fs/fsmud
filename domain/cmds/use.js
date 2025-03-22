@@ -2,10 +2,10 @@ function use(itemName) {
     let itemIndex = this.inventory.indexOf(itemName);
     if (itemIndex !== -1) {
         let item = cache.items[itemName];
-        let result = item.use(this); // 調用 Item 的 use 方法
-        saveObject("players", this.id, this); // 保存玩家狀態
-        broadcastToRoom(`${this.id} used ${item.name}.`, this.room, "");
+        let result = item.use(this);
+        saveObject("players", this.uuid, this);
+        broadcastToRoom(i18n("use_success", { id: this.id, item: item.name }), this.room, "");
         return result;
     }
-    return "You don't have that item.";
+    return i18n("use_fail");
 }
