@@ -28,11 +28,13 @@ function login(player, args) {
                 : "Incorrect password.";
         }
         Object.assign(player, playerData);
-        player.room = playerData.room || "entrance";
+        player.room = playerData.room;
+        log("Info", "look", JSON.stringify(player));
         return player.connectionType === "websocket"
             ? JSON.stringify({ type: "login_success", message: `Welcome back, ${username}!` })
             : `Welcome back, ${username}!`;
     } else {
+        log("Info", "look", "Cannot load player data.");
         player.username = username;
         player.password = password;
         player.room = "entrance";

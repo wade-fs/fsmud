@@ -44,7 +44,7 @@ class Player {
         this.mp = data.mp || 50;
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
-        this.room = data.room || "entrance";
+        this.room = data.room;
         this.connectionType = data.connectionType || "telnet";
         this.location = data.location || null;
         this.isAdmin = data.isAdmin || false;
@@ -55,6 +55,11 @@ class Player {
             log("Player constructor", "Error: No player ID provided");
             log(JSON.stringify(data));
             throw new Error("Player ID is required");
+        } else {
+            if (this.room === null && this.location === null) {
+                this.room = "entrance";
+            }
+            log("Info", "init Player", JSON.stringify(this));
         }
     }
 
