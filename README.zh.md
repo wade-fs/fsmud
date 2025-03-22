@@ -1,79 +1,129 @@
-# 項目簡介
+# FSMUD - Fantasy Scripted Multi-User Dungeon
 
-本項目是一個基於 Golang 和 V8go 構建的 MUD（Multi-User Dungeon）遊戲伺服器。MUD 是一種文字冒險遊戲，玩家可以通過輸入文字命令探索虛擬世界、與 NPC（非玩家角色）互動、進行戰鬥等。本項目使用 Golang 作為後端核心，並整合 V8go 來運行 JavaScript 腳本，從而實現靈活的遊戲邏輯。玩家可以通過 WebSocket 或 Telnet 連接到伺服器進行遊戲。
+FSMUD 是一款基於 Go 和 JavaScript（V8 引擎）的多人 MUD 遊戲，結合 Go 的高效能與 JavaScript 的靈活性，提供可擴展的文字冒險遊戲框架。玩家可透過 WebSocket 或 Telnet 連接，探索虛擬世界、戰鬥、收集物品並互動。
 
-# 功能特點
+## 特色
+- **多協議支持**：支援 WebSocket 和 Telnet 客戶端。
+- **動態腳本**：遊戲邏輯使用 JavaScript（V8 引擎），可快速開發和修改。
+- **持久存儲**：玩家數據以 JSON 文件存儲，使用 UUID 作為鍵。
+- **多語言支持**：支援 `en`（英文）和 `zh`（中文），可用 `set lang` 切換。
+- **房間與地圖系統**：支援基於房間和網格地圖的探索。
+- **廣播系統**：支援房間內及全局訊息廣播。
 
-- 多種連接方式：支援 WebSocket 和 Telnet 兩種連接方式，滿足不同玩家的需求。
-- 動態命令系統：通過動態加載 cmds/*.js 檔案實現命令功能，無需修改核心代碼即可添加新命令。
-- 國際化支援：支援多語言顯示，預設為英文，可根據需要擴展其他語言。
-- 天氣和時間系統：模擬遊戲內的時間流逝與天氣變化，增強沉浸感。
-- 戰鬥系統：提供回合制戰鬥功能，玩家可與 NPC 進行對戰。
-- 管理員功能：管理員可使用特殊命令，例如踢出玩家、修改天氣等。
+## 安裝與運行
 
-# 設置和運行
-## 安裝依賴：
-- 確保您的系統已安裝 Golang 和 Node.js（用於支援 V8go）。
-## 克隆項目：
-<PRE>
-git clone &lt;repository-url&gt;
-cd &lt;project-directory&gt;
-</PRE>
-## 編譯和運行：
-<PRE>
+### 下載專案
+```sh
+git clone https://github.com/yourusername/fsmud.git
+cd fsmud
+```
+
+### 安裝依賴
+```sh
+go mod tidy
+```
+
+### 編譯與運行
+```sh
 make mud
-</PRE>
-## 連接方式：
-- WebSocket：打開瀏覽器訪問 http://localhost:8080，並使用 WebSocket 客戶端連接。
-- Telnet：使用 Telnet 客戶端連接到 localhost:2323。
-## 開發新命令
-要新增遊戲命令，只需在 domain/cmds 目錄下創建一個新的 .js 檔案。檔案名稱將作為命令名稱，檔案內容需定義一個接受參數並返回結果的 JavaScript 函數。
+```
 
-# 示例：
+### 連接遊戲
+- **WebSocket**：瀏覽器訪問 `http://localhost:8080`
+- **Telnet**：使用 Telnet 連接 `localhost:2323`
 
-## 創建檔案 domain/cmds/say.js：
-<PRE>
-function say(message) {
-    if (!message) return "Say what?";
-    broadcastToRoom(`${this.id} says: ${message}`, this.room);
-    return `You say: ${message}`;
-}
-</PRE>
-- 當玩家輸入 say Hello 時，房間內的所有玩家將看到廣播消息，而輸入者會收到個人回饋。
+### 登入
+```sh
+login <用戶名> <密碼>
+```
+範例：
+```sh
+login wade jj
+```
+
+## 指令
+
+| 指令  | 說明                                  | 範例               |
+|------|--------------------------------------|------------------|
+| `login` | 登入遊戲                             | `login wade jj`  |
+| `go`    | 移動到指定方向                       | `go north`       |
+| `look`  | 查看當前房間或地圖                   | `look`           |
+| `say`   | 在房間內發言                         | `say Hello!`     |
+| `talk`  | 私訊玩家                             | `talk chen Hi!`  |
+| `attack`| 攻擊當前房間的 NPC                   | `attack goblin`  |
+| `get`   | 撿起房間內的物品                     | `get sword`      |
+| `drop`  | 丟棄物品                             | `drop sword`     |
+| `stats` | 查看角色狀態                         | `stats`          |
+| `set`   | 設定屬性（lang, nick, bio, weather）| `set lang zh`    |
+| `priv`  | 切換管理員權限（管理員專用）          | `priv chen`      |
+| `quit`  | 退出遊戲並儲存進度                   | `quit`           |
+| `shutdown` | 關閉伺服器（管理員專用）         | `shutdown`       |
 
 ## 目錄結構
-<PRE>
-domain/：包含遊戲邏輯和相關資源。
-cmds/：存放命令腳本檔案。
-lang/：存放多語言文件。
-npcs/：存放 NPC 數據。
-items/：存放物品數據。
-players/：存放玩家數據。
-rooms/：存放房間數據。
-static/：存放靜態文件（如前端資源）。
-main.go：程式的主入口檔案。
-</PRE>
+```
+fsmud/
+├── cmd/
+│   ├── mud/                 # WebSocket / Telnet 處理邏輯
+│   └── main.go              # 入口點
+├── domain/                  # 遊戲腳本
+│   ├── cmds/                # 指令實作（如 login.js, go.js）
+│   ├── players/             # 玩家數據（JSON）
+│   ├── rooms/               # 房間數據（JSON）
+│   ├── maps/                # 地圖數據（JSON）
+│   ├── lang/                # 語言文件（en.json, zh.json）
+│   ├── broadcast.js         # 廣播功能
+│   ├── command.js           # 指令處理核心
+│   └── ...
+├── utils/                   # 工具函式
+└── README.md                # 本文件
+```
 
-# 貢獻
-歡迎通過提交 Pull Request 或 Issue 來參與項目開發與改進！
+## 開發與擴展
 
-# 其它資訊
-- [歷程與測試][100]
-- [我在想什麼？][101]
-- [我想做什麼？][102]
-- [返回英文版](README.md)
+### 新增指令
+1. 在 `domain/cmds/` 新增 `mycommand.js`：
+```js
+function mycommand(player, args) {
+    return "Hello from mycommand!";
+}
+```
+2. 重新啟動伺服器，新指令即生效。
 
-[1]: https://www.fluffos.info/lpc/
-[2]: https://interpreterbook.com/
-[3]: https://github.com/TalesMUD/talesmud
-[4]: https://en.wikipedia.org/wiki/LPMud
-[5]: https://www.fluffos.info/
-[6]: https://github.com/mudren/dead-souls
-[7]: https://en.wikipedia.org/wiki/Multi-user_dungeon
-[8]: https://minecraft.wiki/
-[9]: https://github.com/rogchap/v8go
-[10]: https://en.wikipedia.org/wiki/JSON
-[11]: https://en.wikipedia.org/wiki/JavaScript
-[100]: docs/README-Progress.zh.md
-[101]: docs/README-Thinking.md
-[102]: docs/README-Whats-TODO.zh.md
+### 自訂地圖
+1. 在 `domain/maps/` 添加 JSON，如 `forest.json`：
+```json
+{
+    "id": "forest",
+    "description": "A dense forest.",
+    "width": 5,
+    "height": 5,
+    "grid": [
+        [{"description": "A clearing", "passable": true, "items": [], "npcs": []}, ...]
+    ]
+}
+```
+2. 玩家可透過 `go` 指令探索新地圖。
+
+### 多語言支持
+1. 修改 `domain/lang/<lang>.json`，新增訊息鍵值：
+```json
+{
+    "welcome_new": "Welcome, {username}!"
+}
+```
+2. 在腳本中使用 `i18n(player.lang, "welcome_new", { username })` 取得翻譯。
+
+## 已知問題
+- **密碼安全性**：目前以純文字存儲，建議加密。
+- **效能問題**：大量玩家可能會導致 V8 執行或文件 I/O 瓶頸。
+- **WebSocket 客戶端**：當前功能有限，需改進。
+
+## 貢獻
+1. Fork 並 Clone 此專案。
+2. 修改後測試並提交 Pull Request。
+3. 在 Issues 區回報問題或建議新功能。
+
+## 授權
+本專案基於 MIT License 發布，詳見 `LICENSE` 文件。
+
+

@@ -20,5 +20,11 @@ ENVW := $(ENV) CGO_ENABLED=1 CGO_CFLAGS="-Wno-return-local-addr" GOOS=windows GO
 	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@ && \
 	cd $(TOP) && $(OUT)/$@
 
-mudlib:
-	@ ./mudlib.sh && echo 'less mudlib.txt'
+mudlib-v8:
+	@ ./mudlib.sh --v8 && echo 'less mudlib.txt'
+
+mudlib-go:
+	@ ./mudlib.sh --go && echo 'less mudlib.txt'
+
+mudlib mudlib-both:
+	@ ./mudlib.sh --both && echo 'less mudlib.txt'

@@ -1,6 +1,7 @@
 function save() {
     let playerData = {
         id: this.id,
+        uuid: this.uuid,
         username: this.username,
         room: this.room,
         virtualRoom: this.virtualRoom,
@@ -16,6 +17,6 @@ function save() {
         bio: this.bio,
         combatLog: this.combatLog
     };
-    saveObject("players", this.id, playerData);
+    saveObject("players", this.uuid, playerData);
     return i18n("save_success");
 }

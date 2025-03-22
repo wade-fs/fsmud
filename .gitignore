@@ -17,3 +17,4 @@ go.work.sum
 .env
 mudlib.txt
 mudlib-all.js
+*log

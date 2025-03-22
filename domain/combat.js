@@ -30,7 +30,7 @@ function processCombatTurn(npcId, roomId) {
     }
 
     saveObject("npcs", npcId, npc);
-    saveObject("players", player.id, player);
+    saveObject("players", player.uuid, player);
 
     if (queue.length > 0 && npc.hp > 0) {
         setTimeout(() => processCombatTurn(npcId, roomId), 2000);

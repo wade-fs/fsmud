@@ -79,7 +79,7 @@ class Player {
             lang: this.lang
         };
         saveObject("players", this.uuid, playerData);
-        log(`Saved player ${this.username} to domain/players/${this.username}.json`);
+        log(`Saved player ${this.username} to domain/players/${this.uuid}.json`);
     }
 
     static load(username) {
