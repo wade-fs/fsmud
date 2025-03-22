@@ -126,4 +126,27 @@ function mycommand(player, args) {
 ## 授權
 本專案基於 MIT License 發布，詳見 `LICENSE` 文件。
 
+## [待辦事項][103]（可能無限期）  
+- 不特別列在這兒，請參考 [待辦事項連結][103]
 
+# 其它資訊
+- [歷程與測試][100]
+- [我在想什麼？][101]
+- [我想做什麼？][102]
+- [返回英文版](README.md)
+
+[1]: https://www.fluffos.info/lpc/
+[2]: https://interpreterbook.com/
+[3]: https://github.com/TalesMUD/talesmud
+[4]: https://en.wikipedia.org/wiki/LPMud
+[5]: https://www.fluffos.info/
+[6]: https://github.com/mudren/dead-souls
+[7]: https://en.wikipedia.org/wiki/Multi-user_dungeon
+[8]: https://minecraft.wiki/
+[9]: https://github.com/rogchap/v8go
+[10]: https://en.wikipedia.org/wiki/JSON
+[11]: https://en.wikipedia.org/wiki/JavaScript
+[100]: docs/README-Progress.zh.md
+[101]: docs/README-Thinking.md
+[102]: docs/README-Whats-TODO.zh.md
+[103]: docs/README-TODO.zh.md

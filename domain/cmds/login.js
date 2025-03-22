@@ -1,40 +1,43 @@
 // domain/cmds/login.js
+
 function login(player, args) {
+    // 如果玩家已登入
     if (player.username) {
-        return i18n(player.lang, "already_logged_in");
+        return player.connectionType === "websocket"
+            ? JSON.stringify({ type: "error", message: "You are already logged in." })
+            : "You are already logged in.";
     }
+
+    // 解析參數：login <username> <password>
     let parts = args.trim().split(" ");
     if (parts.length < 2) {
-        return i18n(player.lang, "login_usage");
+        return player.connectionType === "websocket"
+            ? JSON.stringify({ type: "error", message: "Usage: login <username> <password>" })
+            : "Usage: login <username> <password>";
     }
+
     let username = parts[0];
     let password = parts[1];
 
+    // 檢查玩家資料是否存在
     let playerData = Player.load(username);
     if (playerData) {
         if (playerData.password !== password) {
-            return i18n(player.lang, "incorrect_password");
+            return player.connectionType === "websocket"
+                ? JSON.stringify({ type: "error", message: "Incorrect password." })
+                : "Incorrect password.";
         }
-        const tempId = player.id; // 保存 Go 注入的臨時 PlayerID
         Object.assign(player, playerData);
-        player.id = tempId; // 保留臨時 PlayerID
-        if (player.location) {
-            player.room = null;
-        } else if (!player.room) {
-            player.room = "entrance";
-        }
-        players[player.id] = player; // 使用臨時 PlayerID
-        players[player.uuid] = player; // 使用永久 UUID
-        broadcastToRoom("player_logged_in", { username: player.username }, player.room || player.location.map, "");
-        return i18n(player.lang, "welcome_back", { username: player.username });
+        player.room = playerData.room || "entrance";
+        return player.connectionType === "websocket"
+            ? JSON.stringify({ type: "login_success", message: `Welcome back, ${username}!` })
+            : `Welcome back, ${username}!`;
     } else {
         player.username = username;
         player.password = password;
         player.room = "entrance";
-        player.location = null;
-        players[player.id] = player; // 使用臨時 PlayerID
-        players[player.uuid] = player; // 使用永久 UUID
-        broadcastToRoom("player_joined", { username: player.username }, player.room, "");
-        return i18n(player.lang, "welcome_new", { username });
+        return player.connectionType === "websocket"
+            ? JSON.stringify({ type: "login_success", message: `Welcome, new player ${username}!` })
+            : `Welcome, new player ${username}!`;
     }
 }

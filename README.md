@@ -155,3 +155,29 @@ Feel free to report issues or suggest features on the Issues page!
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
 Enjoy exploring the world of FSMUD! Let us know if you have questions or need assistance.
+
+# Contribute
+Welcome to participate in project development and improvement by submitting Pull Request or Issue!
+
+# Advanced Information
+- [Progress and Testing][100]
+- [What's I am thinking?][101]
+- [What's I want to do?][102]
+
+# Other Languages
+- [中文](README.zh.md)
+
+[1]: https://www.fluffos.info/lpc/
+[2]: https://interpreterbook.com/
+[3]: https://github.com/TalesMUD/talesmud
+[4]: https://en.wikipedia.org/wiki/LPMud
+[5]: https://www.fluffos.info/
+[6]: https://github.com/mudren/dead-souls
+[7]: https://en.wikipedia.org/wiki/Multi-user_dungeon
+[8]: https://minecraft.wiki/
+[9]: https://github.com/rogchap/v8go
+[10]: https://en.wikipedia.org/wiki/JSON
+[11]: https://en.wikipedia.org/wiki/JavaScript
+[100]: docs/README-Progress.md
+[101]: docs/README-Thinking.md
+[102]: docs/README-Whats-TODO.md

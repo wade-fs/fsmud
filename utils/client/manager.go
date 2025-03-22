@@ -17,6 +17,7 @@ type ClientInfo struct {
 	Conn     interface{} // WebSocket 或 Telnet 連接
 	Room     string      // 當前房間
 	PlayerID string      // 玩家的唯一 ID
+    ConnectionType string
 }
 
 func (ci *ClientInfo) Send(msg string) {
@@ -51,7 +52,7 @@ func (m *ClientManager) SetV8Context(ctx *v8go.Context) {
 	m.v8Ctx = ctx
 }
 
-func (m *ClientManager) Add(conn interface{}, room string) {
+func (m *ClientManager) Add(conn interface{}, room, connType string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
@@ -60,12 +61,13 @@ func (m *ClientManager) Add(conn interface{}, room string) {
 		Conn:     conn,
 		Room:     room,
 		PlayerID: playerID,
+		ConnectionType: connType,
 	}
 
 	// 通過 v8go 將玩家資訊注入 Mudlib
 	if m.v8Ctx != nil {
 		_, err := m.v8Ctx.RunScript(
-			fmt.Sprintf(`addPlayer("%s", "%s");`, playerID, room),
+			fmt.Sprintf(`addPlayer("%s", "%s", "%s");`, playerID, room, connType),
 			"injectPlayer.js",
 		)
 		if err != nil {

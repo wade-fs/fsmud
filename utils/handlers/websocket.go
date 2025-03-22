@@ -40,7 +40,7 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 	defer conn.Close()
 
 	playerID := h.Manager.GeneratePlayerID()
-	h.Manager.Add(conn, "entrance")
+	h.Manager.Add(conn, "entrance", "websocket")
 	conn.WriteMessage(websocket.TextMessage, []byte("Welcome to the MUD!\nPlease login with: login <username> <password>"))
 
 	for {

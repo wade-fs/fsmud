@@ -11,13 +11,14 @@ function generateUUID() {
     });
 }
 
-function addPlayer(playerId, room) {
+function addPlayer(playerId, room, connectionType) {
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, room });
-        log("addPlayer", `Player ${playerId} added to room ${room}`);
+        players[playerId] = new Player({ id: playerId, room, connectionType });
+        log("addPlayer", `Player ${playerId} added to room ${room} with connectionType ${connectionType}`);
     } else {
-        players[playerId].room = room; // 更新房間
-        log("addPlayer", `Player ${playerId} already exists, updated room to ${room}`);
+        players[playerId].room = room;
+        players[playerId].connectionType = connectionType;
+        log("addPlayer", `Player ${playerId} already exists, updated room to ${room} and connectionType to ${connectionType}`);
     }
 }
 
@@ -44,6 +45,7 @@ class Player {
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
         this.room = data.room || "entrance";
+        this.connectionType = data.connectionType || "telnet";
         this.location = data.location || null;
         this.isAdmin = data.isAdmin || false;
         this.aliases = data.aliases || {};
