@@ -13,25 +13,29 @@ import (
 	v8 "fsmud/utils/v8go"
 )
 
-func CbLoadV8Scripts(m *client.ClientManager, ctx *v8.Context) v8.FunctionCallback {
+func CbLoadV8JSON(m *client.ClientManager) v8.FunctionCallback {
     return func(info *v8.FunctionCallbackInfo) *v8.Value {
-        m.Broadcast("Reload system javascript files.", "", true, "")
-		LoadV8Scripts(ctx)
+        m.Broadcast("Reload system data files.", "", true, "")
+		LoadV8JSON(info.Context())
         return v8.Undefined(info.Context().Isolate())
     }
 }
 
-func CbLoadV8JSON(m *client.ClientManager, ctx *v8.Context) v8.FunctionCallback {
+func CbLoadV8Scripts(m *client.ClientManager) v8.FunctionCallback {
     return func(info *v8.FunctionCallbackInfo) *v8.Value {
-        m.Broadcast("Reload system data files.", "", true, "")
-		LoadV8JSON(ctx)
+        m.Broadcast("Reload system javascript files.", "", true, "")
+		LoadV8Scripts(info.Context())
         return v8.Undefined(info.Context().Isolate())
     }
 }
 
 func LoadV8Scripts(ctx *v8.Context) {
+	if ctx == nil {
+		log.Println("Error", "LoadV8Scripts", "ctx is nil")
+		return
+	}
 	for _,dir := range []string{"domain/scripts", "domain/cmds"} {
-    	jsFiles, err := listFilesWithDepth(dir, ".js", 1)
+    	jsFiles, err := listFilesWithDepth(dir, ".js", -1)
     	if err != nil {
     	    log.Fatalf("Failed to list .js files in domain: %v", err)
     	}
@@ -41,6 +45,7 @@ func LoadV8Scripts(ctx *v8.Context) {
     	        log.Printf("Failed to read %s: %v", file, err)
     	        continue
     	    }
+			log.Println("LoadV8Scripts", file, string(scriptBytes))
     	    if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
     	        log.Printf("Failed to execute %s: %v", file, err)
     	    }

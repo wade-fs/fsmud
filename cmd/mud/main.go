@@ -29,8 +29,8 @@ func createV8Context(m *client.ClientManager) {
 	// ClientManager 相關函數
 	global.Set("sendToPlayer", v8.NewFunctionTemplate(iso, v8funcs.CbSendToPlayer(m)))
 	global.Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.CbShutdown(m)))
-	global.Set("reloadJs", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8Scripts(m, ctx)))
-	global.Set("reloadJSON", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8JSON(m, ctx)))
+	global.Set("reloadJs", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8Scripts(m)))
+	global.Set("reloadJSON", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8JSON(m)))
 
 	ctx = v8.NewContext(iso, global)
 	log.Println("V8 context created with all functions set up.")
