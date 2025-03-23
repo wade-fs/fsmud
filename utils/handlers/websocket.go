@@ -57,6 +57,9 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 			continue
 		}
 
+		if !strings.HasPrefix(input, "login ") {
+			input = "login "+input
+		}
 		// 將所有輸入交給 V8 的 processCommand 處理
 		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
 		val, err := h.Context.RunScript(script, "cmd.js")

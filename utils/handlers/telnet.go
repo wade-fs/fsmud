@@ -51,6 +51,9 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 			continue
 		}
 
+		if !strings.HasPrefix(input, "login ") {
+			input = "login "+input
+		}
 		// 將所有輸入交給 V8 的 processCommand 處理
 		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
 		val, err := ctx.RunScript(script, "cmd.js")
