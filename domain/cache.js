@@ -24,6 +24,9 @@ function preloadCache() {
     log("Players:", players);
     log("Maps:", maps);
 
+    cache.cmds = cmds;
+    log("Info", "Preload Cmds:", cmds);
+
     rooms.forEach(name => {
         cache.rooms[name] = loadObject("rooms", name);
     });
@@ -40,21 +43,5 @@ function preloadCache() {
         }
         cache.maps[name] = loadObject("maps", name);
     });
-
-/*
-    players.forEach(name => {
-        cache.items[name] = loadObject("players", name);
-    });
-    if (players.length > 0) {
-        log("players", JSON.stringify(players));
-        players.forEach(id => {
-            let savedData = loadObject("players", id);
-            if (savedData) {
-                players[id] = new Player(id, savedData.race);
-                Object.assign(players[id], savedData); // 直接賦值屬性
-                log(`${id} preloaded from saved data.`);
-            }
-        });
-    }
-*/
+    log("Info", "preloadCache cmds", cmds);
 }

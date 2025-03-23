@@ -66,9 +66,26 @@ func createV8Context(m *client.ClientManager) {
 	log.Println("V8 context created with all functions set up.")
 }
 
+func extractCmds(files []string, ext string) []string {
+	var processed []string
+	for _, file := range files {
+		base := filepath.Base(file)       // 取得檔案名稱 (含副檔名)
+		name := strings.TrimSuffix(base, ext) // 去掉副檔名
+		processed = append(processed, name)
+	}
+	return processed
+}
+
 func loadV8Scripts(ctx *v8.Context) {
 	dirs := []string{"rooms", "npcs", "items", "players", "maps"}
 	filesJSON := make(map[string][]string)
+
+	cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
+	if err != nil {
+		log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
+	} else {
+        filesJSON["cmds"] = extractCmds(cmdJsFiles, ".js")
+	}
 
 	for _, dir := range dirs {
 		dirPath := filepath.Join("domain", dir)
@@ -103,10 +120,6 @@ func loadV8Scripts(ctx *v8.Context) {
 		}
 	}
 
-	cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
-	if err != nil {
-		log.Fatalf("Failed to list .js files in domain/cmds: %v", err)
-	}
 	for _, file := range cmdJsFiles {
 		scriptBytes, err := os.ReadFile(file)
 		if err != nil {
