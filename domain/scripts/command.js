@@ -45,6 +45,11 @@ function processCommand(playerId, input) {
         if (player.username && !players[playerId]) {
             players[playerId] = player;
         }
+        if (cmd === "login" && result.type === "login_success") {
+            let statsResult = stats(player, "");
+            let statsMessage = formatOutput(player, statsResult);
+            sendToPlayer(playerId, statsMessage); // 使用臨時 ID 發送
+        }
         return formatOutput(player, result);
     } else {
         log("processCommand", "Unknown command:", cmd);
