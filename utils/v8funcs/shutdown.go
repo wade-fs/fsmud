@@ -11,7 +11,7 @@ var (
 	ShutdownChan = make(chan struct{})
 )
 
-func Shutdown(m *client.ClientManager) v8.FunctionCallback {
+func CbShutdown(m *client.ClientManager) v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		m.Broadcast("System is shutting down...", "", true, "")
 		close(ShutdownChan)

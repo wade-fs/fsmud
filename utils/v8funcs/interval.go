@@ -15,7 +15,7 @@ var (
 	timerMu sync.Mutex
 )
 
-func SetInterval() v8.FunctionCallback {
+func CbSetInterval() v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		args := info.Args()
 		if len(args) < 2 {
@@ -55,7 +55,7 @@ func SetInterval() v8.FunctionCallback {
 	}
 }
 
-func ClearInterval() v8.FunctionCallback {
+func CbClearInterval() v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		args := info.Args()
 		if len(args) < 1 {

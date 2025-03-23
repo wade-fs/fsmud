@@ -7,7 +7,7 @@ import (
 	v8 "fsmud/utils/v8go"
 )
 
-func Log() v8.FunctionCallback {
+func CbLog() v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		var args []interface{}
 		for _, arg := range info.Args() {

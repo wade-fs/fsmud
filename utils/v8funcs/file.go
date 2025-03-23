@@ -11,7 +11,7 @@ import (
 	v8 "fsmud/utils/v8go"
 )
 
-func LoadFile() v8.FunctionCallback {
+func CbLoadFile() v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		args := info.Args()
 		if len(args) < 1 {
@@ -34,7 +34,7 @@ func LoadFile() v8.FunctionCallback {
 	}
 }
 
-func SaveFile() v8.FunctionCallback {
+func CbSaveFile() v8.FunctionCallback {
 	return func(info *v8.FunctionCallbackInfo) *v8.Value {
 		args := info.Args()
 		if len(args) < 2 {
