@@ -54,8 +54,10 @@ ws.onmessage = function(event) {
 
 function sendCommand() {
     let cmd = document.getElementById("command").value;
-    ws.send(cmd);
-    document.getElementById("command").value = "";
+    if (cmd !== "") {
+        ws.send(cmd);
+        document.getElementById("command").value = "";
+    }
 }
 
 function formatPlayerInfo(data) {
@@ -73,3 +75,10 @@ function formatRoomInfo(room) {
         <p>Description: ${room.description}</p>
     `;
 }
+
+document.getElementById("command").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        sendCommand();
+    }
+});

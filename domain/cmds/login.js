@@ -27,5 +27,10 @@ function login(player, args) {
         player.password = password;
         player.room = "entrance";
     }
+/* NOT work now...try to send stats
+    let statsResult = stats(player, "");
+    let statsMessage = (typeof statsResult === "object") ? JSON.stringify(statsResult) : statsResult;
+    sendToPlayer(player.id, statsMessage);
+*/
     return { type: "login_success", message: `Welcome, ${username}!` };
 }

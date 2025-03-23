@@ -1,4 +1,4 @@
-// cmd/mud/handlers/websocket.go
+// utils/handlers/websocket.go
 
 package handlers
 
@@ -41,7 +41,7 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 
 	playerID := h.Manager.GeneratePlayerID()
 	h.Manager.Add(conn, "entrance", "websocket")
-	conn.WriteMessage(websocket.TextMessage, []byte("Welcome to the MUD!\nPlease login with: login <username> <password>"))
+    conn.WriteMessage(websocket.TextMessage, []byte(`{"type": "command_result", "message": "Welcome to the MUD!\nPlease login with: login <username> <password>"}`))
 
 	for {
 		_, message, err := conn.ReadMessage()
