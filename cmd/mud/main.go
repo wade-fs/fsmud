@@ -31,6 +31,8 @@ func createV8Context(m *client.ClientManager) {
 	global.Set("shutdown", v8.NewFunctionTemplate(iso, v8funcs.CbShutdown(m)))
 	global.Set("reloadJs", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8Scripts(m)))
 	global.Set("reloadJSON", v8.NewFunctionTemplate(iso, v8funcs.CbLoadV8JSON(m)))
+	global.Set("hashPassword", v8.NewFunctionTemplate(iso, v8funcs.CbHashPassword()))
+	global.Set("comparePassword", v8.NewFunctionTemplate(iso, v8funcs.CbComparePassword()))
 
 	ctx = v8.NewContext(iso, global)
 	log.Println("V8 context created with all functions set up.")

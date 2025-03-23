@@ -17,14 +17,15 @@ function login(player, args) {
     playerData.connectionType = ct;
 
     if (playerData) {
-        if (playerData.password !== password) {
+        let isValid = comparePassword(playerData.password, password);
+        if (!isValid) {
             return { type: "error", message: "Incorrect password." };
         }
         Object.assign(player, playerData);
         player.room = playerData.room;
     } else {
         player.username = username;
-        player.password = password;
+        player.password = hashPassword(password);
         player.room = "entrance";
     }
     return { type: "login_success", message: `Welcome, ${username}!` };

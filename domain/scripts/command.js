@@ -9,6 +9,10 @@ function processCommand(playerId, input) {
     let parts = input.trim().split(" ");
     let cmd = parts[0];
     let args = parts.slice(1).join(" ");
+    if (!player.username) {
+        cmd = "login";
+        args = input;
+    }
 
     if (!player.username && cmd !== "login") {
         if (cmd !== "login") {
