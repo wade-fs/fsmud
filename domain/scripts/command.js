@@ -28,26 +28,15 @@ function processCommand(playerId, input) {
 
     if (typeof this[cmd] === "function") {
         let adminCommands = ["shutdown", "priv", "reloadJs", "reloadJSON"];
-        if (adminCommands.includes(cmd) && !player.isAdmin) {
-            return formatOutput(player, "You are not authorized to use this command.");
-        }
-
-        if (cmd === "shutdown") {
-            if (player.isAdmin) {
+        if (adminCommands.includes(cmd)) {
+            if (!player.isAdmin) {
+                return formatOutput(player, "You are not authorized to use this command.");
+            }
+            if (cmd !== "priv") {
                 broadcastGlobal("System shutting down...");
-                shutdown();
+                this[cmd]();
+                return formatOutput(player, "");
             }
-            return formatOutput(player, "");
-        } else if (cmd === "reloadJs") {
-            if (player.isAdmin) {
-                reloadJs();
-            }
-            return formatOutput(player, "");
-        } else if (cmd === "reloadJSON") {
-            if (player.isAdmin) {
-                reloadJSON();
-            }
-            return formatOutput(player, "");
         }
 
         log("processCommand", player.username, cmd);
