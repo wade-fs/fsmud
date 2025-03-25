@@ -39,6 +39,7 @@ class Player {
         this.uuid = data.uuid || generateUUID();
         this.name = data.name || '';
         this.password = data.password || ''; // 應加密
+        this.area = "entrance";
         this.x = data.x || 0;                // 初始 X 座標
         this.y = data.y || 0;                // 初始 Y 座標
         this.health = data.health || 100;
@@ -53,6 +54,7 @@ class Player {
             uuid: this.uuid,
             name: this.name,
             password: this.password,
+            area: "entrance",
             x: this.x,
             y: this.y,
             health: this.health,
@@ -77,6 +79,7 @@ class Player {
             uuid: this.uuid,
             name: this.name,
             password: this.password,
+            area: this.area,
             x: this.x,
             y: this.y,
             health: this.health,

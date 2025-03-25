@@ -10,7 +10,7 @@ function priv(player, args) {
         return;
     }
 
-    let target = Player.load(args); // args 是 username
+    let target = Player.load(args); // args 是 name
     if (!target) {
         broadcastToRoom("No such player found.", player.room, false, player.id);
         return;
@@ -22,12 +22,12 @@ function priv(player, args) {
 
     // 檢查目標玩家是否在線，若在線則同步更新
     for (let playerId in players) {
-        if (players[playerId].username === target.username) {
+        if (players[playerId].name === target.name) {
             players[playerId].isAdmin = target.isAdmin;
-            broadcastToRoom(`${player.username} has ${target.isAdmin ? "granted" : "revoked"} admin privileges for ${target.username}.`, players[playerId].room, false, "");
+            broadcastToRoom(`${player.name} has ${target.isAdmin ? "granted" : "revoked"} admin privileges for ${target.name}.`, players[playerId].room, false, "");
             break;
         }
     }
 
-    broadcastToRoom(`Admin status of ${target.username} changed to ${target.isAdmin}.`, player.room, false, player.id);
+    broadcastToRoom(`Admin status of ${target.name} changed to ${target.isAdmin}.`, player.room, false, player.id);
 }

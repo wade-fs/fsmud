@@ -1,20 +1,19 @@
 // domain/cmds/login.js
 
 function login(player, args) {
-    if (player.username) {
+    if (player.name) {
         return { type: "error", message: "You are already logged in." };
     }
 
     let parts = args.trim().split(" ");
     if (parts.length < 2) {
-        return { type: "error", message: "Usage: login <username> <password>" };
+        return { type: "error", message: "Usage: login <name> <password>" };
     }
 
-    let username = parts[0];
+    let name = parts[0];
     let password = parts[1];
     let ct = player.connectionType;
-    let playerData = Player.load(username);
-    playerData.connectionType = ct;
+    let playerData = Player.load(name);
 
     if (playerData) {
         let isValid = comparePassword(playerData.password, password);
@@ -24,9 +23,11 @@ function login(player, args) {
         Object.assign(player, playerData);
         player.room = playerData.room;
     } else {
-        player.username = username;
+        player.name = name;
         player.password = hashPassword(password);
-        player.room = "entrance";
+        player.area = "entrance";
+        player.x = 0;
+        player.y = 0;
     }
-    return { type: "login_success", message: `Welcome, ${username}!` };
+    return { type: "login_success", message: `Welcome, ${name}!` };
 }

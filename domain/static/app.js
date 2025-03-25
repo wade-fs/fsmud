@@ -62,7 +62,7 @@ function sendCommand() {
 
 function formatPlayerInfo(data) {
     return `
-        <p>Name: ${data.username || "Unknown"}</p>
+        <p>Name: ${data.name || "Unknown"}</p>
         <p>Level: ${data.level}</p>
         <p>HP: ${data.hp}</p>
         <p>MP: ${data.mp}</p>

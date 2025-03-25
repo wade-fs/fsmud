@@ -1,53 +1,58 @@
 // domain/scripts/command.js
 
 function processCommand(playerId, input) {
+    log("Info", "processCommand playerId", playerId, "input", input);
     let player = players[playerId]; // 優先從全局 players 獲取
     if (!player) {
-        // 如果 players 中沒有，創建一個臨時玩家，但不再嘗試從 playerId 載入檔案
+        log("Info", "processCommand new player");
         player = new Player({ id: playerId });
+    } else {
+        log("Info", "processCommand player", JSON.stringify(player));
     }
 
     let parts = input.trim().split(" ");
     let cmd = parts[0];
     let args = parts.slice(1).join(" ");
-    if (!player.username) {
+    if (!player.name) {
         cmd = "login";
         args = input;
     }
 
-    if (!player.username && cmd !== "login") {
-        if (cmd !== "login") {
-            return formatOutput(player, "Please login first using: login <username> <password>");
-        }
+    if (!player.name && cmd !== "login") {
+        log("Info", "processCommand playerId", playerId, "name", player.name, "cmd", cmd, "args", args);
+        return formatOutput(player, "Please login first using: login <name> <password>");
     }
 
-    if (player.username && !players[playerId]) {
+    if (player.name && !players[playerId]) {
+        log("Info", "!players[", playerId, "]");
         players[playerId] = player;
-        players[player.uuid] = player; // 添加 uuid 索引
+        players[player.uuid] = player;
+    } else {
+        log("Info", "exist player");
     }
 
-    // 檢查玩家自訂別名
-    if (player.aliases[cmd]) {
-        cmd = player.aliases[cmd];
-    }
+    log("Info", "final cmd", cmd);
 
     if (typeof this[cmd] === "function") {
         let adminCommands = ["shutdown", "priv", "reloadJs", "reloadJSON"];
         if (adminCommands.includes(cmd)) {
             if (!player.isAdmin) {
+                log("Info", "player is not admin");
                 return formatOutput(player, "You are not authorized to use this command.");
             }
             if (cmd !== "priv") {
-                broadcastGlobal("System shutting down...");
+                log("Info", "player is admin, cmd", cmd);
                 this[cmd]();
                 return formatOutput(player, "");
             }
+        } else {
+            log("Info", "normal cmd ", cmd);
         }
 
-        log("processCommand", player.username, cmd);
+        log("processCommand", player.name, cmd);
         let result = this[cmd](player, args);
         // 在執行命令後將玩家存入全局 players（特別是登入後）
-        if (player.username && !players[playerId]) {
+        if (player.name && !players[playerId]) {
             players[playerId] = player;
         }
         if (cmd === "login" && result.type === "login_success") {
