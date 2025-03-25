@@ -39,6 +39,12 @@ class Player {
         this.uuid = data.uuid || generateUUID();
         this.name = data.name || '';
         this.password = data.password || '';
+        this.isAdmin = data.isAdmin || false;
+        this.aliases = data.aliases || {};
+        this.inventory = data.inventory || [];
+        this.connectionType = data.connectionType || "telnet";
+        this.lang = data.lang || "en";
+
         this.area = "entrance";
         this.x = data.x || 0;
         this.y = data.y || 0;
@@ -47,11 +53,7 @@ class Player {
         this.mp = data.mp || 100;
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
-        this.isAdmin = data.isAdmin || false;
-        this.aliases = data.aliases || {};
-        this.inventory = data.inventory || [];
-        this.connectionType = data.connectionType || "telnet";
-        this.lang = data.lang || "en";
+        this.race = data.race || "Human";
     }
 
     save() {

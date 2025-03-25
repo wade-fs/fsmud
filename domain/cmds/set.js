@@ -27,7 +27,33 @@ function set(player, args) {
                 return i18n("weather_success", { weather });
             }
             return i18n("weather_permission");
+        case "race":
+            if (["Human", "Dragon", "Elf", "Giant", "Dwarf", "Beastman", "Demon", "OtherAnimal"].includes(newRace)) {
+                this.race = newRace;
+                this.applyRaceBonuses();
+                saveObject("players", this.id, this);
+            } else {
+                return "Invalid race.";
+            }
         default:
             return i18n("unknown_command");
+    }
+}
+
+applyRaceBonuses() {
+    switch (this.race) {
+        case "Dragon":
+            this.strength += 3;
+            break;
+        case "Dwarf":
+        case "Beastman":
+            this.strength += 1;
+            break;
+        case "Elf":
+            this.agility += 2;
+            break;
+        // 其他种族可根据需要添加
+        default:
+            break;
     }
 }
