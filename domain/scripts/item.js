@@ -1,4 +1,4 @@
-// domain/item.js
+// domain/scripts/item.js
 
 class Item {
     constructor(id, name, description) {

@@ -1,4 +1,4 @@
-// domain/combat.js
+// domain/scripts/combat.js
 
 function processCombatTurn(npcId, roomId) {
     let queue = combatQueues[npcId];

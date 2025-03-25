@@ -1,0 +1,21 @@
+{
+  "id": "temp_2_1742644899999999999",
+  "uuid": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+  "username": "chen",
+  "password": "$2a$10$1693qErqgV7Eid2BE6RFnO57zXNCsAozm81P/DMLkPkEToRStwTmO",
+  "lang": "en",
+  "level": 1,
+  "hp": 100,
+  "mp": 50,
+  "strength": 10,
+  "agility": 10,
+  "room": null,
+  "location": {
+    "map": "forest",
+    "x": 0,
+    "y": 0
+  },
+  "isAdmin": false,
+  "aliases": {},
+  "inventory": []
+}

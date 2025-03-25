@@ -1,18 +1,14 @@
-// domain/objects.js
+// domain/scripts/objects.js
 
 function loadObject(type, name) {
     if (!cache[type][name]) {
         let filePath = name;
-        log("loadObject", type, name);
         if (!name.startsWith(`domain/${type}`)) {
-            log("loadObject", `add domain/${type}`, filePath);
             filePath = `domain/${type}/${name}`;
         }
         if (!filePath.includes(".")) {
-            log("loadObject", `append .json`, filePath);
             filePath = filePath + ".json";
         }
-        log("loadObject", "type", type, "name", name, "filePath", filePath);
         let rawData = loadFile(filePath);
         if (typeof rawData !== 'string' || rawData.trim() === '') {
             log(`Failed to load ${type}/${name} from ${filePath} (received: '${rawData}', type: ${typeof rawData})`);
@@ -27,9 +23,6 @@ function loadObject(type, name) {
             let data = JSON.parse(rawData);
             // 根據類型創建對應的 class 實例
             switch (type) {
-                case "rooms":
-                    cache[type][name] = new Room(data);
-                    break;
                 case "items":
                     cache[type][name] = new Item(data);
                     break;
@@ -39,8 +32,8 @@ function loadObject(type, name) {
                 case "players":
                     cache[type][name] = new Player(data);
                     break;
-                case "maps":
-                    cache[type][name] = new GameMap(data);
+                case "areas":
+                    cache[type][name] = new Area(data);
                     break;
                 default:
                     cache[type][name] = data; // 其他類型保持原始數據
@@ -53,6 +46,7 @@ function loadObject(type, name) {
     }
     
     // 返回深拷貝的實例
+    log("Info", "loadObject type", type, "name", name);
     return cache[type][name] ? cache[type][name].clone() : null;
 }
 

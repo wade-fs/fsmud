@@ -1,4 +1,5 @@
-// domain/command.js
+// domain/scripts/command.js
+
 function processCommand(playerId, input) {
     let player = players[playerId]; // 優先從全局 players 獲取
     if (!player) {

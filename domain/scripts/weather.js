@@ -1,4 +1,4 @@
-// domain/weather.js
+// domain/scripts/weather.js
 
 let weather = "sunny";
 let isDay = true;

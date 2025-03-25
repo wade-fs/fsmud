@@ -54,7 +54,7 @@ func LoadV8Scripts(ctx *v8.Context) {
 }
 
 func LoadV8JSON(ctx *v8.Context) {
-	dirs := []string{"rooms", "npcs", "items", "players", "maps"}
+	dirs := []string{"areas", "npcs", "items", "players"}
 	filesJSON := make(map[string][]string)
 
 	cmdJsFiles, err := listFilesWithDepth("domain/cmds", ".js", 1)
@@ -72,6 +72,15 @@ func LoadV8JSON(ctx *v8.Context) {
 		}
 		filesJSON[dir] = fileList
 	}
+	// 載入 terrains.json
+    terrainsData, err := os.ReadFile("domain/configs/terrains.json")
+    if err != nil {
+        log.Printf("Failed to read terrains.json: %v", err)
+        filesJSON["terrains"] = []string{} // 提供空陣列作為預設值
+    } else {
+        filesJSON["terrains"] = []string{string(terrainsData)} // 將檔案內容作為字串存入
+    }
+
 	filesJSONBytes, err := json.Marshal(filesJSON)
 	if err != nil {
 		log.Fatal("Failed to marshal file lists:", err)

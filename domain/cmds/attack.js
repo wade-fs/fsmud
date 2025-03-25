@@ -1,25 +1,24 @@
 // domain/cmds/attack.js
 function attack(player, args) {
-    if (!args) {
-        let msg = i18n(player.lang, "attack_empty");
-        broadcastToRoom(msg, player.room, player.id);
-        return;
-    }
-    let room = Room.load(player.room);
-    let npc = room.npcs.find(n => n.name === args);
-    if (!npc) {
-        let msg = i18n(player.lang, "attack_fail");
-        broadcastToRoom(msg, player.room, player.id);
-        return;
-    }
-    let damage = player.strength - npc.defense;
-    npc.hp -= damage > 0 ? damage : 0;
-    let damageMsg = i18n(player.lang, "attack_hit", { id: player.username, npc: npc.name, damage });
-    broadcastToRoom(damageMsg, player.room, player.id);
-    if (npc.hp <= 0) {
-        let defeatMsg = i18n(player.lang, "attack_defeat", { npc: npc.name });
-        broadcastToRoom(defeatMsg, player.room, player.id);
-        room.npcs = room.npcs.filter(n => n.id !== npc.id);
-        room.save();
-    }
+  let targetName = args.trim();
+  if (!targetName) return "Attack what?";
+
+  // 找出同一座標的 NPC
+  let npcsInArea = Object.values(cache.npcs).filter(npc => npc.x === player.x && npc.y === player.y);
+  let target = npcsInArea.find(npc => npc.name.toLowerCase() === targetName.toLowerCase());
+
+  if (!target) return `There is no ${targetName} here.`;
+
+  // 簡單戰鬥邏輯：玩家造成 10 點傷害
+  let damage = 10;
+  target.health -= damage;
+
+  if (target.health <= 0) {
+    broadcastToArea(`${player.name} killed ${target.name}!`, player.x, player.y);
+    delete cache.npcs[target.id]; // 移除被擊殺的 NPC
+    return `You killed ${target.name}!`;
+  } else {
+    broadcastToArea(`${player.name} attacked ${target.name}, dealing ${damage} damage.`, player.x, player.y);
+    return `You attacked ${target.name}, dealing ${damage} damage.`;
+  }
 }
