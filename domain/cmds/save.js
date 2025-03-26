@@ -1,4 +1,11 @@
 function save() {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "save_help", {
+            usage: "save",
+            description: "save player data."
+        });
+    }
+
     let playerData = {
         id: this.id,
         uuid: this.uuid,

@@ -1,4 +1,12 @@
 function use(itemName) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "use_help", {
+            usage: "use <item_name>",
+            description: "Use an item from your inventory.",
+            examples: "use potion"
+        });
+    }
+
     let itemIndex = this.inventory.indexOf(itemName);
     if (itemIndex !== -1) {
         let item = cache.items[itemName];

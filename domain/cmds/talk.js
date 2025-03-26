@@ -1,5 +1,13 @@
 // domain/cmds/talk.js
 function talk(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "talk_help", {
+            usage: "talk <player_name> <message>",
+            description: "Send a private message to another player.",
+            examples: "talk Bob Hi there!"
+        });
+    }
+
     if (!args) {
         return i18n(player.lang, "talk_usage");
     }

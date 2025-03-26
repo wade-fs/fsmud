@@ -1,5 +1,12 @@
 // domain/cmds/priv.js
 function priv(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "priv_help", {
+            usage: "priv <player_name>",
+            description: "Toggle admin privileges for a specified player (admin only)."
+        });
+    }
+
     if (!player.isAdmin) {
         broadcastToRoom("You don't have permission to use this command.", player.room, false, player.id);
         return;

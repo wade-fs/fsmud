@@ -1,5 +1,13 @@
 // domain/cmds/set.js
 function set(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "set_help", {
+            usage: "set <subcommand> <value>",
+            description: "Set various properties like language, nickname, bio, or weather (admin only).",
+            examples: "set lang en, set nick Hero, set weather sunny"
+        });
+    }
+
     let parts = args.split(" ");
     if (parts.length < 2) {
         return i18n("unknown_command");

@@ -1,5 +1,13 @@
 // domain/cmds/attack.js
 function attack(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "attack_help", {
+            usage: "attack <target_name>",
+            description: "Attack an NPC within one tile of your current position. Costs 5 MP.",
+            examples: "attack goblin"
+        });
+    }
+
     let targetName = args.trim();
     if (!targetName) return "Attack what?";
 

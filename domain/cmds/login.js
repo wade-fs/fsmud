@@ -1,6 +1,13 @@
 // domain/cmds/login.js
 
 function login(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "login_help", {
+            usage: "login <name> <password>",
+            description: "Log in with an existing character or create a new one."
+        });
+    }
+
     if (player.name) {
         return { type: "error", message: "You are already logged in." };
     }
