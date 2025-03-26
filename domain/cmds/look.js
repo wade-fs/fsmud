@@ -26,7 +26,7 @@ function look(player, args) {
     }
 
     let terrainData = terrain[terrainCode];
-    let description = terrainData[currentTime] || terrainData["noon"];
+    let description = terrainData["name"]+": "+terrainData[currentTime] || terrainData["noon"];
 
     let exits = [];
     if (currentArea.isPassable(player.x, player.y - 1)) exits.push(i18n(player.lang, "north"));

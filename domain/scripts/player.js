@@ -57,24 +57,26 @@ class Player {
     }
 
     save() {
+        log("player.save()", JSON.stringify(this));
         let playerData = {
             id: this.id,
             uuid: this.uuid,
             name: this.name,
             password: this.password,
-            area: "entrance",
+            area: this.area,
+            isAdmin: this.isAdmin,
             x: this.x,
             y: this.y,
             health: this.health,
             inventory: this.inventory,
             lang: this.lang
         };
-        saveObject("players", this.uuid, playerData);
+        saveObject("domain/players", this.uuid, playerData);
     }
 
     static load(name) {
         for (let file of fileLists.players || []) {
-            let playerData = loadObject("players", file.split('/').pop().replace('.json', ''));
+            let playerData = loadObject("domain/players", file.split('/').pop().replace('.json', ''));
             if (playerData && playerData.name === name) {
                 return new Player(playerData);
             }

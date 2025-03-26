@@ -37,6 +37,14 @@ function login(player, args) {
         player.area = "entrance";
         player.x = 0;
         player.y = 0;
+
+        let existingPlayers = listExistingPlayers();
+        player.isAdmin = existingPlayers.length === 0;
     }
     return { type: "login_success", message: `Welcome, ${name}!` };
+}
+
+function listExistingPlayers() {
+    let playerFiles = fileLists.players || []; // 假設 fileLists.players 包含玩家檔案路徑
+    return playerFiles.map(file => file.split('/').pop().replace('.json', ''));
 }
