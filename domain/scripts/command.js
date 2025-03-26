@@ -31,17 +31,12 @@ function processCommand(playerId, input) {
                 return formatOutput(player, "You are not authorized to use this command.");
             }
             if (cmd !== "priv") {
-                log("Info", "player is admin, cmd", cmd);
                 this[cmd]();
                 return formatOutput(player, "");
             }
-        } else {
-            log("Info", "normal cmd ", cmd);
         }
 
-        log("processCommand", player.name, cmd);
         let result = this[cmd](player, args);
-        // 在執行命令後將玩家存入全局 players（特別是登入後）
         if (player.name && !players[playerId]) {
             players[playerId] = player;
         }
