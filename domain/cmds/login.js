@@ -28,7 +28,9 @@ function login(player, args) {
             return { type: "error", message: "Incorrect password." };
         }
         Object.assign(player, playerData);
-        player.room = playerData.room;
+        player.area = playerData.area;
+        player.x = playerData.x;
+        player.y = playerData.y;
     } else {
         player.name = name;
         player.password = hashPassword(password);

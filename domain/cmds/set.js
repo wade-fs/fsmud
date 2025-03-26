@@ -48,7 +48,7 @@ function set(player, args) {
     }
 }
 
-applyRaceBonuses() {
+function applyRaceBonuses() {
     switch (this.race) {
         case "Dragon":
             this.strength += 3;
@@ -60,7 +60,6 @@ applyRaceBonuses() {
         case "Elf":
             this.agility += 2;
             break;
-        // 其他种族可根据需要添加
         default:
             break;
     }

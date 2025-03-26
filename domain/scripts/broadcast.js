@@ -7,6 +7,19 @@ function broadcastToArea(message, x, y, excludeId) {
     }
   }
 }
+function broadcastToArea(key, params, x, y, excludeId) {
+    for (let p of Object.values(cache.players)) {
+        if (Math.abs(p.x - x) <= 2 && Math.abs(p.y - y) <= 2 && p.id !== excludeId) {
+            let msg = i18n(p.lang, key, params);
+            
+            if (p.connectionType === "websocket") {
+                msg = JSON.stringify({ type: "broadcast", message: msg });
+            }
+            
+            sendToPlayer(p.id, msg);
+        }
+    }
+}
 
 function broadcastGlobal(key, params) {
     for (let playerId in players) {

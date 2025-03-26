@@ -1,13 +1,9 @@
 // domain/scripts/command.js
 
 function processCommand(playerId, input) {
-    log("Info", "processCommand playerId", playerId, "input", input);
-    let player = players[playerId]; // 優先從全局 players 獲取
+    let player = players[playerId];
     if (!player) {
-        log("Info", "processCommand new player");
         player = new Player({ id: playerId });
-    } else {
-        log("Info", "processCommand player", JSON.stringify(player));
     }
 
     let parts = input.trim().split(" ");
@@ -19,19 +15,13 @@ function processCommand(playerId, input) {
     }
 
     if (!player.name && cmd !== "login") {
-        log("Info", "processCommand playerId", playerId, "name", player.name, "cmd", cmd, "args", args);
         return formatOutput(player, "Please login first using: login <name> <password>");
     }
 
     if (player.name && !players[playerId]) {
-        log("Info", "!players[", playerId, "]");
         players[playerId] = player;
         players[player.uuid] = player;
-    } else {
-        log("Info", "exist player");
     }
-
-    log("Info", "final cmd", cmd);
 
     if (typeof this[cmd] === "function") {
         let adminCommands = ["shutdown", "priv", "reloadJs", "reloadJSON"];

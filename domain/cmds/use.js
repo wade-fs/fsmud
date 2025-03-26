@@ -12,7 +12,7 @@ function use(itemName) {
         let item = cache.items[itemName];
         let result = item.use(this);
         saveObject("players", this.uuid, this);
-        broadcastToRoom(i18n("use_success", { id: this.id, item: item.name }), this.room, "");
+        broadcastToArea(i18n("use_success", { id: this.id, item: item.name }), this.x, this.y, "");
         return result;
     }
     return i18n("use_fail");

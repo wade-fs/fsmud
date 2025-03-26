@@ -8,18 +8,18 @@ function priv(player, args) {
     }
 
     if (!player.isAdmin) {
-        broadcastToRoom("You don't have permission to use this command.", player.room, false, player.id);
+        broadcastToArea("You don't have permission to use this command.", player.x, player.y, false, player.id);
         return;
     }
 
     if (!args) {
-        broadcastToRoom("Usage: priv <player>", player.room, false, player.id);
+        broadcastToArea("Usage: priv <player>", player.x, player.y, false, player.id);
         return;
     }
 
     let target = Player.load(args); // args 是 name
     if (!target) {
-        broadcastToRoom("No such player found.", player.room, false, player.id);
+        broadcastToArea("No such player found.", player.x, player.y, false, player.id);
         return;
     }
 
@@ -31,10 +31,10 @@ function priv(player, args) {
     for (let playerId in players) {
         if (players[playerId].name === target.name) {
             players[playerId].isAdmin = target.isAdmin;
-            broadcastToRoom(`${player.name} has ${target.isAdmin ? "granted" : "revoked"} admin privileges for ${target.name}.`, players[playerId].room, false, "");
+            broadcastToArea(`${player.name} has ${target.isAdmin ? "granted" : "revoked"} admin privileges for ${target.name}.`, players[playerId].x, players[playerId].y, false, "");
             break;
         }
     }
 
-    broadcastToRoom(`Admin status of ${target.name} changed to ${target.isAdmin}.`, player.room, false, player.id);
+    broadcastToArea(`Admin status of ${target.name} changed to ${target.isAdmin}.`, player.x, player.y, false, player.id);
 }
