@@ -66,6 +66,7 @@
     "look_npcs": "NPCs: {npcs}",
     "look_void": "You are in a void.",
     "look_lost": "You are lost.",
+    "items_here": "Items: ",
     "talk_usage": "Usage: talk <player> <message>",
     "talk_player_not_found": "Player '{target}' not found.",
     "talk_received": "{sender} whispers to you: {message}",
@@ -87,5 +88,5 @@
     "stats_help": "Usage: {usage}\nDescription: {description}",
     "talk_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
     "use_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
-    "clone_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}"
+    "clone_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
 }

@@ -8,21 +8,28 @@ function get(player, args) {
             examples: "get potion"
         });
     }
+
     let itemName = args.trim();
     if (!itemName) return "Get what?";
 
-    // 找出同一座標的無主物品
-    let itemsInArea = Object.values(cache.items).filter(item => item.x === player.x && item.y === player.y && item.owner === null);
-    let item = itemsInArea.find(item => item.name.toLowerCase() === itemName.toLowerCase());
+    let area = cache.areas[player.area];
+    let itemsInArea = area.getItemsAt(player.x, player.y);
+    log("get", JSON.stringify(itemsInArea));
 
+    let item = itemsInArea.find(i => i.name.toLowerCase() === itemName.toLowerCase());
     if (!item) return `There is no ${itemName} here.`;
 
     // 將物品加入玩家背包
-    player.inventory.push(item.id);
+    player.inventory.push(item.name);
     item.owner = player.id;
-    item.x = null; // 物品離開地圖
+    item.x = null;
     item.y = null;
+
+    // 從區域中移除該物品
+    area.removeItem(item.id);
+
     player.save(); // 保存玩家狀態
     broadcastToArea(`${player.name} picked up ${item.name}.`, player.x, player.y, player.id);
     return `You picked up ${item.name}.`;
 }
+

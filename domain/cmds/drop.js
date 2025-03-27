@@ -8,6 +8,7 @@ function drop(player, args) {
             examples: "drop sword"
         });
     }
+
     let itemName = args.trim();
     if (!itemName) return "Drop what?";
 
@@ -17,12 +18,20 @@ function drop(player, args) {
     let itemId = player.inventory[itemIndex];
     let item = cache.items[itemId];
 
-    // 丟棄物品到當前座標
+    // 從玩家背包移除物品
+    player.inventory.splice(itemIndex, 1);
+    player.save(); // 保存玩家狀態
+
+    // 設定物品的新位置
     item.owner = null;
     item.x = player.x;
     item.y = player.y;
-    player.inventory.splice(itemIndex, 1); // 從背包移除
-    player.save(); // 保存玩家狀態
+
+    // 加入當前區域的 items 陣列
+    let currentArea = cache.areas[player.area];
+    currentArea.items.push(item);
+
     broadcastToArea(`${player.name} dropped ${item.name}.`, player.x, player.y, player.id);
     return `You dropped ${item.name}.`;
 }
+

@@ -1,7 +1,5 @@
 // domain/cmds/look.js
 
-// domain/cmds/look.js
-
 function look(player, args) {
     if (args === "-h" || args === "--help") {
         return i18n(player.lang, "look_help", {
@@ -38,6 +36,13 @@ function look(player, args) {
         description += `\n${i18n(player.lang, "exits")}: ${exits.join(", ")}`;
     } else {
         description += `\n${i18n(player.lang, "no_exits")}`;
+    }
+
+    let area = cache.areas[player.area];
+    let items = area.getItemsAt(player.x, player.y);
+    if (items.length > 0) {
+        let itemNames = items.map(item => item.name).join(", ");
+        description += `\n${i18n(player.lang, "items_here")}: ${itemNames}`;
     }
 
     return description;

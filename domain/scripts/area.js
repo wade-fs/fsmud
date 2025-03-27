@@ -36,7 +36,7 @@ class Area {
             log(`Cannot place item ${item.id}, position (${x},${y}) is out of bounds.`);
             return false;
         }
-        this.items.push({ id: item.id, x, y });
+        this.items.push({ id: item.id, name:item.name, x, y });
         return true;
     }
 
@@ -45,6 +45,7 @@ class Area {
     }
 
     getItemsAt(x, y) {
+        log(`getItemsAt(${x},${y})`, JSON.stringify(this.items));
         return this.items.filter(item => item.x === x && item.y === y);
     }
     clone() {
