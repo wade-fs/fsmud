@@ -1,4 +1,4 @@
-// domain/i18n.js
+// domain/scripts/i18n.js
 let messages = {};
 
 function i18n(lang, key, params = {}) {

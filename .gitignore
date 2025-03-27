@@ -1,6 +1,5 @@
 out/
 players/
-
 *.exe
 *.exe~
 *.dll

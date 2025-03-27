@@ -1,4 +1,4 @@
-// domain/npc.js
+// domain/scripts/npc.js
 
 class NPC {
     constructor(id, name, hp, defense) {
@@ -10,11 +10,14 @@ class NPC {
 
     static load(id) {
         let data = loadFile(`domain/npcs/${id}.json`);
-        data = data.split('\n')
-                .filter(line => !line.trim().startsWith('//')) // Remove lines starting with //
-                .join('\n');
-        if (data) return Object.assign(new NPC(), JSON.parse(data));
-        return null;
+        if (!data) return null;
+        data = data.split('\n').filter(line => !line.trim().startsWith('//')).join('\n');
+        try {
+            return new NPC(JSON.parse(data));
+        } catch (e) {
+            log(`Failed to parse NPC ${id}: ${e.message}`);
+            return null;
+        }
     }
     clone() {
         return new NPC({
@@ -23,19 +26,5 @@ class NPC {
             hp: this.hp,
             defense: this.defense
         })
-    }
-}
-
-function attack(playerId, npcId) {
-    let player = Player.load(playerId);
-    let npc = NPC.load(npcId);
-    if (!player || !npc) return;
-
-    let damage = player.strength - npc.defense;
-    npc.hp -= damage > 0 ? damage : 0;
-    broadcastToRoom(`${player.username} dealt ${damage} damage to ${npc.name}`, player.room, false, "");
-
-    if (npc.hp <= 0) {
-        broadcastToRoom(`${npc.name} has been defeated!`, player.room, false, "");
     }
 }

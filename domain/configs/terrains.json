@@ -1,0 +1,1509 @@
+{
+"en":
+[
+  { "00": { "name": "Flat Grassland",
+      "midnight": "Quiet, hazy, shadows intertwined, dew-covered, insects chirping softly",
+      "morning": "Mist-shrouded, gentle breeze, dew sparkling, golden light appearing, silence awakening",
+      "noon": "Scorching hot, dazzling sunlight, gentle breeze swaying, lush green, dappled light and shadow",
+      "afternoon": "Sunset glow, golden and red intertwined, sky brilliant, gentle breeze, long shadows swaying",
+      "night": "Stars twinkling, gentle breeze on the face, quiet night, moonlight spreading, vast and dark"
+    }
+  },
+  { "01": { "name": "Low-lying Wetland",
+      "midnight": "Hazy and humid, misty, frogs croaking softly, muddy and hidden, cool and quiet",
+      "morning": "Morning dew moistening, mist rising, water birds singing, reeds swaying, gentle breeze",
+      "noon": "Humid and hot, sunlight shining, water rippling, insects buzzing loudly, vibrant green",
+      "afternoon": "Sunset reflecting on the water, orange and gold blending, night herons flitting, water patterns gently swaying, refreshing humidity",
+      "night": "Quiet and cool, night air permeating, frogs chirping in chorus, moonlight floating, deep dark shadows"
+    }
+  },
+  { "02": { "name": "Gentle Hills",
+      "midnight": "Moon shadows swaying, quiet undulations, cool breeze on the face, night mist permeating, hazy and dreamlike",
+      "morning": "Gentle morning light, mountain mist ethereal, dewdrops scattered, fresh air, quiet awakening",
+      "noon": "Sunlight shining down, vibrant green, warm mountain breeze, melodious birdsong, clear outlines",
+      "afternoon": "Golden light pouring down, long shadows stretching, gentle breeze whispering, sunset glow reflecting on the slopes, hazy mountain colors",
+      "night": "Night quiet, starry sky vast, gentle breeze, deep mountain shadows, night insects chirping softly"
+    }
+  },
+  { "03": { "name": "Slightly Undulating Grassland",
+      "midnight": "Gentle breeze whispering, grass waves rolling, soft night colors, dewdrops sparkling, swaying moon shadows",
+      "morning": "Morning light slightly dyeing, green grass sparkling, dewdrops scattered, gentle wind sound, green awakening",
+      "noon": "Scorching sunlight, green waves swaying, rich grass fragrance, passionate wind, short shadows",
+      "afternoon": "Warm dusk, golden grass waves, rosy sky, gentle wind murmuring, light and shadow intertwined",
+      "night": "Quiet and warm, gentle night breeze, grass rustling softly, moonlight rendering, floating dark shadows"
+    }
+  },
+  { "04": { "name": "Small Sand Dunes",
+      "midnight": "Cold and silent, gentle breeze blowing sand, sand patterns sparkling, stars twinkling, deep night colors",
+      "morning": "Gentle morning light, cool sand surface, golden light appearing, gentle breeze, fine sand moving",
+      "noon": "Scorching and dazzling, hot sand flowing, sunlight reflecting like a mirror, air shimmering, heat waves surging",
+      "afternoon": "Orange-red dyeing the sand, warm sand patterns, cool breeze blowing, shadows lengthening, desolate sunset",
+      "night": "Night cool as water, gentle breeze rising, starry sky boundless, sand dunes quiet, silvery light permeating"
+    }
+  },
+  { "05": { "name": "Field Scattered with Rocks",
+      "midnight": "Quiet and desolate, cold wind sighing, deep rock shadows, deep night colors, faint light twinkling",
+      "morning": "Mist permeating, dewdrops crystal clear, new life in rock crevices, gentle breeze blowing, soft light scattering",
+      "noon": "Scorching and baking, hot rock surfaces, dazzling sunlight, air shimmering, sharp shadows",
+      "afternoon": "Sunset slanting, orange-red flowing, residual warmth of rocks, brilliant sky, gentle breeze stroking",
+      "night": "Deep and silent, cold moonlight, night wind blowing sand, scattered shadows, colorful starlight"
+    }
+  },
+  { "06": { "name": "Low Forest Area",
+      "midnight": "Quiet in the forest, swaying branches, distant insect chirping, gentle breeze stroking, dappled moonlight",
+      "morning": "Morning dew sparkling, mist swirling, clear birdsong, light and shadow intertwined, leaves trembling gently",
+      "noon": "Sunlight fragmented, cool in the forest, lush green leaves, rustling wind, full of vitality",
+      "afternoon": "Golden light flowing, gentle breeze warming, shadows lengthening, night birds singing, hazy sunset glow",
+      "night": "Night thick, quiet in the forest, wind whispering softly, stars scattered, moonlight passing through"
+    }
+  },
+  { "07": { "name": "River Valley Meadow",
+      "midnight": "Night mist floating, flowing water gurgling, cool green grass, starlight scattering gently, gentle night breeze",
+      "morning": "Morning light shining down, dewdrops sparkling, mist rising, gentle breeze blowing, tender green grass",
+      "noon": "Bright sunlight, grass waves rolling, stream sparkling, light birdsong, lush green",
+      "afternoon": "Sunset glow rendering, evening breeze blowing, water rippling, golden grass waves, gentle and quiet",
+      "night": "Quiet and distant, flowing water murmuring softly, insects chirping in waves, night wind blowing grass, stars twinkling"
+    }
+  },
+  { "08": { "name": "Plain with Scattered Hills",
+      "midnight": "Calm and vast, hazy hill shadows, gentle breeze blowing, starry sky boundless, deep night colors",
+      "morning": "Morning light slightly dyeing, mist surrounding, grass leaves with dew, elegant hill shadows, warm gentle breeze",
+      "noon": "Sunlight shining down, gold and green reflecting each other, hills layered, gentle breeze blowing, undulating terrain",
+      "afternoon": "Sunset glow spreading, long shadows swaying, evening breeze blowing, soft warm light, golden grass rolling",
+      "night": "Night wind blowing, quiet hill shadows, stars scattered, grass rustling softly, hazy distant view"
+    }
+  },
+  { "09": { "name": "Low and Gentle Desert Hills",
+      "midnight": "Cold sand patterns, bright starlight, gentle night breeze rising, silent, silvery light permeating",
+      "morning": "Golden morning light, gentle breeze blowing sand, cool sand dunes, soft shadows, fine sand moving slightly",
+      "noon": "Scorching and dazzling, heat waves surging, hot sand flowing, merciless sunlight, air shimmering",
+      "afternoon": "Brilliant sunset glow, warm sand dunes, long shadows slanting, gentle night breeze, golden light floating",
+      "night": "Quiet and mysterious, gentle breeze blowing, sand patterns sparkling, hazy moonlight, deep night colors"
+    }
+  },
+  { "10": { "name": "Undulating Small Hills",
+      "midnight": "Quiet and vast, hazy hill shadows, gentle breeze blowing, starry sky boundless, deep night colors",
+      "morning": "Light morning mist, dewdrops sparkling, sunlight appearing, gentle hills, gentle breeze coming",
+      "noon": "Bright sunlight, gold and green interspersed, undulating hills, clear air, lush green",
+      "afternoon": "Sunset glow reflecting, long shadows slanting, warm soft light, gentle wind sound, rich colors",
+      "night": "Quiet night colors, stars scattered, deep hills, wind whispering softly, faint shadows"
+    }
+  },
+  { "11": { "name": "Sparse Woodland Grassland",
+      "midnight": "Dappled forest shadows, night wind whispering, grass leaves trembling gently, stars twinkling, distant insect chirping",
+      "morning": "Faint morning light, mist permeating, intertwined tree shadows, rolling grass waves, clear birdsong",
+      "noon": "Scorching sunlight, cool tree shade, golden grassland, gentle breeze stroking, full of vitality",
+      "afternoon": "Orange sunset glow filling the sky, long shadows swaying, evening breeze blowing, brilliant sky, warm soft light",
+      "night": "Night enveloping, swaying tree shadows, insects chirping one after another, gentle breeze blowing, quiet and distant"
+    }
+  },
+  { "12": { "name": "Shallow Valley Hills",
+      "midnight": "Valley silent, night mist swirling, wind sighing softly, hazy moonlight, stretching shadows",
+      "morning": "Thin mist dancing gently, stream murmuring softly, damp grassy slopes, gentle breeze on the face, soft morning light",
+      "noon": "Sunlight shining directly, stream sparkling, green mountain slopes, fresh air, lush vegetation",
+      "afternoon": "Sunset glow reflecting in the valley, long slope shadows, gentle wind sound, golden grass waves, night birds singing softly",
+      "night": "Quiet and distant, night wind blowing, grass whispering softly, starry river reflecting, faint light floating"
+    }
+  },
+  { "13": { "name": "Gravel Wasteland",
+      "midnight": "Cold and silent, intertwined rock shadows, night wind blowing sand, desolate moonlight, stars scattered",
+      "morning": "Morning light slightly penetrating, white gravel, lingering cold, gentle breeze passing, mist lightly swirling",
+      "noon": "Scorching sun, hot rocks, dry and stuffy, air trembling, desolate and boundless",
+      "afternoon": "Setting sun's afterglow, long shadows crisscrossing, gravel sparkling, night wind blowing, orange-red spreading",
+      "night": "Deep and silent, stars twinkling, cool stone ground, scattered dark shadows, cool breeze sneaking"
+    }
+  },
+  { "14": { "name": "Boulder Slope",
+      "midnight": "Steep cliff deep, cold gravel, night wind blowing, faint starlight, overlapping shadows",
+      "morning": "Mist ethereal, slightly damp rock surface, light and shadow intertwined, cold wind gently stroking, silent",
+      "noon": "Poisonous sunlight, hot rocks, fine dust flying, scorching air, steep slope",
+      "afternoon": "Desolate dusk, orange-red afterglow, long shadows stretching, gentle breeze floating, jagged rocky slope",
+      "night": "Night deep, cold gravel, cold wind blowing, dappled starlight, layers of dark shadows"
+    }
+  },
+  { "15": { "name": "Small Rocky Hill",
+      "midnight": "Quiet and isolated, hazy mountain shadows, cool rock surface, night wind blowing, stars scattered",
+      "morning": "Mist lightly swirling, white rock face, dewdrops sparkling, sunlight appearing, gentle breeze coming",
+      "noon": "Sunlight shining directly, hot rocks, clear light and shadow, scorching ground, dry air",
+      "afternoon": "Sunset glow reflecting, long shadows slanting, gentle breeze blowing, orange rock face, night birds singing softly",
+      "night": "Quiet and dim, cold rocks, faint moonlight, wind whispering softly, scattered shadows"
+    }
+  },
+  { "16": { "name": "Mixed Wood Hills",
+      "midnight": "Swaying forest shadows, trembling leaves, echoing insect chirping, starlight peeking through, gentle night breeze",
+      "morning": "Mist ethereal, dewdrops sparkling, faint morning light, clear birdsong, treetops swaying gently",
+      "noon": "Bright sunlight, lush green leaves, cool forest shade, gentle breeze passing through, full of vitality",
+      "afternoon": "Sunset glow reflecting on leaves, slanting sunlight shining down, intertwined tree shadows, gentle evening breeze, peaceful atmosphere",
+      "night": "Night enveloping, swaying leaf shadows, treetops whispering softly, insects chirping all around, gentle breeze blowing"
+    }
+  },
+  { "17": { "name": "High Grassland Area",
+      "midnight": "Grass waves silent, cool breeze blowing gently, starry river twinkling, faint shadows, distant night colors",
+      "morning": "Thin mist permeating, morning dew sparkling, golden grass tips, gentle breeze blowing, rising sun",
+      "noon": "Grass sea rolling, hot sunlight, fresh air, insects chirping one after another, boundless",
+      "afternoon": "Grassland dyed by sunset, long shadows following the wind, evening breeze blowing, warm orange light, peaceful and serene",
+      "night": "Dark night silent, gentle breeze blowing, stars shining, grass rustling softly, cool air"
+    }
+  },
+  { "18": { "name": "Small Rocky Ridge",
+      "midnight": "Faint mountain shape, biting cold wind, intertwined rock shadows, gloomy night colors, starlight scattered",
+      "morning": "Mist dancing gently, damp rock crevices, sunlight probing, dewdrops crystal clear, gentle breeze stroking",
+      "noon": "Sunlight shining directly, hot rock walls, deep cracks, sharp shadows, dry air",
+      "afternoon": "Orange-red sunset glow, long rock shadows, gentle breeze blowing, remaining light shining, quiet and distant",
+      "night": "Dark night, cold rock walls, wind howling, dappled starlight, lonely and distant"
+    }
+  },
+  { "19": { "name": "Edge of Low Mountains",
+      "midnight": "Scattered dark shadows, night wind blowing, clear insect chirping, silent mountains, cold starlight",
+      "morning": "Thin mist swirling, hazy mountains, morning glow reflecting, loud birdsong, gentle breeze blowing",
+      "noon": "Sunlight shining brightly, green mountain colors, clear air, gentle breeze, cool air",
+      "afternoon": "Sunset glow scattering gently, floating cloud shadows, long wind sound, slanting mountain shadows, warm colors",
+      "night": "Night enveloping, silent mountain peaks, mountain wind sighing softly, bright stars, faint light"
+    }
+  },
+  { "20": { "name": "Gentle Plateau",
+      "midnight": "Quiet and vast, sparse starlight, night wind blowing, cold ground, silent dark shadows",
+      "morning": "Mist lightly swirling, faint light appearing, dewdrops sparkling, fresh air, gentle breeze blowing",
+      "noon": "Sunlight shining directly, dry and vast, scorching ground, sharp shadows, soft wind sound",
+      "afternoon": "Orange sunset glow rendering, long shadows crisscrossing, evening breeze blowing, warm air, changing cloud layers",
+      "night": "Deep night colors, distant wind sound, cool ground, silent, stars scattered"
+    }
+  },
+  { "21": { "name": "Dry Red Soil Plateau",
+      "midnight": "Dull red soil, biting night wind, cool ground, faint shadows, soft gravel sound",
+      "morning": "Morning light slightly scattering, red soil gleaming, cool air, dust mist rising gently, hazy distant view",
+      "noon": "Scorching sun, hot red soil, dry air, heat waves distorting, barren",
+      "afternoon": "Sunset glow reflecting red, long shadows crisscrossing, warm and dry, wind sighing softly, dust flying",
+      "night": "Dark red faint light, night wind sighing softly, cold air permeating, cracked earth, silent"
+    }
+  },
+  { "22": { "name": "Coastal Cliff",
+      "midnight": "Sea wind howling, waves roaring, dark cliff, stars twinkling, damp air",
+      "morning": "Mist permeating, waves gently lapping, slightly damp rock walls, sunlight appearing, fresh breeze blowing",
+      "noon": "Bright sunlight, hot rock walls, sparkling waves, fierce sea wind, salty air",
+      "afternoon": "Sunset glow reflecting on the sea, red cliff walls, low tide sound, warm breeze, rolling waves",
+      "night": "Intertwined dark shadows, waves crashing against the shore, cold rock walls, hazy moonlight, slightly salty air"
+    }
+  },
+  { "23": { "name": "Deep Valley Basin",
+      "midnight": "Valley bottom quiet, cold mist permeating, night wind blowing, faint starlight, faint echo",
+      "morning": "Mist rising, morning dew sparkling, gentle breeze blowing, sunlight slanting, swaying tree shadows",
+      "noon": "Hot sunlight, stuffy air, scorching rock walls, clear echo, thin gentle breeze",
+      "afternoon": "Long shadows stretching, sunset glow scattering gently, gentle breeze, warm and quiet, cool air",
+      "night": "Darkness enveloping, cold air accumulating, faint moonlight, insects chirping echoing, deep and mysterious"
+    }
+  },
+  { "24": { "name": "Continuous Small Hills",
+      "midnight": "Continuous undulations, night mist lightly swirling, gentle breeze whispering, layers of dark shadows, stars twinkling",
+      "morning": "Faint morning light, hills gleaming, dewdrops sparkling, gentle wind blowing, birdsong echoing",
+      "noon": "Sunlight shining brightly, grass swaying, clear hill shadows, warm wind blowing, lush green",
+      "afternoon": "Sunset dyeing red, long shadows slanting, long wind sound, soft sunset glow, warm hill colors",
+      "night": "Quiet night colors, lonely hills, cold wind blowing gently, insects chirping softly, hazy moonlight"
+    }
+  },
+  { "25": { "name": "Low Mountain Ridge",
+      "midnight": "Jagged dark shadows, night wind blowing, cold stone surface, dappled starlight, silent and lonely",
+      "morning": "Faint morning light, hazy mist, soft mountain shadows, cool wind, birdsong echoing",
+      "noon": "Scorching sun shining directly, hot rocks, short shadows, scorching air, clear mountain ridge",
+      "afternoon": "Sunset glow reflecting red, long wind sound, stretching mountain shadows, slightly warm stone surface, quiet sky",
+      "night": "Night enveloping, deep rock walls, cool wind whistling, insects chirping echoing, quiet and distant"
+    }
+  },
+  { "26": { "name": "Wind-eroded Rock Formation Land",
+      "midnight": "Dark cliff, night wind sighing softly, distorted shadows, cold stone surface, quiet and desolate",
+      "morning": "Mist lightly swirling, sunlight faintly dyeing, dewdrops in rock crevices, gentle breeze blowing, warm colors",
+      "noon": "Dry rock layers, scorching sun, clear textures, heat waves surging, wind howling",
+      "afternoon": "Orange sunset glow rendering, rock walls gleaming, long shadows, gentle breeze blowing, afterglow reflecting",
+      "night": "Deep and silent, cold wind on the face, dim rock walls, lonely night colors, cool air"
+    }
+  },
+  { "27": { "name": "Undulating Sand Dune Belt",
+      "midnight": "Silvery sand sparkling, night wind blowing, stretching sand patterns, quiet and vast, stars scattered",
+      "morning": "Faint morning light appearing, soft sand ridge, gentle wind marks, cool air, golden light floating",
+      "noon": "Heat waves surging, hot sand dunes, footprints difficult to leave, dazzling sunlight, boundless dryness",
+      "afternoon": "Warm sunset colors, golden sand dunes, long shadows slanting, gentle evening breeze, beautiful scenery",
+      "night": "Black sand sighing softly, night wind in gusts, faint moonlight shining, quiet and distant, cool and comfortable"
+    }
+  },
+  { "28": { "name": "Shrubland Plateau",
+      "midnight": "Swaying forest shadows, night wind blowing, grass rustling softly, stars twinkling, slightly cool air",
+      "morning": "Dewdrops sparkling, mist permeating, sunlight slanting through, branches and leaves swaying gently, clear birdsong",
+      "noon": "Bright sunlight, lush green leaves, dry and hot air, swaying shrubs, cool gentle breeze",
+      "afternoon": "Sunset glow reflecting on trees, swaying shadows, evening breeze blowing gently, stretching tree shadows, peaceful atmosphere",
+      "night": "Silent tree shadows, hazy night colors, wind blowing leaves, cool air, insects chirping echoing"
+    }
+  },
+  { "29": { "name": "Narrow Valley",
+      "midnight": "Valley bottom deep, night mist permeating, cold wind blowing, layers of shadows, slightly cool air",
+      "morning": "Mist lightly swirling, stream murmuring softly, sunlight appearing, fresh air, flowers and grass with dew",
+      "noon": "Scorching sun high up, hot rock walls, long echo, stuffy air, swaying tree shadows",
+      "afternoon": "Sunset glow reflecting in the valley, gentle breeze blowing, shadows lengthening, cool air, soft colors",
+      "night": "Quiet and deep, faint moonlight shining, cool breeze blowing, stream murmuring softly, hazy night colors"
+    }
+  },
+  { "30": { "name": "Hills with Many Canyons",
+      "midnight": "Dark and winding, night wind howling, scattered shadows, cold stone walls, deep and silent",
+      "morning": "Mist permeating, soft mountain shadows, sunlight slanting, slightly cool air, stream murmuring",
+      "noon": "Scorching sun, hot rock layers, canyon echo, wind and sand swirling, dazzling sky",
+      "afternoon": "Sunset glow reflecting red, deep valley, gentle breeze blowing, lengthening shadows, warm colors",
+      "night": "Quiet and deep, faint moonlight shining, silent canyon, rising cold air, stars twinkling"
+    }
+  },
+  { "31": { "name": "Gentle Mountain Slope",
+      "midnight": "Night enveloping, grass swaying, gentle breeze blowing, insects chirping echoing, quiet and gentle",
+      "morning": "Morning light passing over, mist rising, grass leaves with dew, gentle breeze stroking, soft colors",
+      "noon": "Bright sunlight, golden grassy slope, warm wind blowing, slightly hot air, floating cloud shadows",
+      "afternoon": "Sunset reflecting on the slope, evening breeze blowing, swaying tree shadows, warm and quiet, hazy distant mountains",
+      "night": "Cool night breeze, stars scattered, quiet slope, grass fragrance permeating, calm atmosphere"
+    }
+  },
+  { "32": { "name": "Sparse Woodland Highland",
+      "midnight": "Swaying tree shadows, gentle breeze blowing, quiet in the forest, deep night colors, faint insect chirping",
+      "morning": "Morning light through the forest, dewdrops sparkling, mist surrounding, cool air, birds chirping",
+      "noon": "Bright sunlight, intertwined tree shadows, cool gentle breeze, dry air, dappled light",
+      "afternoon": "Sunset glow through trees, golden-red branches and leaves, gentle evening breeze, long shadows, peaceful and serene",
+      "night": "Night enveloping, treetops whispering softly, stars appearing and disappearing, cool air, quiet in the forest"
+    }
+  },
+  { "33": { "name": "Small Stone Forest Landform",
+      "midnight": "Scattered rock shadows, cold wind passing through, mysterious night colors, cold ground, deep and silent",
+      "morning": "Mist permeating, slightly damp stone pillars, sunlight scattering gently, fresh air, dewdrops in rock crevices",
+      "noon": "Dazzling sunlight, hot rocks, clear shadows, wind blowing through stone gaps, heat waves surging",
+      "afternoon": "Sunset glow reflecting on stone, lengthening shadows, gentle breeze swirling, light and shadow intertwined, unique scenery",
+      "night": "Night mist floating, quiet stone forest, cold air permeating, stars twinkling, slightly cool air"
+    }
+  },
+  { "34": { "name": "Steep Canyon Area",
+      "midnight": "Deep and dark, biting cold wind, cold rock walls, silent canyon, gloomy night colors",
+      "morning": "Mist permeating, soft light, cool morning breeze, rock walls gleaming, birdsong echoing",
+      "noon": "Bright sunlight, hot rock walls, clear echo, deep canyon, soft wind sound",
+      "afternoon": "Sunset glow reflecting red, canyon walls gleaming, deepening shadows, cool air, magnificent scenery",
+      "night": "Faint starlight, silent canyon, cold wind howling, desolate night colors, cold air"
+    }
+  },
+  { "35": { "name": "Highland Forest Area",
+      "midnight": "Silent forest sea, mist enveloping, gentle breeze blowing, night birds singing softly, swaying tree shadows",
+      "morning": "Morning light through leaves, dewdrops sparkling, mist lightly swirling, birds chirping on branches, cool air",
+      "noon": "Sunlight shining directly, intertwined green shade, warm gentle breeze, dappled forest, cicadas buzzing",
+      "afternoon": "Sunset glow reflecting on the forest, golden leaves, gentle forest breeze, lengthening shadows, peaceful atmosphere",
+      "night": "Swaying tree shadows, stars appearing and disappearing, wind sighing softly, quiet in the forest, hazy night colors"
+    }
+  },
+  { "36": { "name": "Limestone Plateau",
+      "midnight": "Ominous rock shadows, cool rock crevices, cold wind passing through, deep night colors, rugged terrain",
+      "morning": "Mist swirling, rock layers gleaming, dewdrops sparkling, cool air, faint warmth of the rising sun",
+      "noon": "Hot rock surface, direct sunlight, heat waves surging, sharp shadows, soft wind sound",
+      "afternoon": "Sunset glow reflecting on stone, warm colors, gentle breeze blowing, clear rock patterns, desolate scenery",
+      "night": "Cool breeze blowing gently, silent rock layers, desolate night colors, stars twinkling, silent"
+    }
+  },
+  { "37": { "name": "Eroded Mountain Slope",
+      "midnight": "Steep cliff gloomy, loose gravel, cold wind howling, deep night colors, eerie shadows",
+      "morning": "Morning light slanting, rock walls gleaming, dewdrops condensing, slightly cool air, gentle slope",
+      "noon": "Hot soil and rocks, strong sunlight, canyon echo, dry cracked slope, heat waves rising",
+      "afternoon": "Setting sun reflecting on the cliff, wind-eroded marks, color layers, gentle breeze stroking, long shadows",
+      "night": "Cold night wind, sliding gravel, looming dark shadows, dangerous terrain, quiet and dark"
+    }
+  },
+  { "38": { "name": "Layered Rocky Hills",
+      "midnight": "Layered rocks, cold wind passing through, hazy night colors, deep and silent, intertwined dark shadows",
+      "morning": "Bright morning light, clear rock textures, mist lightly swirling, soft wind sound, fresh air",
+      "noon": "Scorching sun shining directly, hot rocks, clear shadows, layers of rock fragments, heat waves surging",
+      "afternoon": "Sunset glow reflecting, red rock layers, cool gentle breeze, lengthening shadows, magnificent scenery",
+      "night": "Deep rock shadows, wind howling, cold air, stars twinkling, silent"
+    }
+  },
+  { "39": { "name": "Steep Sand Dune Mountain",
+      "midnight": "Floating sand patterns, wind sighing softly, desolate night colors, lonely sand dunes, cold air permeating",
+      "morning": "Morning breeze blowing sand, golden sunrise, rolling sand grains, footprints disappearing, slightly cool air",
+      "noon": "Scorching sun, hot sand dunes, heat waves rising, sharp shadows, dry air",
+      "afternoon": "Orange-red sunset glow, soft sand surface, delicate wind patterns, cool air, charming scenery",
+      "night": "Black sand sighing softly, night wind in gusts, faint moonlight shining, quiet and distant, cool and comfortable"
+    }
+  },
+  { "40": { "name": "Low Mountain Slope",
+      "midnight": "Night mist permeating, slope shadows, wind sighing softly, dark tree shadows, lingering cold",
+      "morning": "Morning light passing over, dewdrops sparkling, birdsong in the forest, cool air, gentle breeze blowing",
+      "noon": "Sunlight shining brightly, golden grassy slope, warm wind blowing, shortening shadows, floating cloud shadows",
+      "afternoon": "Sunset afterglow, gentle breeze blowing, soft mountain shadows, golden-red slope, quiet scenery",
+      "night": "Quiet night colors, gentle breeze blowing, starry sky boundless, sleeping mountain slopes, rising coolness"
+    }
+  },
+  { "41": { "name": "Deeply Fissured Rock Formation",
+      "midnight": "Black cracks, cold wind blowing, gloomy rock walls, silent and deep, deep night colors",
+      "morning": "Morning light reflecting in cracks, rock walls gleaming, mist lightly swirling, cracks appearing and disappearing, cool air",
+      "noon": "Scorching sun, hot rock surface, deep cracks, clear shadows, soft wind sound",
+      "afternoon": "Sunset glow reflecting red, yellow rock walls, deep cracks, gentle breeze passing, lengthening shadows",
+      "night": "Night enveloping, cold rock walls, dark cracks, deep atmosphere, silent"
+    }
+  },
+  { "42": { "name": "Perilous Rocky Hill",
+      "midnight": "Jagged mountain shadows, cold rock walls, biting night wind, deep and dark, silent",
+      "morning": "Morning light slanting, rocks gleaming, dewdrops sparkling, gentle breeze blowing, fresh air",
+      "noon": "Scorching sun shining directly, hot rock surface, sharp shadows, heat waves rising, wind howling",
+      "afternoon": "Sunset glow reflecting on rock, golden-red colors, hazy rock crevices, gentle breeze, lengthening shadows",
+      "night": "Night deep, cold wind passing through, faint rock patterns, stars twinkling, silent rocky hill"
+    }
+  },
+  { "43": { "name": "Dry Canyon",
+      "midnight": "Canyon deep, cold rock walls, night wind passing through, soft gravel sound, faint moonlight shining",
+      "morning": "Mist swirling, sunlight slanting, rocks warming up, slightly cool air, silent",
+      "noon": "Scorching sun, hot rock walls, heat waves surging, dust flying, echo roaring",
+      "afternoon": "Sunset reflecting in the canyon, golden rock colors, deepening shadows, gentle breeze blowing, desolate scenery",
+      "night": "Night wind blowing, black canyon walls, dry and cold air, stars shining brightly, lonely and deep"
+    }
+  },
+  { "44": { "name": "Collapsed Mountain Slope",
+      "midnight": "Broken rocks standing precariously, loose gravel, night wind sighing softly, gloomy slope shadows, silent and cold",
+      "morning": "Morning light reflecting on the slope, dust mist rising, gentle breeze blowing, dewdrops condensing, calm atmosphere",
+      "noon": "Strong sunlight, hot rock layers, cracked soil and rocks, heat waves rising, wind howling",
+      "afternoon": "Setting sun's afterglow, lengthening slope shadows, gravel sparkling, slightly cool air, wind blowing dust",
+      "night": "Looming dark shadows, cold wind blowing, silent rock layers, sliding gravel, deep atmosphere"
+    }
+  },
+  { "45": { "name": "Highland Rock Formation",
+      "midnight": "Cold rock walls, deep night colors, cold wind invading, faint rock patterns, silent",
+      "morning": "Morning light penetrating, red rock layers, thin mist swirling, slightly cool air, soft wind sound",
+      "noon": "Scorching sun on rocks, clear shadows, hot rocks, dry air, soft wind sound",
+      "afternoon": "Sunset glow reflecting, warm rock surface, light and shadow intertwined, gentle breeze passing, peaceful and serene",
+      "night": "Night wind blowing, cold air permeating, deep rock patterns, stars twinkling, lonely atmosphere"
+    }
+  },
+  { "46": { "name": "Semi-desert Hills",
+      "midnight": "Silent hills, floating dust, night wind sighing softly, cool ground, dim starlight",
+      "morning": "Morning breeze blowing gently, warm sunlight, grass gleaming, soft hill shadows, fresh air",
+      "noon": "Scorching sunlight, hot sand dunes, dry wind howling, clear shadows, heat waves rising",
+      "afternoon": "Sunset slanting, golden hills, cool breeze blowing gently, warm colors, gentle terrain",
+      "night": "Night permeating, soft wind blowing sand, cold ground, deep and silent, starry sky boundless"
+    }
+  },
+  { "47": { "name": "Continuous Mountain Ridge",
+      "midnight": "Undulating mountains, layers of dark shadows, night wind blowing, cold atmosphere, ethereal clouds and mist",
+      "morning": "Morning light reflecting on the ridge, clear mountain line, mist swirling, soft wind sound, fresh air",
+      "noon": "Sunlight shining directly, hot mountain peaks, intertwined shadows, heat waves rising, dry air",
+      "afternoon": "Golden light dyeing, lengthening mountain shadows, cool breeze stroking, calm atmosphere, magnificent scenery",
+      "night": "Quiet night colors, lonely mountains, gentle breeze passing, cold air, stars shining brightly"
+    }
+  },
+  { "48": { "name": "Steep Slope Forest",
+      "midnight": "Intertwined forest shadows, night wind blowing, leaves sighing softly, quiet slope, faint moonlight",
+      "morning": "Morning light through the forest, light mist, dewdrops sparkling, clear birdsong, fresh air",
+      "noon": "Dappled sunlight, lush green, cool breeze passing through, swaying leaf shadows, cicadas buzzing",
+      "afternoon": "Sunset glow reflecting on trees, cool slope, golden leaves falling, soft light and shadow, peaceful atmosphere",
+      "night": "Silent forest, evening breeze sighing softly, stars peeking through, cool air, hazy shadows"
+    }
+  },
+  { "49": { "name": "Edge of Plateau",
+      "midnight": "Deep boundary, mountain wind sighing softly, cold air permeating, intertwined shadows, quiet and vast",
+      "morning": "Mist lightly swirling, distant view appearing, rock layers gleaming, cool gentle breeze, fresh air",
+      "noon": "Strong sunlight, hot rock walls, dry air, dangerous terrain, wind howling",
+      "afternoon": "Sunset glow rendering, golden edge, gentle breeze, long shadows, soft colors",
+      "night": "Night enveloping, stars twinkling, cold wind blowing, silent rock layers, quiet scenery"
+    }
+  },
+  { "50": { "name": "Main Peak of Low Mountain",
+      "midnight": "Majestic peak shadows, dark and silent, mountain wind in gusts, vast night sky, faint moonlight",
+      "morning": "Rising sun appearing, mountain top slightly bright, mist swirling, gentle breeze blowing, clear birdsong",
+      "noon": "Sunlight shining directly, hot rock walls, thin air, clear shadows, wind passing through",
+      "afternoon": "Sunset glow reflecting, warm mountain top, lengthening shadows, gentle breeze blowing, soft colors",
+      "night": "Night falling, silent peak top, wind echoing, stars shining brightly, deep atmosphere"
+    }
+  },
+  { "51": { "name": "Quartzite Mountain Slope",
+      "midnight": "Cold mountain slope, white rock face, night wind blowing, hazy light and shadow, deep and silent",
+      "morning": "Morning light reflecting, slightly bright rock surface, thin mist floating, slightly cool air, fresh air",
+      "noon": "Scorching sun, hot rock layers, dazzling light, heat waves surging, dust flying",
+      "afternoon": "Sunset afterglow scattering, rock surface gleaming, scattered shadows, warm atmosphere, gentle breeze blowing",
+      "night": "Quiet night colors, cold rock walls, wind sighing softly, faint cold light, stars scattered"
+    }
+  },
+  { "52": { "name": "Basalt Hills",
+      "midnight": "Black hills, cold hard rock walls, night wind howling, dappled moonlight, deep and silent",
+      "morning": "Morning light slightly scattering, rock surface gleaming, dewdrops sparkling, cool breeze blowing gently, refreshing air",
+      "noon": "Sunlight shining directly, hot basalt, rising heat, undulating hills, deep shadows",
+      "afternoon": "Sunset glow rendering, rocks warming up, gentle breeze on the face, soft hills, magnificent scenery",
+      "night": "Night enveloping, silent hills, cold air permeating, night wind sighing softly, stars scattered"
+    }
+  },
+  { "53": { "name": "Volcanic Ash Covered Land",
+      "midnight": "Black soil silent, floating dust, night wind blowing, desolate and cold, stars twinkling",
+      "morning": "Sunlight first shining, dust mist rising slightly, gray ground surface, soft wind sound, slightly cool air",
+      "noon": "Scorching sun high up, hot volcanic ash, dry and pungent, heat waves surging, barren scenery",
+      "afternoon": "Sunset glow reflecting on the ground, dust dyed orange, gentle breeze passing, calm air, soft long shadows",
+      "night": "Night enveloping, wind and sand sighing softly, cold ground, deep atmosphere, silvery light shining"
+    }
+  },
+  { "54": { "name": "Gravel Slope Highland",
+      "midnight": "Silent gravel, intertwined slope shadows, cold wind passing through, slightly cold ground, faint starlight",
+      "morning": "Faint morning light, bright gravel, slightly cool air, dewdrops sparkling, birdsong echoing",
+      "noon": "Scorching sun, hot gravel, dust flying, short shadows, heat waves rising",
+      "afternoon": "Sunset afterglow, lengthening rock shadows, gentle breeze blowing, gleaming gravel, peaceful atmosphere",
+      "night": "Dark night silent, cold gravel, night wind blowing, stars shining brightly, distant atmosphere"
+    }
+  },
+  { "55": { "name": "Steep Cliff",
+      "midnight": "Black cliff, cold wind blowing, deep abyss, low echo, cold air",
+      "morning": "Morning light scattering, rock walls gleaming, soft wind sound, mist lightly swirling, long slanting shadows",
+      "noon": "Scorching sun shining directly, hot rock layers, dazzling sunlight, sharp shadows, hot wind sweeping",
+      "afternoon": "Sunset glow reflecting on the cliff, golden colors, soft wind sound, soft shadows, magnificent scenery",
+      "night": "Night deep, cold cliff, wind echoing, faint moonlight shining, quiet atmosphere"
+    }
+  },
+  { "56": { "name": "Highland Deep Valley",
+      "midnight": "Deep and dark, wind sighing softly, gloomy rock walls, cold air permeating, stars appearing and disappearing",
+      "morning": "Mist swirling, rock walls gleaming, gentle breeze blowing, hazy valley bottom, sunlight appearing",
+      "noon": "Scorching valley, hot rock layers, short shadows, hot wind swirling, gravel flying",
+      "afternoon": "Sunset glow rendering, red canyon walls, wind echoing, soft shadows, magnificent scenery",
+      "night": "Night falling, silent valley bottom, night wind blowing, ominous rock shadows, cold air"
+    }
+  },
+  { "57": { "name": "Semi-desert High Mountain Hill",
+      "midnight": "Dry cold silence, dark hills, soft dust rising, desolate night wind, stars twinkling",
+      "morning": "Dawn slightly scattering, cool air, gravel gleaming, gentle breeze blowing, vast terrain",
+      "noon": "Scorching sun, hot hills, heat waves surging, withered vegetation, sparse shadows",
+      "afternoon": "Brilliant sunset glow, red hills, cool air, dust settling, calm atmosphere",
+      "night": "Deep night colors, silent hills, cold wind on the face, cold gravel, hazy distant view"
+    }
+  },
+  { "58": { "name": "Low Mountain with Snow Line",
+      "midnight": "Silvery light sparkling, cold mountain slope, cold wind howling, slightly sparkling snow layer, quiet night colors",
+      "morning": "Pale golden morning light, slightly bright snow layer, mountain mist floating, cool air, ice crystals sparkling",
+      "noon": "Sunlight shining, snow surface reflecting light, fierce cold wind, dazzling mountain slope, clear shadows",
+      "afternoon": "Sunset glow reflecting on snow, warm mountain slope, gentle breeze, red ice layer, long shadows",
+      "night": "Night enveloping, cold snow light, wind echoing, quiet mountain, bright stars"
+    }
+  },
+  { "59": { "name": "Hills with Glacial Remains",
+      "midnight": "Lonely rocky hills, cold glacial traces, wind blowing erratically, heavy cold air, cold moonlight",
+      "morning": "Dawn first appearing, glacial traces gleaming, thin valley mist, bright hills, gentle breeze blowing",
+      "noon": "Scorching sun high up, hot rock surface, sparkling meltwater, exposed boulders, short shadows",
+      "afternoon": "Twilight reflecting, soft glacial traces, red hills, quiet air, lingering warmth",
+      "night": "Hazy night colors, cold wind sighing softly, silent glacial remains, bone-chilling cold, sparse starlight"
+    }
+  },
+  { "60": { "name": "Mid-Mountain Grassy Slope",
+      "midnight": "Quiet slope, night mist permeating, soft wind sound, dark grass, hazy stars",
+      "morning": "Morning dew sparkling, lush green grass leaves, fresh gentle breeze, ethereal mountain mist, faint sunlight",
+      "noon": "Scorching sun, hot grassy slope, heat waves rising, sparse shadows, silent wind sound",
+      "afternoon": "Golden light covering the field, red slope, gentle breeze blowing, swaying grass waves, leisurely scenery",
+      "night": "Dark night silent, cool breeze blowing gently, grass leaves whispering softly, scattered slope shadows, cold moonlight"
+    }
+  },
+  { "61": { "name": "Edge of Deeply Cut Canyon",
+      "midnight": "Canyon deep, night wind blowing, gloomy cliff, unfathomable darkness, cold air",
+      "morning": "Morning light appearing, cliff walls gleaming, mist permeating, soft wind sound, silent deep valley",
+      "noon": "Scorching canyon, hot rock walls, direct sunlight, shortening shadows, heat waves surging",
+      "afternoon": "Cliff golden glow, evening breeze blowing, deep valley echo, soft long shadows, peaceful atmosphere",
+      "night": "Night falling, cold canyon walls, wind echoing, swaying starlight, dark and mysterious"
+    }
+  },
+  { "62": { "name": "Limestone Cave Area",
+      "midnight": "Dark cave, sparkling stalactites, dripping water sighing softly, cool breeze, cold rock walls",
+      "morning": "Morning light first penetrating, slightly bright cave entrance, humid air, stalactites gleaming, cool air",
+      "noon": "Hot rock walls, cool inside the cave, intertwined light and shadow, echoing dripping water, heavy humidity",
+      "afternoon": "Sunset afterglow reflecting in the cave, red rock walls, lengthening shadows, peaceful atmosphere, warm stalactites",
+      "night": "Darkness and silence, cold wind passing through, white rock walls, deep inside the cave, faint light"
+    }
+  },
+  { "63": { "name": "Narrow Valley in the Mountains",
+      "midnight": "Dark and deep, cold air permeating, soft wind sighing, quiet valley bottom, scattered dark shadows",
+      "morning": "Mist enveloping, cool stream, faint light seeping through, humid air, wild grass with sparkling dewdrops",
+      "noon": "Scorching sun, hot rock walls, narrow shadows, stuffy air, insects chirping one after another",
+      "afternoon": "Sunset glow rendering, golden stream, gentle wind sound, lengthening shadows, beautiful afterglow",
+      "night": "Deep night colors, cold wind blowing, hazy valley, stream murmuring softly, faint starlight"
+    }
+  },
+  { "64": { "name": "Rocky Mountain Slope",
+      "midnight": "Cold gravel, silent mountain slope, wind sighing softly, intertwined dark shadows, lonely night colors",
+      "morning": "Faint morning light penetrating, rocks gleaming, cool breeze blowing gently, damp soil, clear birdsong in the mountains",
+      "noon": "Bright sunlight, hot rock surface, heat waves surging, dry mountain slope, dappled shadows",
+      "afternoon": "Setting sun's afterglow, slightly warm rocky slope, wind and sand settling, long shadows, quiet scenery",
+      "night": "Night falling, cold rock walls, stars twinkling, night wind passing through, quiet in the mountains"
+    }
+  },
+  { "65": { "name": "Plateau Pass",
+      "midnight": "Wind howling, deep pass, dark and cool, biting cold, stars high up",
+      "morning": "Mist lightly swirling, gentle breeze blowing, valley gleaming, fresh air, grass leaves with dew",
+      "noon": "Sunlight shining directly, scorching pass, swirling air currents, short shadows, vast view",
+      "afternoon": "Golden sunset glow, gentle wind sound, distant mountain silhouettes, slightly cold in the mountains, desolate scenery",
+      "night": "Hazy night colors, cold air, night wind blowing, cold starlight, silent"
+    }
+  },
+  { "66": { "name": "Low Mountain Peak",
+      "midnight": "Cold peak top, quiet night colors, cold wind blowing, faint mountains, vast starry sky",
+      "morning": "Morning light scattering gently, bright mountain top, mist swirling, cool air, hazy distant view",
+      "noon": "Bright sunlight, hot rocks, heat waves surging, dry grassy slope, shortening shadows",
+      "afternoon": "Sunset afterglow, warm mountain top, gentle breeze, distant mountains shrouded in mist, soft scenery",
+      "night": "Silent mountain top, fierce night wind, scattered lights, hazy night colors, twinkling stars"
+    }
+  },
+  { "67": { "name": "Layered Mountains",
+      "midnight": "Dark mountain ranges, mist permeating, night wind blowing, silent mountain peaks, faint starlight",
+      "morning": "Mountain mist lightly swirling, sunlight breaking through the mist, green mountain colors, ethereal birdsong, fresh air",
+      "noon": "Scorching sun shining, hot mountain bodies, short shadows, lush vegetation, changing cloud shadows",
+      "afternoon": "Golden peaks, brilliant sunset glow, long wind sound, magnificent scenery, calm atmosphere",
+      "night": "Quiet night colors, hazy mountain shadows, cold wind blowing, deep starry sky, all sounds still"
+    }
+  },
+  { "68": { "name": "Steep Cliff",
+      "midnight": "Gloomy cliff, cold wind blowing, deep abyss, cold stone walls, faint moonlight",
+      "morning": "Morning light reflecting, golden cliff top, mist rising, soft wind sound, clear view",
+      "noon": "Sunlight shining directly, hot rock walls, swirling air currents, sharp shadows, hot wind swirling",
+      "afternoon": "Cliff reflecting red, wind sighing softly, lengthening shadows, quiet mountain colors, intertwined clouds and mist",
+      "night": "Hazy night colors, cold wind blowing, deep cliff, dark rock walls, silent mountain peaks"
+    }
+  },
+  { "69": { "name": "Subalpine Area",
+      "midnight": "Quiet in the forest, night wind blowing, stars twinkling, low-lying mist, bone-chilling cold",
+      "morning": "Rising sun, dappled tree shadows, dewdrops sparkling, crisp air, echoing birdsong",
+      "noon": "Cool in the forest, slightly hot sunlight, swaying leaves, clear air, soft wind sound",
+      "afternoon": "Sunset glow filling the sky, mountain wind blowing gently, quiet in the forest, pleasant temperature, harmonious scenery",
+      "night": "Deep night colors, silent forest, cold wind whispering softly, swaying tree shadows, bright moonlight"
+    }
+  },
+  { "70": { "name": "Alpine Meadow",
+      "midnight": "Silent, cold air permeating, grass leaves trembling slightly, silvery dew sparkling, night wind blowing",
+      "morning": "Mist lightly swirling, dewdrops scattered, soft morning light, fragrant green grass, gentle breeze on the face",
+      "noon": "Bright sunlight, lush green grass, cool breeze blowing, insects buzzing, wildflowers swaying",
+      "afternoon": "Golden light scattering, grass waves rolling, warm gentle breeze, colorful clouds, quiet and leisurely",
+      "night": "Hazy night colors, grass tips frosted, gentle breeze blowing, distant wolf howling, bright stars"
+    }
+  },
+  { "71": { "name": "Short Woodland Highland",
+      "midnight": "Swaying forest shadows, scattered dark shadows, intermittent insect chirping, night wind sighing softly, quiet atmosphere",
+      "morning": "Morning light scattering, mist rising, sparkling leaves, gentle breeze blowing, birds chirping",
+      "noon": "Sunlight shining directly, cool in the forest, dappled leaf shadows, gentle breeze warming, distant cicada sound",
+      "afternoon": "Orange light through leaves, long tree shadows, gentle breeze blowing, soft light and shadow, quiet scenery",
+      "night": "Stretching dark shadows, rustling branches and leaves, night wind blowing, scattered moonlight, quiet in the forest"
+    }
+  },
+  { "72": { "name": "Rocky Slope",
+      "midnight": "Cold and silent, loose gravel, moonlight shining, scattered shadows, bone-chilling cold",
+      "morning": "Faint light appearing, yellow rock layers, ethereal morning mist, permeating coolness, soft wind sound",
+      "noon": "Scorching sun, hot rock walls, scorching air, short shadows, sparkling gravel",
+      "afternoon": "Sunset glow reflecting, red rock layers, gentle wind sound, lengthening shadows, desolate scenery",
+      "night": "Night falling, fierce mountain wind, dim rock walls, bone-chilling cold, silent"
+    }
+  },
+  { "73": { "name": "High Mountain Deep Valley",
+      "midnight": "Dark and deep, bone-chilling cold, wind howling, stream murmuring softly, dim moonlight",
+      "morning": "Mist permeating, dappled light and shadow, cool stream, humid air, vibrant green",
+      "noon": "Scorching sun, cool valley bottom, flowing water gurgling, birds chirping softly, sparkling rock walls",
+      "afternoon": "Sunset glow dyeing the valley, gentle wind sound, light and shadow intertwined, hazy distant mountains, quiet air",
+      "night": "Quiet and dark, cold mountain wind, starlight reflecting on water, whispering echoes, night mist lightly swirling"
+    }
+  },
+  { "74": { "name": "Severe Cliff",
+      "midnight": "Dark cliff, cold wind blowing, steep cliff, unfathomable abyss, mysterious night colors",
+      "morning": "Faint morning light, golden rock walls, soft wind sound, hazy distant view, cool air",
+      "noon": "Sunlight shining directly, hot rock walls, heat waves surging, sharp shadows, magnificent momentum",
+      "afternoon": "Sunset glow reflecting, golden-red cliff, wind echoing, lengthening shadows, magnificent scenery",
+      "night": "Silent cliff top, cold air permeating, fierce wind, hazy night colors, gloomy cliff"
+    }
+  },
+  { "75": { "name": "Collapsed Mountain Wall",
+      "midnight": "Cold gravel, oppressive darkness, cold wind blowing, silent mountain body, deep and silent",
+      "morning": "Mist ethereal, damp rock debris, faint light twinkling, fresh air, gentle cold breeze",
+      "noon": "Scorching sun, hot gravel, dry cracked rock walls, wind and sand flying, sharp shadows",
+      "afternoon": "Sunset slanting, red rock walls, wind sound weakening, lengthening shadows, magnificent mountain range",
+      "night": "Gloomy night colors, cold gravel, cold wind blowing, faint moonlight shining, deep and quiet"
+    }
+  },
+  { "76": { "name": "High Mountain Gravel Slope",
+      "midnight": "Cold gravel, night wind blowing, rugged slope, scattered dark shadows, floating moonlight",
+      "morning": "Faint morning light penetrating, rock debris gleaming, cold breeze blowing gently, steep terrain, crisp air",
+      "noon": "Hot rocky slope, direct sunlight, loose gravel, difficult to walk, sparse shadows",
+      "afternoon": "Golden light sparkling, residual warmth of gravel, mountain wind blowing, lengthening shadows, desolate scenery",
+      "night": "Silent night falling, cold wind penetrating, soft gravel sound, cold hard slope surface, vast starry sky"
+    }
+  },
+  { "77": { "name": "Highland Volcanic Rock Area",
+      "midnight": "Dark and desolate, cold wind passing through, faint volcanic shadows, cold rock walls, eerie atmosphere",
+      "morning": "Mist permeating, red rocks, slight geothermal heat, air smelling of sulfur, wisps of steam",
+      "noon": "Hot rock layers, dappled lava, heat waves surging, hot gravel, smell of burning permeating",
+      "afternoon": "Sunset glow reflecting on rock, faint red light, steam from rock crevices, temperature gradually decreasing, wind sighing softly",
+      "night": "Scattered dark shadows, dark red lava, slight geothermal heat rising, silent and stuffy, cold night wind"
+    }
+  },
+  { "78": { "name": "Glacially Eroded Valley",
+      "midnight": "Snow-covered, cold night colors, cold wind roaring, ice layer reflecting light, silent",
+      "morning": "Faint morning light penetrating, blue ice walls, cold mist floating, snow layer sparkling, icy air",
+      "noon": "Dazzling sunlight, crystal clear glacier, crisp air currents, snowfield reflecting light, lingering cold",
+      "afternoon": "Sunset dyeing snow, ice layer reflecting sunset glow, cold wind blowing, light and shadow intertwined, desolate and quiet",
+      "night": "Night deep, quiet ice walls, wind trembling softly, pale blue moonlight, frost condensing"
+    }
+  },
+  { "79": { "name": "Low Icefield Area",
+      "midnight": "Silent ice layer, biting cold, floating silvery light, distant wolf howling, fierce north wind",
+      "morning": "Pale blue morning light, white ice layer, cold mist lightly swirling, gentle breeze blowing snow, quiet and desolate",
+      "noon": "Cold sunlight, sparkling icefield, pure blue sky, dazzling snowfield, wind howling",
+      "afternoon": "Sunset glow reflecting on snow, hazy distant view, red ice layer, increasing cold air, silent",
+      "night": "Vast starry sky, silent icefield, fierce north wind, faint snow light, desolate night colors"
+    }
+  },
+  { "80": { "name": "High Mountain Canyon",
+      "midnight": "Dark canyon, cold wind blowing, hidden rock walls, low echo, mysterious atmosphere",
+      "morning": "Mist lightly swirling, sunlight through crevices, cold valley bottom, stream gurgling softly, gentle breeze",
+      "noon": "Sunlight shining directly, hot rock walls, towering canyon, dry air, long wind sound",
+      "afternoon": "Orange light reflecting in the canyon, red rock layers, lengthening shadows, gradually decreasing temperature, magnificent scenery",
+      "night": "Night falling, fierce wind sound, dim canyon walls, approaching cold air, silent"
+    }
+  },
+  { "81": { "name": "Steep Rocky Ridge",
+      "midnight": "Dark mountain ridge, steep cliff, cold wind howling, scattered shadows, deep night colors",
+      "morning": "Morning light first penetrating, orange rock layers, cold wind sound, mist swirling, deep rock crevices",
+      "noon": "Scorching sun, hot rock layers, dappled light and shadow, scorching air, weakening wind",
+      "afternoon": "Sunset glow reflecting on the cliff, red rock layers, cool breeze stroking, hazy distant view, desolate mountain range",
+      "night": "Night enveloping, cold air invading, dim rock walls, faint light twinkling, quiet and distant"
+    }
+  },
+  { "82": { "name": "Rugged High Mountain Hills",
+      "midnight": "Undulating ridges, gloomy night colors, cold wind passing through, scattered gravel, dense dark shadows",
+      "morning": "Mist enveloping, faint mountains, thin frost scattered, dappled light and shadow, birds chirping for the first time",
+      "noon": "Dazzling sunlight, rolling hills, heat waves rising, swaying grass, desolate and boundless",
+      "afternoon": "Golden light scattering, lengthening mountain shadows, cool breeze, colorful sunset glow, quiet atmosphere",
+      "night": "Deep night colors, intertwined mountain shadows, wind blowing grass, wolf howling echoing, silent"
+    }
+  },
+  { "83": { "name": "Snow Line Boundary Area",
+      "midnight": "Clear snow line, fierce cold wind, ice and snow reflecting light, stars scattered, world still",
+      "morning": "Snow light reflecting morning, cold air floating, ice and frost covering, sunlight slightly scattering, desolate mountain colors",
+      "noon": "Clear snow line, dazzling sunlight, crystal clear ice layer, cool mountain wind, pure air",
+      "afternoon": "Sunset glow scattering gently, orange snow line, ice layer refracting light, cold air gradually increasing, desolate and quiet",
+      "night": "Moon and stars reflecting on snow, cold wind blowing, ice crystals sparkling, quiet snowfield, desolate winter"
+    }
+  },
+  { "84": { "name": "Steep Mountain Wall",
+      "midnight": "Dark and dangerous, gloomy rock walls, fierce wind sound, biting cold, oppressive silence",
+      "morning": "Faint morning light, faint rock walls, mist permeating, cold wind gently stroking, scenery appearing",
+      "noon": "Scorching sun, hot rock layers, dappled light and shadow, heat waves rising, towering cliff",
+      "afternoon": "Sunset glow reflecting, red rock walls, lengthening shadows, cold wind gently stroking, hazy light and shadow",
+      "night": "Night dark as ink, hidden rock walls, cold wind howling, silent, heavy shadows"
+    }
+  },
+  { "85": { "name": "Icefield Boundary Area",
+      "midnight": "Cold silvery light, silent icefield, cold wind like a blade, soundless, distant snow-capped mountains silent",
+      "morning": "Morning light scattering, bright ice layer, snow mist permeating, cold air condensing, fresh and slightly cold",
+      "noon": "Dazzling sunlight, crystal clear ice layer, cold air currents, rapid wind speed, snow light reflecting",
+      "afternoon": "Sunset glow reflecting, orange ice and snow, cold air invading, shadows lengthening, world quiet",
+      "night": "Quiet ice and snow, moonlight scattering, fierce cold wind, snow layer reflecting moonlight, desolate and lonely"
+    }
+  },
+  { "86": { "name": "Boundary of Highland Icefield",
+      "midnight": "Biting snow mist, dark icefield, cold wind roaring, heavy night colors, lonely and silent",
+      "morning": "Faint morning light, ice and snow boundary, frost permeating, light and shadow blooming, lingering cold",
+      "noon": "Strong sunlight, scorching snowfield, sparkling ice layer, increasing wind, thin air",
+      "afternoon": "Sunset glow reflecting on ice, faint red snow light, quiet icefield, lengthening shadows, piercing cold",
+      "night": "Night sky full of stars, deep ice and snow, bone-chilling cold, snowstorm, world silent"
+    }
+  },
+  { "87": { "name": "Near Glacier Area",
+      "midnight": "Cold and silent, silent snowfield, north wind howling, ice layer covered, boundless darkness",
+      "morning": "Faint morning light, ice and snow reflecting, flowing snow mist, icy air, quiet and distant",
+      "noon": "Dazzling sunlight, glacier reflecting light, wind and cold intertwined, crystal clear snow layer, lingering cold",
+      "afternoon": "Sunset glow dyeing snow, red icefield, bone-chilling cold, lengthening shadows, quiet scenery",
+      "night": "Moonlight like water, ice and snow covered, fierce cold wind, faint starlight, silent"
+    }
+  },
+  { "88": { "name": "Severe Cold Highland",
+      "midnight": "Bone-chilling ice wind, cold moon hanging high, silent snowfield, heavy dark shadows, merciless cold",
+      "morning": "Morning mist and frost, ice crystals sparkling, clear cold breeze, faint sunrise, vast expanse of heaven and earth",
+      "noon": "Scorching sun, severe cold temperature, ice and snow reflecting, approaching storm, dry and cold air",
+      "afternoon": "Pale red snow light, biting cold, low-hanging shadows, frost and snow covering the ground, silent",
+      "night": "Long cold night, ice and snow covered, cold wind howling, cold moonlight, desolate world"
+    }
+  },
+  { "89": { "name": "Steep Glacial Valley",
+      "midnight": "Moonlight reflecting snow, cold glacier, crisp wind sound, deep valley, silence spreading",
+      "morning": "Ice layer reflecting light, faint morning light, floating snow mist, gentle cold breeze, faint scenery",
+      "noon": "Dazzling snowfield, transparent glacier, strong wind, hot rock walls, significant temperature difference",
+      "afternoon": "Ice and snow reflecting red, sunset reflecting, deep valley, deep shadows, increasing cold wind",
+      "night": "Cold wind passing through, deep glacier, bright starlight, fierce wind and snow, darkness engulfing"
+    }
+  },
+  { "90": { "name": "High Mountain Rock Wall",
+      "midnight": "Darkness concealing, majestic cliff, fierce cold wind, dappled rock layers, silent night",
+      "morning": "Dawn first appearing, orange rock layers, mist permeating, fresh breeze on the face, magnificent mountain range",
+      "noon": "Strong sunlight, hot rock walls, thin air, pleasant wind sound, vast mountains",
+      "afternoon": "Sunset glow reflecting on rock, increasing shadows, fine weather, intertwined light and shadow, decreasing temperature",
+      "night": "Clear starry sky, hidden cliff, biting cold, cold and deep night, silent"
+    }
+  },
+  { "91": { "name": "Ice-bound Peak",
+      "midnight": "Cold moonlight, lonely snow peak, bone-chilling cold wind, ice and snow condensing, boundless darkness",
+      "morning": "Faint morning light, sparkling ice peak, frost and snow like a painting, lingering cold, flowing light and shadow",
+      "noon": "Dazzling sunlight, towering ice peak, sparkling snow light, fierce cold wind, persistent cold",
+      "afternoon": "Sunset shining, red ice peak, lengthening shadows, cold wind howling, quiet and distant",
+      "night": "Night falling, hidden ice peak, wind and snow intertwined, silent darkness, biting cold"
+    }
+  },
+  { "92": { "name": "Steep Cliff and Precipice",
+      "midnight": "Deep darkness, hidden cliff, fierce cold wind, cold moon hanging high, silence of the night",
+      "morning": "Faint morning light penetrating, cliff reflecting, sparkling frost and snow, mist swirling, refreshing scenery",
+      "noon": "Scorching sun, hot cliff, scattered shadows, rapid wind speed, dazzling light",
+      "afternoon": "Sunset glow reflecting, red cliff, lengthening shadows, wind gradually cooling, charming scenery",
+      "night": "Deep starry sky, hidden cliff, biting cold, silent, darkness enveloping"
+    }
+  },
+  { "93": { "name": "Glacier Collapse Zone",
+      "midnight": "Cold moonlight, distant sound of glacier collapse, silent snowfield, cold wind roaring, silent",
+      "morning": "Dawn shining, sparkling ice blocks, mist permeating, bone-chilling cold, eerie scenery",
+      "noon": "Scorching sun cracking, ice layer melting, sound of collapse, snow light reflecting, persistent cold",
+      "afternoon": "Sunset glow reflecting, orange snowfield, lengthening shadows, danger of collapse, deteriorating scenery",
+      "night": "Night falling, glacier still, wind and snow intertwined, biting cold, all around silent"
+    }
+  },
+  { "94": { "name": "Permanent Snowfield",
+      "midnight": "Moonlight like water, boundless snowfield, fierce cold wind, deep silence, ice and snow sealed",
+      "morning": "Dawn first shining, sparkling snowfield, scattered frost and snow, lingering cold, fresh air",
+      "noon": "Dazzling sunlight, snow layer reflecting light, cold wind like a blade, bright ice and snow, slightly rising temperature",
+      "afternoon": "Faint sunset glow, red snow light, lengthening shadows, biting cold, quiet and silent",
+      "night": "Deep night colors, ice-sealed snowfield, cold air invading, wind and snow intertwined, all around silent"
+    }
+  },
+  { "95": { "name": "Icefield Highland",
+      "midnight": "Frost condensing, silent snowfield, fierce cold wind, boundless darkness, cold permeating",
+      "morning": "Ice and snow sparkling, soft frost rising, faint morning light penetrating, bell-like cold, white world",
+      "noon": "Scorching sun, icefield reflecting light, increasing wind speed, thin air, vast scenery",
+      "afternoon": "Sunset glow slightly shining, red snowfield, cold invading, lengthening shadows, quiet and distant",
+      "night": "Deep night colors, silent icefield, bone-chilling cold, cold moonlight, silent"
+    }
+  },
+  { "96": { "name": "Glacial Deep Valley",
+      "midnight": "Deep valley dark, ice and snow covered, wind hissing, faint moonlight, cold air",
+      "morning": "Mist rising, glacier sparkling, faint morning light, wind howling, lingering cold",
+      "noon": "Ice and snow reflecting light, fierce cold wind, dazzling sunlight, magnificent scenery, slightly rising temperature",
+      "afternoon": "Sunset glow reflecting, glacier reflecting, strong shadows, cold invading, world silent",
+      "night": "Bright starry sky, faint glacier, fierce cold wind, cold moonlight, lonely valley"
+    }
+  },
+  { "97": { "name": "High Altitude Rocky Mountain",
+      "midnight": "Hidden rock layers, cold moonlight, wind howling, piercing cold wind, hidden mountain range",
+      "morning": "Faint morning light penetrating, rock layers appearing, light frost covering, gentle ice wind, pleasant scenery",
+      "noon": "Scorching sun, hot rock layers, strong wind, clear rock veins, thin air",
+      "afternoon": "Sunset glow reflecting, red rock walls, lengthening shadows, cold wind rising, magnificent scenery",
+      "night": "Night falling, hidden rock walls, fierce cold wind, bright cold moon, all around silent"
+    }
+  },
+  { "98": { "name": "Highland Polar Peak",
+      "midnight": "Boundless darkness, bone-chilling cold wind, hidden snow-capped mountains, ice and snow condensing, oppressive silence",
+      "morning": "Faint morning light, snow peak appearing, light mist rising, cold wind on the face, vast scenery",
+      "noon": "Sunlight shining, ice and snow sparkling, rapid cold wind, persistent cold, thin air",
+      "afternoon": "Sunset glow scattering, red snow peak, lengthening shadows, biting cold, world silent",
+      "night": "Deep night colors, ice and snow covered, cold moonlight, cold wind howling, silent night"
+    }
+  },
+  { "99": { "name": "Roof of the World",
+      "midnight": "Deep cold, hidden mountain ranges, ice and snow spreading, cold wind howling, lonely isolation",
+      "morning": "Dawn first appearing, mountain ranges revealed, ice layer sparkling, clear cold breeze, magnificent scenery",
+      "noon": "Scorching sun, ice and snow reflecting light, strong wind, vast scenery, thin air",
+      "afternoon": "Sunset glow reflecting, red ice and snow, lengthening shadows, cold wind invading, world quiet",
+      "night": "Bright moonlight, ice and snow sealed, fierce cold wind, wind howling, all around silent"
+    }
+  }
+],
+
+"zh":
+  [
+	{"00": {"name": "平坦草原",
+		"midnight":  "靜謐、朦朧、暗影交錯、露水盈盈、蟲鳴低語",
+		"morning":   "晨霧繚繞、微風輕拂、露珠閃爍、金黃初現、寂靜蘇醒",
+		"noon":      "炙熱蒸騰、陽光耀眼、微風搖曳、翠綠盎然、光影斑斕",
+		"afternoon": "夕陽餘暉、金紅交錯、天際絢爛、微風輕柔、長影搖曳",
+		"night":     "星光閃爍、微風拂面、夜色寧靜、月光鋪灑、幽暗廣闊"
+	}},
+	{"01": {"name": "低窪濕地",
+		"midnight":  "朦朧潮濕、霧氣瀰漫、青蛙低鳴、泥濘隱秘、陰涼幽靜",
+		"morning":   "晨露濕潤、霧氣騰騰、水鳥啼鳴、蘆葦搖曳、微風輕盈",
+		"noon":      "潮熱蒸騰、陽光閃耀、水波粼粼、蟲鳴喧鬧、蒼翠欲滴",
+		"afternoon": "霞光映水、橙金相融、夜鷺掠影、水紋微蕩、濕潤沁人",
+		"night":     "靜謐潮涼、夜氣瀰漫、青蛙合奏、月光浮動、暗影幽深"
+	}},
+	{"02": {"name": "和緩丘陵",
+		"midnight":  "月影搖曳、靜謐起伏、涼風拂面、夜霧瀰漫、朦朧夢幻",
+		"morning":   "晨光溫柔、山嵐飄渺、露珠點點、空氣清新、靜謐甦醒",
+		"noon":      "陽光灑落、翠綠鮮明、山風和暖、鳥語悠揚、輪廓分明",
+		"afternoon": "金光潑灑、長影綿延、微風輕語、霞彩映坡、山色朦朧",
+		"night":     "夜色沉靜、星空遼遠、微風習習、山影深邃、夜蟲低鳴"
+	}},
+	{"03": {"name": "淺淺起伏的草地",
+		"midnight":  "微風低語、草浪翻動、夜色柔和、露珠閃爍、月影婆娑",
+		"morning":   "晨曦微染、青草閃光、露水點點、風聲輕柔、綠意初醒",
+		"noon":      "陽光熾烈、綠波盪漾、草香馥郁、風兒熱情、影子短暫",
+		"afternoon": "暮色溫潤、草浪金黃、天邊嫣紅、風兒呢喃、光影交錯",
+		"night":     "寂靜和煦、夜風輕拂、草叢細語、月色渲染、暗影浮動"
+	}},
+	{"04": {"name": "小型沙丘",
+		"midnight":  "冷冽寂靜、微風拂沙、沙紋閃爍、星光點點、夜色幽邃",
+		"morning":   "晨曦柔和、沙面微涼、金光初現、微風輕拂、流沙細動",
+		"noon":      "灼熱耀眼、流沙滾燙、陽光鏡面、空氣顫動、熱浪翻湧",
+		"afternoon": "橘紅染沙、沙紋溫暖、涼風拂過、影子拉長、日暮蒼茫",
+		"night":     "夜涼如水、微風輕揚、星空無垠、沙丘靜謐、銀光瀰漫"
+	}},
+	{"05": {"name": "散布岩石的原野",
+		"midnight":  "靜謐荒涼、冷風低吟、岩影深邃、夜色沉沉、微光閃爍",
+		"morning":   "晨霧瀰漫、露珠晶瑩、石縫新生、微風吹拂、柔光輕灑",
+		"noon":      "熾熱炙烤、石面滾燙、陽光刺眼、空氣顫動、影子銳利",
+		"afternoon": "夕照斜映、橘紅流轉、岩石餘溫、天邊絢麗、微風輕撫",
+		"night":     "幽深寂靜、月光冷冽、夜風吹沙、陰影錯落、星光斑斕"
+	}},
+	{"06": {"name": "低矮的森林地帶",
+		"midnight":  "林間靜謐、枝影婆娑、蟲鳴悠悠、微風輕撫、月色斑駁",
+		"morning":   "晨露閃耀、霧氣繚繞、鳥鳴清脆、光影交錯、樹葉輕顫",
+		"noon":      "陽光碎落、林間涼爽、葉色蒼翠、風聲沙沙、生機盎然",
+		"afternoon": "金光流轉、微風送暖、影子拉長、夜鳥啼鳴、霞光迷離",
+		"night":     "夜色濃稠、林間寂靜、風語低喃、繁星點點、月光穿梭"
+	}},
+	{"07": {"name": "河谷草甸",
+		"midnight":  "夜霧浮動、流水潺潺、青草微涼、星光輕灑、夜風柔和",
+		"morning":   "晨光灑落、露珠閃耀、霧氣氤氳、微風吹拂、青草嫩綠",
+		"noon":      "陽光燦爛、草浪翻滾、溪水閃爍、鳥語輕快、綠意盎然",
+		"afternoon": "霞光渲染、晚風吹拂、水波粼粼、金色草浪、柔和靜謐",
+		"night":     "靜謐悠遠、流水輕吟、蟲鳴陣陣、夜風吹草、星光閃爍"
+	}},
+	{"08": {"name": "零星丘陵的平原",
+		"midnight":  "沉靜廣闊、丘影朦朧、微風吹拂、星空遼遠、夜色深邃",
+		"morning":   "晨曦微染、霧氣環繞、草葉帶露、丘影淡雅、微風和煦",
+		"noon":      "陽光灑落、金綠相映、丘陵層疊、微風吹拂、地勢起伏",
+		"afternoon": "霞光遍染、長影搖曳、晚風吹拂、柔光溫暖、金草翻騰",
+		"night":     "夜風吹拂、丘影靜謐、星光點點、草叢低語、遠景朦朧"
+	}},
+	{"09": {"name": "低緩沙漠丘陵",
+		"midnight":  "沙紋冷冽、星光璀璨、夜風輕揚、靜謐無聲、銀光瀰漫",
+		"morning":   "晨曦金黃、微風拂沙、沙丘溫涼、影子柔和、細沙微動",
+		"noon":      "炙熱耀眼、熱浪翻湧、流沙滾燙、陽光無情、空氣顫動",
+		"afternoon": "晚霞絢爛、沙丘溫潤、長影斜落、夜風徐徐、金光浮動",
+		"night":     "幽靜神秘、微風輕拂、沙紋閃耀、月色迷離、夜色深沉"
+	}},
+	{"10": {"name": "起伏的小丘陵",
+		"midnight":  "靜謐廣闊、丘影朦朧、微風吹拂、星空遼遠、夜色深邃",
+		"morning":   "晨霧輕盈、露珠閃爍、陽光初現、丘陵柔和、微風徐來",
+		"noon":      "陽光燦爛、金綠相間、丘陵起伏、空氣清澈、綠意盎然",
+		"afternoon": "晚霞映照、長影斜掛、溫暖柔光、風聲輕和、色彩豐富",
+		"night":     "夜色靜謐、星光點點、丘陵幽深、風聲呢喃、影影綽綽"
+	}},
+	{"11": {"name": "疏林草原",
+		"midnight":  "林影斑駁、夜風低語、草葉輕顫、星光閃爍、蟲鳴悠揚",
+		"morning":   "晨曦微光、霧氣瀰漫、樹影交錯、草浪翻動、鳥鳴清脆",
+		"noon":      "陽光炙熱、樹蔭涼爽、草原金黃、微風輕撫、生機勃勃",
+		"afternoon": "橙霞滿天、長影搖曳、晚風吹拂、天空絢爛、微光和煦",
+		"night":     "夜色籠罩、樹影婆娑、蟲鳴此起彼落、微風吹拂、靜謐深遠"
+	}},
+	{"12": {"name": "淺谷丘陵",
+		"midnight":  "山谷靜默、夜霧繚繞、風聲低吟、月光朦朧、陰影綿延",
+		"morning":   "薄霧輕舞、溪水呢喃、草坡濕潤、微風拂面、晨光柔和",
+		"noon":      "陽光直射、溪流閃爍、山坡翠綠、空氣清新、草木生機盎然",
+		"afternoon": "霞光映谷、坡影悠長、風聲舒緩、金色草浪、夜鳥低鳴",
+		"night":     "靜謐深遠、夜風吹拂、草叢竊語、星河倒映、微光浮動"
+	}},
+	{"13": {"name": "碎石荒地",
+		"midnight":  "陰冷沉寂、石影交錯、夜風吹砂、月色蒼茫、星光點綴",
+		"morning":   "晨光微透、碎石泛白、寒意未散、微風拂過、霧氣輕繞",
+		"noon":      "烈日灼燒、岩石滾燙、乾燥沉悶、空氣顫抖、蒼涼無垠",
+		"afternoon": "落日餘暉、長影縱橫、碎石閃爍、夜風吹拂、橘紅遍染",
+		"night":     "幽深靜謐、星辰閃爍、石地微涼、黑影錯落、涼風潛行"
+	}},
+	{"14": {"name": "滾石坡地",
+		"midnight":  "峭壁幽深、碎石冷冽、夜風吹襲、星光微閃、陰影重疊",
+		"morning":   "晨霧飄渺、石面微濕、光影交錯、冷風輕撫、寂靜無聲",
+		"noon":      "陽光毒辣、岩石滾燙、細塵飛揚、空氣炙熱、坡道險峻",
+		"afternoon": "暮色蒼茫、餘光橙紅、長影拉伸、微風浮動、石坡嶙峋",
+		"night":     "夜色沉沉、碎石冰涼、冷風吹拂、星輝斑駁、黑影層層"
+	}},
+	{"15": {"name": "小型岩丘",
+		"midnight":  "幽靜孤立、山影模糊、岩面微涼、夜風吹拂、星光點綴",
+		"morning":   "晨霧輕繞、岩壁泛白、露水閃爍、陽光初現、微風徐來",
+		"noon":      "陽光直射、岩石滾燙、光影分明、地面炙熱、空氣乾燥",
+		"afternoon": "霞光映照、長影斜掛、微風吹拂、岩面泛橘、夜鳥低鳴",
+		"night":     "靜謐昏暗、岩石冷冽、月色微茫、風聲低語、陰影錯落"
+	}},
+	{"16": {"name": "雜木林丘陵",
+		"midnight":  "林影婆娑、樹葉顫動、蟲鳴迴盪、星光透隙、夜風輕拂",
+		"morning":   "霧氣縹緲、露珠閃爍、晨光微透、鳥鳴清脆、樹梢輕搖",
+		"noon":      "陽光燦爛、葉片蒼翠、林蔭涼爽、微風穿梭、生機盎然",
+		"afternoon": "霞光映葉、斜陽灑落、樹影交錯、晚風溫柔、氣息寧靜",
+		"night":     "夜色籠罩、葉影搖曳、樹梢低語、蟲聲四起、微風吹過"
+	}},
+	{"17": {"name": "高草原地帶",
+		"midnight":  "草浪寂靜、涼風習習、星河閃爍、影影綽綽、夜色遼遠",
+		"morning":   "薄霧瀰漫、晨露閃閃、金色草尖、微風吹拂、陽光初升",
+		"noon":      "草海翻滾、陽光熱烈、空氣清新、蟲鳴此起彼落、遼闊無垠",
+		"afternoon": "草原染霞、長影隨風、晚風吹拂、橙光溫暖、寂靜祥和",
+		"night":     "黑夜靜謐、微風吹拂、星光閃耀、草叢沙沙作響、氣息涼爽"
+	}},
+	{"18": {"name": "小規模岩脊",
+		"midnight":  "山勢隱約、冷風凜冽、岩影交錯、夜色陰沉、星輝點綴",
+		"morning":   "晨霧輕舞、岩縫濕潤、陽光探照、露珠晶瑩、微風輕拂",
+		"noon":      "陽光直射、岩壁滾燙、裂隙幽深、影子銳利、空氣乾燥",
+		"afternoon": "晚霞橙紅、岩影拉長、微風吹拂、餘光閃耀、靜謐遼遠",
+		"night":     "夜色昏暗、岩壁冰涼、風聲呼嘯、星光斑駁、孤寂深遠"
+	}},
+	{"19": {"name": "低山前緣",
+		"midnight":  "黑影錯落、夜風吹襲、蟲鳴清越、群山沉寂、星光冷冽",
+		"morning":   "薄霧縈繞、山巒朦朧、朝霞映照、鳥鳴響亮、微風吹拂",
+		"noon":      "陽光普照、山色蒼翠、空氣清澈、微風徐徐、氣息涼爽",
+		"afternoon": "晚霞輕灑、雲影浮動、風聲悠長、山影斜掛、色彩溫潤",
+		"night":     "夜色籠罩、群峰寂靜、山風低吟、星辰燦爛、微光點點"
+	}},
+	{"20": {"name": "平緩台地",
+		"midnight":  "靜謐遼闊、星光稀疏、夜風吹拂、地面冰涼、黑影沉靜",
+		"morning":   "晨霧輕繞、微光乍現、露珠閃爍、空氣清新、微風輕拂",
+		"noon":      "陽光直射、乾燥廣闊、地表滾燙、影子銳利、風聲微響",
+		"afternoon": "橙霞渲染、長影交錯、晚風吹拂、空氣溫暖、雲層變幻",
+		"night":     "夜色深沉、風聲悠遠、地面微涼、寂靜無聲、星光點點"
+	}},
+	{"21": {"name": "干燥紅土高原",
+		"midnight":  "紅土暗沉、夜風凜冽、地表微涼、影影綽綽、沙礫輕響",
+		"morning":   "晨光微灑、紅土泛光、空氣微涼、塵霧輕揚、遠景朦朧",
+		"noon":      "烈日灼熱、紅土燙手、空氣乾燥、熱浪扭曲、寸草不生",
+		"afternoon": "餘暉映紅、長影交錯、溫暖乾燥、風聲低鳴、塵埃飛揚",
+		"night":     "暗紅微光、夜風低吟、冷空氣瀰漫、乾裂大地、沉靜無聲"
+	}},
+	{"22": {"name": "沿海峭壁",
+		"midnight":  "海風呼嘯、浪聲轟鳴、峭壁陰暗、星光閃爍、潮氣瀰漫",
+		"morning":   "晨霧瀰漫、浪花輕拂、岩壁微濕、日光初透、清風吹拂",
+		"noon":      "陽光閃耀、岩壁滾燙、波光粼粼、海風狂烈、氣息鹹濕",
+		"afternoon": "霞光映海、岩壁泛紅、潮聲低鳴、風中帶暖、浪花翻滾",
+		"night":     "暗影交錯、浪濤拍岸、岩壁冰涼、月色朦朧、空氣微咸"
+	}},
+	{"23": {"name": "深谷盆地",
+		"midnight":  "谷底幽靜、冷霧瀰漫、夜風吹襲、星光微弱、回聲隱約",
+		"morning":   "霧氣氤氳、晨露閃爍、微風輕拂、陽光斜射、樹影搖曳",
+		"noon":      "日光炙熱、空氣悶熱、岩壁炙燙、回音清晰、微風稀薄",
+		"afternoon": "長影橫生、晚霞輕灑、微風輕柔、溫暖寧靜、氣息涼爽",
+		"night":     "黑暗籠罩、寒氣沉積、月色淺淡、蟲鳴回響、幽深神秘"
+	}},
+	{"24": {"name": "連綿小丘",
+		"midnight":  "連綿起伏、夜霧輕繞、微風低語、黑影層層、星光閃爍",
+		"morning":   "晨曦微亮、丘陵泛光、露珠閃爍、風兒輕拂、鳥鳴回蕩",
+		"noon":      "陽光普照、草地搖曳、丘影分明、暖風吹拂、綠意盎然",
+		"afternoon": "夕陽染紅、長影斜掛、風聲悠揚、晚霞輕柔、丘色溫潤",
+		"night":     "夜色沉靜、丘陵寂寥、冷風輕拂、蟲聲呢喃、月光朦朧"
+	}},
+	{"25": {"name": "低矮山脊",
+		"midnight":  "黑影嶙峋、夜風吹襲、石面冰涼、星光斑駁、沉靜孤寂",
+		"morning":   "晨光微灑、霧氣朦朧、山影柔和、風中透涼、鳥鳴回蕩",
+		"noon":      "烈日直射、岩石滾燙、長影短促、空氣炙熱、山脊清晰",
+		"afternoon": "霞光映紅、風聲悠長、山影綿延、石面微暖、天空靜謐",
+		"night":     "夜色籠罩、岩壁深沉、涼風颯颯、蟲鳴回響、靜謐悠遠"
+	}},
+	{"26": {"name": "風蝕岩層地",
+		"midnight":  "峭壁幽暗、夜風低吟、影子扭曲、石面冰冷、靜謐蒼涼",
+		"morning":   "晨霧輕繞、陽光淡染、岩縫藏露、微風吹拂、色澤溫潤",
+		"noon":      "岩層乾燥、烈日灼熱、紋理分明、熱浪翻騰、風聲呼嘯",
+		"afternoon": "橙霞渲染、岩壁泛光、影子悠長、微風輕拂、餘暉映照",
+		"night":     "幽深沉靜、冷風拂面、石壁黯淡、夜色寂寥、空氣清涼"
+	}},
+	{"27": {"name": "起伏沙丘帶",
+		"midnight":  "銀沙閃爍、夜風吹拂、沙紋綿延、沉靜遼闊、星光點點",
+		"morning":   "晨曦初現、沙脊柔和、微風吹痕、空氣涼爽、金光浮動",
+		"noon":      "熱浪翻騰、沙丘滾燙、足跡難留、日光耀眼、乾燥無邊",
+		"afternoon": "霞色溫暖、沙丘染金、長影斜掛、晚風輕柔、景色柔美",
+		"night":     "黑沙低吟、夜風陣陣、月光淡照、寂靜深遠、微涼舒適"
+	}},
+	{"28": {"name": "灌木林高原",
+		"midnight":  "林影搖曳、夜風吹襲、草叢低語、星光閃爍、空氣微涼",
+		"morning":   "露珠閃爍、晨霧瀰漫、陽光斜透、枝葉輕搖、鳥鳴清脆",
+		"noon":      "日光明亮、葉片蒼翠、空氣乾熱、灌木婆娑、微風涼爽",
+		"afternoon": "霞光映樹、影子搖晃、晚風輕拂、樹影綿延、氣息寧靜",
+		"night":     "樹影沉默、夜色朦朧、風吹葉響、氣息涼爽、蟲聲迴盪"
+	}},
+	{"29": {"name": "狹長山谷",
+		"midnight":  "谷底幽深、夜霧瀰漫、冷風吹襲、陰影層疊、空氣微涼",
+		"morning":   "晨霧輕繞、溪流潺潺、陽光初透、空氣清新、花草沾露",
+		"noon":      "烈日高照、岩壁滾燙、回聲悠長、空氣悶熱、樹影搖曳",
+		"afternoon": "晚霞映谷、微風輕拂、影子變長、氣息清涼、色澤柔和",
+		"night":     "靜謐深沉、月光微瀉、涼風吹拂、溪流低吟、夜色朦朧"
+	}},
+	{"30": {"name": "多峽谷丘陵",
+		"midnight":  "幽暗蜿蜒、夜風嘯鳴、陰影錯落、石壁冰冷、深邃寂靜",
+		"morning":   "晨霧彌漫、山影柔和、陽光斜照、空氣微涼、溪流呢喃",
+		"noon":      "烈日曝曬、岩層滾燙、峽谷回音、風沙翻騰、蒼穹耀眼",
+		"afternoon": "晚霞映紅、山谷深邃、微風輕拂、陰影拉長、色澤溫潤",
+		"night":     "靜謐幽深、月光微瀉、峽谷沉默、寒氣升騰、星河閃爍"
+	}},
+	{"31": {"name": "低緩山坡",
+		"midnight":  "夜色籠罩、草叢搖曳、微風吹襲、蟲鳴迴盪、寂靜和緩",
+		"morning":   "晨光拂過、霧氣氤氳、草葉帶露、微風輕撫、色調柔和",
+		"noon":      "陽光普照、草坡金黃、暖風吹拂、空氣微熱、雲影浮動",
+		"afternoon": "斜陽映坡、晚風吹拂、樹影搖曳、溫暖寧靜、遠山朦朧",
+		"night":     "夜風清涼、星光點點、坡地靜謐、草香瀰漫、氣息沉穩"
+	}},
+	{"32": {"name": "疏林高地",
+		"midnight":  "樹影婆娑、微風吹拂、林間靜謐、夜色深沉、蟲鳴微響",
+		"morning":   "晨光穿林、露珠閃爍、霧氣環繞、空氣涼爽、鳥語啁啾",
+		"noon":      "陽光耀眼、樹影交錯、微風涼爽、空氣乾燥、光線斑駁",
+		"afternoon": "霞光透樹、枝葉金紅、晚風溫柔、影子悠長、寧靜祥和",
+		"night":     "夜色籠罩、樹梢低語、星光隱現、空氣清冷、林間寂靜"
+	}},
+	{"33": {"name": "小型石林地貌",
+		"midnight":  "岩影錯落、冷風穿梭、夜色神秘、地面冰涼、靜謐深邃",
+		"morning":   "晨霧瀰漫、石柱微濕、陽光輕灑、空氣清新、岩縫藏露",
+		"noon":      "陽光刺眼、岩石滾燙、陰影分明、石隙生風、熱氣翻騰",
+		"afternoon": "餘暉映石、影子拉長、微風輕繞、光影交錯、景色獨特",
+		"night":     "夜霧浮動、石林幽靜、寒氣瀰漫、星光閃爍、空氣微涼"
+	}},
+	{"34": {"name": "陡峭峽谷區",
+		"midnight":  "深邃幽暗、寒風凜冽、岩壁冰冷、峽谷靜默、夜色陰森",
+		"morning":   "霧氣瀰漫、光線柔和、晨風清涼、岩壁泛光、鳥鳴回響",
+		"noon":      "烈日照耀、石壁滾燙、回音清晰、峽谷深幽、風聲低鳴",
+		"afternoon": "夕陽染紅、峽壁泛光、陰影加深、空氣涼爽、景色壯麗",
+		"night":     "星光微弱、峽谷沉寂、寒風呼嘯、夜色蒼茫、氣息冷冽"
+	}},
+	{"35": {"name": "高地林區",
+		"midnight":  "林海沉寂、霧氣籠罩、微風吹拂、夜鳥低鳴、樹影婆娑",
+		"morning":   "晨光透葉、露珠閃耀、霧氣輕繞、枝頭啼鳴、空氣清涼",
+		"noon":      "陽光直射、綠蔭交錯、微風和煦、林間斑駁、蟬鳴陣陣",
+		"afternoon": "霞光映林、葉片金黃、林間微風、影子拉長、氣息寧靜",
+		"night":     "樹影晃動、星光隱現、風聲低吟、林間靜謐、夜色朦朧"
+	}},
+	{"36": {"name": "石灰岩台地",
+		"midnight":  "石影森然、岩縫陰涼、寒風穿梭、夜色幽深、地勢崎嶇",
+		"morning":   "晨霧縈繞、岩層泛光、露水閃爍、空氣清冷、初陽微暖",
+		"noon":      "岩面滾燙、陽光直曬、熱氣翻騰、影子銳利、風聲低鳴",
+		"afternoon": "餘暉映石、色澤溫潤、微風輕拂、石紋明顯、景色蒼茫",
+		"night":     "冷風微拂、岩層靜默、夜色蒼茫、星光閃爍、寂靜無聲"
+	}},
+	{"37": {"name": "侵蝕型山坡",
+		"midnight":  "峭壁陰森、沙礫鬆散、冷風呼嘯、夜色幽深、影子詭異",
+		"morning":   "晨光斜照、岩壁泛光、露水凝結、空氣微涼、坡地柔和",
+		"noon":      "土石滾燙、陽光強烈、峽谷回音、坡面乾裂、熱氣蒸騰",
+		"afternoon": "夕陽映壁、風蝕痕跡、色彩層次、微風輕撫、影子悠長",
+		"night":     "夜風冷冽、砂石滑落、黑影幢幢、地形險峻、幽暗寂靜"
+	}},
+	{"38": {"name": "層疊岩丘",
+		"midnight":  "岩層錯落、冷風穿隙、夜色迷濛、靜謐深沉、暗影交錯",
+		"morning":   "晨光透亮、石紋清晰、霧氣輕繞、風聲細微、空氣清新",
+		"noon":      "烈日灼照、岩石滾燙、陰影分明、層層岩片、熱浪翻騰",
+		"afternoon": "餘暉映照、石層泛紅、微風涼爽、影子漸長、景色壯麗",
+		"night":     "岩影深邃、風聲呼嘯、空氣寒冷、星光閃爍、靜謐無聲"
+	}},
+	{"39": {"name": "陡峭沙丘山",
+		"midnight":  "沙紋浮動、風聲低鳴、夜色蒼茫、沙丘孤寂、寒氣瀰漫",
+		"morning":   "晨風拂沙、日出耀金、沙粒翻滾、足跡消失、空氣微涼",
+		"noon":      "烈日曝曬、沙丘滾燙、熱浪升騰、影子銳利、空氣乾燥",
+		"afternoon": "斜陽金紅、沙面柔和、風紋細膩、空氣涼爽、景色迷人",
+		"night":     "夜風吹襲、沙塵翻滾、溫度驟降、星空遼闊、沙丘靜默"
+	}},
+	{"40": {"name": "低山斜坡",
+		"midnight":  "夜霧瀰漫、坡地陰影、風聲微鳴、樹影幽暗、寒氣沉沉",
+		"morning":   "晨曦映坡、露珠閃耀、林間鳥鳴、空氣清涼、微風輕拂",
+		"noon":      "陽光普照、草坡金黃、熱風輕拂、影子縮短、雲影浮動",
+		"afternoon": "夕陽餘暉、微風吹拂、山影柔和、坡地金紅、景色靜謐",
+		"night":     "夜色寂靜、微風輕拂、星空遼闊、山坡沉眠、涼意升起"
+	}},
+	{"41": {"name": "深裂縫岩層",
+		"midnight":  "裂隙漆黑、冷風吹拂、岩壁陰森、寂靜幽深、夜色沉沉",
+		"morning":   "晨光映隙、岩壁泛光、霧氣輕繞、裂縫隱現、空氣清冷",
+		"noon":      "陽光灼熱、岩面滾燙、裂縫深邃、影子鮮明、風聲低鳴",
+		"afternoon": "夕陽染紅、岩壁昏黃、裂隙幽深、微風拂過、影子拉長",
+		"night":     "夜色籠罩、岩壁冷冽、裂縫黑暗、氣息深沉、寂靜無聲"
+	}},
+	{"42": {"name":"險峻岩丘",
+		"midnight":  "山影嶙峋、岩壁冰冷、夜風凜冽、深邃幽暗、寂靜無聲",
+		"morning":   "晨曦斜照、岩石泛光、露珠閃爍、微風輕拂、空氣清新",
+		"noon":      "陽光炙烈、岩面滾燙、陰影鋒利、熱氣升騰、風聲呼嘯",
+		"afternoon": "夕陽映岩、色澤金紅、岩隙朦朧、微風徐徐、影子拉長",
+		"night":     "夜色沉沉、冷風穿隙、石紋隱現、星光閃爍、岩丘靜默"
+	}},
+	{"43": {"name":"乾燥峽谷",
+		"midnight":  "峽谷幽深、岩壁冰冷、夜風穿梭、砂礫微鳴、月光淺照",
+		"morning":   "晨霧繚繞、陽光斜照、岩石泛暖、空氣微涼、沉靜無聲",
+		"noon":      "陽光灼熱、岩壁滾燙、熱浪翻湧、沙塵飛揚、回音轟鳴",
+		"afternoon": "斜陽映峽、岩色轉金、陰影加深、微風吹拂、景色蒼茫",
+		"night":     "夜風吹襲、峽壁漆黑、空氣乾冷、星辰閃耀、寂寥深邃"
+	}},
+	{"44": {"name":"崩塌山坡",
+		"midnight":  "斷岩危立、碎石鬆動、夜風低鳴、坡影幽暗、寂靜冰冷",
+		"morning":   "晨光映坡、塵霧升起、微風拂動、露水凝結、氣息沉穩",
+		"noon":      "日照強烈、岩層滾燙、土石龜裂、熱氣翻騰、風聲呼嘯",
+		"afternoon": "夕陽殘照、坡影拉長、碎石閃爍、空氣微涼、風拂塵揚",
+		"night":     "黑影幢幢、冷風吹拂、岩層靜默、沙礫滑落、氣息沉沉"
+	}},
+	{"45": {"name":"高地岩層",
+		"midnight":  "岩壁冷冽、夜色深沉、寒風侵襲、岩紋隱現、靜謐無聲",
+		"morning":   "晨光透射、岩層泛紅、微霧輕繞、空氣微涼、風聲細微",
+		"noon":      "烈日灼岩、陰影明晰、岩石滾燙、氣息乾燥、風沙低鳴",
+		"afternoon": "餘暉映照、岩面溫潤、光影錯落、微風拂過、寂靜祥和",
+		"night":     "夜風吹拂、冷氣瀰漫、岩紋幽深、星光閃爍、氣息寂寥"
+	}},
+	{"46": {"name":"半荒漠丘陵",
+		"midnight":  "丘陵靜默、沙塵浮動、夜風低鳴、地表微涼、星光黯淡",
+		"morning":   "晨風輕拂、陽光微暖、草叢泛光、丘影柔和、氣息清新",
+		"noon":      "日照熾熱、沙丘滾燙、乾風呼嘯、影子鮮明、熱浪蒸騰",
+		"afternoon": "夕陽斜映、丘陵染金、涼風微拂、色彩溫潤、地勢柔和",
+		"night":     "夜色瀰漫、風沙輕揚、地表冰冷、寂靜深沉、星空遼闊"
+	}},
+	{"47": {"name":"連綿山脊",
+		"midnight":  "山勢起伏、暗影層疊、夜風吹襲、氣息幽冷、雲霧飄渺",
+		"morning":   "晨曦映脊、山線清晰、霧氣纏繞、風聲細語、氣息清新",
+		"noon":      "陽光直射、山峰滾燙、陰影交錯、熱氣升騰、空氣乾燥",
+		"afternoon": "金光潤染、山影拉長、涼風輕撫、氣息沉穩、景色壯闊",
+		"night":     "夜色沉靜、群山寂寥、微風拂過、空氣冷冽、星光閃耀"
+	}},
+	{"48": {"name":"陡坡森林",
+		"midnight":  "林影交錯、夜風吹拂、樹葉低鳴、坡地寂靜、月光隱約",
+		"morning":   "晨光透林、霧氣輕盈、露珠閃爍、鳥鳴清脆、空氣清新",
+		"noon":      "陽光斑駁、綠意盎然、涼風穿行、葉影婆娑、蟬鳴陣陣",
+		"afternoon": "霞光映樹、坡地微涼、金葉飄落、光影柔和、氣息靜謐",
+		"night":     "森林沉寂、晚風低鳴、星光透隙、空氣涼爽、影子朦朧"
+	}},
+	{"49": {"name":"高原邊緣",
+		"midnight":  "邊界幽深、山風低鳴、寒氣瀰漫、影子交錯、靜謐廣闊",
+		"morning":   "晨霧輕繞、遠景浮現、岩層泛光、微風涼爽、氣息清新",
+		"noon":      "日照強烈、岩壁滾燙、空氣乾燥、地勢險峻、風聲呼嘯",
+		"afternoon": "夕照渲染、邊緣染金、微風徐徐、陰影綿長、色彩柔和",
+		"night":     "夜色籠罩、星光閃爍、冷風吹拂、岩層沉默、景色幽靜"
+	}},
+	{"50": {"name":"矮山主峰",
+		"midnight":  "峰影巍峨、黑暗靜謐、山風陣陣、夜空遼闊、月光微透",
+		"morning":   "朝陽初現、山頭微亮、霧氣縈繞、微風輕拂、鳥鳴清脆",
+		"noon":      "陽光直射、岩壁滾燙、空氣稀薄、影子明暗、風聲穿梭",
+		"afternoon": "霞光映照、山頂溫潤、陰影拉長、微風吹拂、色澤柔和",
+		"night":     "夜幕低垂、峰頂寂靜、風聲回響、星辰閃耀、氣息幽深"
+	}},
+	{"51": {"name":"石英岩山坡",
+		"midnight":  "山坡冷峻、岩面泛白、夜風吹襲、光影朦朧、寂靜深沉",
+		"morning":   "晨曦映射、石面微亮、薄霧浮動、空氣微涼、氣息清新",
+		"noon":      "烈日曝曬、岩層發燙、光芒刺眼、熱氣翻湧、沙塵飛揚",
+		"afternoon": "餘暉灑落、岩面閃耀、陰影錯落、氣息溫潤、微風吹拂",
+		"night":     "夜色沉靜、岩壁泛寒、風聲低鳴、冷光微閃、星辰點點"
+	}},
+	{"52": {"name":"玄武岩丘陵",
+		"midnight":  "黑色丘陵、岩壁冷硬、夜風呼嘯、月光斑駁、靜謐深沉",
+		"morning":   "晨光微灑、石面泛光、露珠閃爍、涼風輕拂、氣息清爽",
+		"noon":      "陽光直射、玄武岩燙手、熱氣上升、丘陵起伏、陰影深邃",
+		"afternoon": "夕陽渲染、岩石轉暖、風輕拂面、丘陵柔和、景色壯闊",
+		"night":     "夜幕籠罩、丘陵沉靜、寒氣瀰漫、夜風低鳴、星光點綴"
+	}},
+	{"53": {"name":"火山灰覆蓋地",
+		"midnight":  "黑土靜默、灰塵浮動、夜風吹拂、荒涼冷寂、星光閃爍",
+		"morning":   "陽光初映、塵霧微揚、地表泛灰、風聲輕柔、空氣微涼",
+		"noon":      "烈日當空、火山灰滾燙、乾燥刺鼻、熱浪翻騰、景色荒蕪",
+		"afternoon": "餘暉映地、塵埃染橘、微風拂過、空氣沉靜、影子柔長",
+		"night":     "夜色籠罩、風沙低鳴、地表冰冷、氣息幽深、銀光閃耀"
+	}},
+	{"54": {"name":"碎石坡高地",
+		"midnight":  "碎石寂靜、坡影交錯、冷風穿行、地面微寒、星光微透",
+		"morning":   "晨曦微光、碎石泛亮、空氣微涼、露水閃爍、鳥鳴回響",
+		"noon":      "陽光炙熱、碎石滾燙、塵埃飛揚、陰影短促、熱浪騰升",
+		"afternoon": "夕陽餘暉、石影拉長、微風吹拂、碎石泛光、氣息寧靜",
+		"night":     "黑夜沉寂、碎石冰冷、夜風吹拂、星光閃耀、氣息深遠"
+	}},
+	{"55": {"name":"陡峭岩壁",
+		"midnight":  "峭壁漆黑、寒風吹襲、深淵幽暗、回音低鳴、氣息冰冷",
+		"morning":   "晨光灑落、石壁泛光、風聲輕拂、霧氣微繞、影子斜長",
+		"noon":      "烈日直射、岩層滾燙、陽光刺眼、陰影峭削、熱風席捲",
+		"afternoon": "夕陽映壁、色澤金黃、風聲低語、陰影柔和、景色雄偉",
+		"night":     "夜幕深沉、峭壁冰冷、風聲回響、月光微瀉、氣息寂靜"
+	}},
+	{"56": {"name":"高原深谷",
+		"midnight":  "幽暗深邃、風聲低吟、岩壁陰森、寒氣瀰漫、星光隱現",
+		"morning":   "晨霧繚繞、岩壁泛光、微風吹拂、峽底朦朧、陽光初透",
+		"noon":      "峽谷灼熱、岩層滾燙、陰影短促、熱風盤旋、沙礫飛揚",
+		"afternoon": "夕陽渲染、峽壁染紅、風聲回盪、陰影柔和、景色壯闊",
+		"night":     "夜幕低垂、谷底沉靜、夜風吹襲、石影森然、氣息冷冽"
+	}},
+	{"57": {"name":"半荒漠高山丘",
+		"midnight":  "乾冷寂靜、丘陵陰暗、沙塵微揚、夜風蕭瑟、星光閃爍",
+		"morning":   "曙光微灑、空氣清涼、砂石泛光、微風吹拂、地勢遼闊",
+		"noon":      "烈日曝曬、丘陵滾燙、熱浪翻湧、植被枯黃、影子稀薄",
+		"afternoon": "晚霞炫彩、丘陵映紅、空氣涼爽、沙塵靜落、氣息和緩",
+		"night":     "夜色幽深、丘陵靜默、冷風拂面、砂礫冰冷、遠景模糊"
+	}},
+	{"58": {"name":"雪線低山",
+		"midnight":  "銀光閃爍、山坡冰冷、寒風吹嘯、雪層微閃、夜色靜謐",
+		"morning":   "晨光淡金、雪層微亮、山嵐浮動、空氣透涼、冰晶閃爍",
+		"noon":      "陽光照耀、雪面反光、寒風凌厲、山坡刺眼、陰影鮮明",
+		"afternoon": "霞光映雪、山坡溫潤、微風徐徐、冰層泛紅、影子綿長",
+		"night":     "夜幕籠罩、雪光幽冷、風聲回盪、山勢靜謐、星辰璀璨"
+	}},
+	{"59": {"name":"冰河遺跡丘陵",
+		"midnight":  "岩丘孤寂、冰痕幽涼、風聲飄忽、寒氣沉重、月光冷冽",
+		"morning":   "晨曦初露、冰痕泛光、山谷薄霧、丘陵透亮、微風吹拂",
+		"noon":      "烈日高掛、岩面滾燙、融水閃爍、石塊裸露、陰影短促",
+		"afternoon": "暮光映照、冰痕柔亮、丘陵泛紅、空氣靜謐、餘溫尚存",
+		"night":     "夜色朦朧、冷風低鳴、冰河遺跡沉默、寒意透骨、星光稀疏"
+	}},
+	{"60": {"name":"中等山區草坡",
+		"midnight":  "坡地靜謐、夜霧瀰漫、風聲輕柔、草叢幽暗、星辰朦朧",
+		"morning":   "晨露閃爍、草葉翠綠、微風清新、山嵐縹緲、陽光微透",
+		"noon":      "陽光炙熱、草坡滾燙、熱氣蒸騰、影子稀少、風聲寂靜",
+		"afternoon": "金光遍野、坡地染紅、微風吹拂、草浪搖曳、景色悠然",
+		"night":     "黑夜靜默、冷風徐徐、草葉低語、坡影錯落、月色清冷"
+	}},
+	{"61": {"name":"深切峽谷邊緣",
+		"midnight":  "峽谷幽邃、夜風吹襲、斷崖陰森、黑暗深不可測、氣息冰冷",
+		"morning":   "晨光浮現、崖壁泛光、霧氣朦朧、風聲輕柔、深谷寂靜",
+		"noon":      "峽谷灼熱、岩壁滾燙、烈日直射、陰影縮短、熱風翻湧",
+		"afternoon": "斷崖金輝、晚風吹拂、深谷回音、陰影柔長、氣息寧靜",
+		"night":     "夜幕低垂、峽壁冰冷、風聲迴盪、星光搖曳、幽暗神秘"
+	}},
+	{"62": {"name":"石灰岩溶洞地區",
+		"midnight":  "洞穴幽暗、鐘乳石閃爍、滴水低鳴、陰風徐徐、石壁冰冷",
+		"morning":   "晨光初透、洞口微亮、潮氣氤氳、鐘乳石泛光、空氣清涼",
+		"noon":      "石壁滾燙、洞內陰涼、光影交錯、滴水回響、潮氣濃重",
+		"afternoon": "餘暉映洞、石壁泛紅、陰影拉長、氣息靜謐、鐘乳石溫潤",
+		"night":     "黑暗寂靜、冷風穿梭、石壁泛白、洞內深邃、幽光點點"
+	}},
+	{"63": {"name":"山間窄谷",
+		"midnight":  "陰暗幽深、寒氣瀰漫、微風低鳴、谷底靜謐、黑影錯落",
+		"morning":   "晨霧籠罩、溪流清涼、微光滲透、空氣濕潤、野草露珠閃爍",
+		"noon":      "陽光炙熱、岩壁滾燙、影子狹長、空氣悶熱、蟲鳴此起彼落",
+		"afternoon": "霞光渲染、溪水金輝、風聲輕柔、陰影綿長、餘暉靜美",
+		"night":     "夜色深沉、冷風吹襲、幽谷朦朧、溪水低吟、星光微弱"
+	}},
+	{"64": {"name":"多岩山坡",
+		"midnight":  "碎石冰冷、山坡靜默、風聲低語、黑影交錯、夜色孤寂",
+		"morning":   "晨曦微透、岩石泛光、涼風輕拂、泥土潮濕、山間鳥鳴清脆",
+		"noon":      "烈日燦爛、石面滾燙、熱氣翻湧、山坡乾燥、影子斑駁",
+		"afternoon": "落日餘暉、石坡微暖、風沙靜落、陰影悠長、景色寧靜",
+		"night":     "夜幕低垂、岩壁冷冽、星光閃爍、夜風穿行、山間靜謐"
+	}},
+	{"65": {"name":"高原隘口",
+		"midnight":  "風聲呼嘯、隘口深邃、黑暗幽涼、寒氣逼人、星辰高掛",
+		"morning":   "晨霧輕繞、微風吹拂、山谷泛光、空氣清新、草葉帶露",
+		"noon":      "陽光直射、隘口炙熱、氣流翻湧、影子短促、視野遼闊",
+		"afternoon": "金色霞光、風聲徐徐、遠山剪影、山間微冷、景色蒼茫",
+		"night":     "夜色朦朧、空氣寒涼、夜風吹襲、星光冷冽、寂靜無聲"
+	}},
+	{"66": {"name":"低山峰頂",
+		"midnight":  "峰頂冷冽、夜色寂靜、寒風吹拂、群山隱約、星空浩瀚",
+		"morning":   "晨光輕灑、山頭透亮、雲霧繚繞、空氣清涼、遠景朦朧",
+		"noon":      "日光耀眼、岩石滾燙、熱風翻湧、草坡乾燥、影子縮短",
+		"afternoon": "斜陽餘暉、山頭溫暖、微風習習、遠山含煙、景色柔和",
+		"night":     "山頭靜默、夜風凌冽、燈火點點、夜色朦朧、繁星閃爍"
+	}},
+	{"67": {"name":"層層疊疊山脈",
+		"midnight":  "山巒黝黑、霧氣瀰漫、夜風吹襲、群峰靜立、星光微微",
+		"morning":   "山嵐輕繞、陽光破霧、山色蒼翠、鳥鳴空靈、空氣清新",
+		"noon":      "烈日照耀、山體滾燙、影子短促、草木茂盛、雲影變幻",
+		"afternoon": "層峰染金、霞光瀲灩、風聲悠揚、景色壯闊、氣息和緩",
+		"night":     "夜色沉靜、山影朦朧、冷風吹襲、星空深邃、萬籟俱寂"
+	}},
+	{"68": {"name":"陡峭斷崖",
+		"midnight":  "懸崖陰森、冷風吹拂、深淵幽暗、石壁冰冷、月光微透",
+		"morning":   "晨光映照、崖頂泛金、霧氣升騰、風聲輕柔、視野清朗",
+		"noon":      "陽光直射、岩壁滾燙、氣流翻騰、陰影銳利、熱風盤旋",
+		"afternoon": "斷崖映紅、風聲低吟、影子悠長、山色靜謐、雲霞交錯",
+		"night":     "夜色朦朧、冷風吹拂、懸崖深邃、岩壁黝黑、群峰靜默"
+	}},
+	{"69": {"name":"亞高山區",
+		"midnight":  "林間靜謐、夜風吹拂、星光閃爍、霧氣低伏、寒氣沁骨",
+		"morning":   "陽光初升、樹影斑駁、露水閃爍、空氣清冽、鳥鳴迴盪",
+		"noon":      "林間涼爽、陽光微灼、樹葉搖曳、空氣清透、風聲細微",
+		"afternoon": "晚霞滿天、山風輕拂、林間靜謐、溫度宜人、景色和諧",
+		"night":     "夜色深邃、森林靜默、冷風低語、樹影搖曳、月光皎潔"
+	}},
+	{"70": {"name":"高山草甸",
+		"midnight":  "靜謐無聲、寒氣瀰漫、草葉微顫、銀露閃爍、夜風吹拂",
+		"morning":   "晨霧輕繞、露珠點點、晨曦柔和、青草芳香、微風拂面",
+		"noon":      "陽光燦爛、草地蔥鬱、涼風吹拂、昆蟲嗡鳴、野花搖曳",
+		"afternoon": "金光灑落、草浪翻滾、微風和煦、雲彩斑斕、寧靜悠然",
+		"night":     "夜色朦朧、草尖染霜、微風吹襲、遠處狼嚎、星辰璀璨"
+	}},
+	{"71": {"name":"短林高地",
+		"midnight":  "林影搖曳、黑影錯落、蟲鳴時歇、夜風低吟、氣氛幽靜",
+		"morning":   "晨光灑落、霧氣升騰、樹葉閃亮、微風輕拂、鳥鳴啁啾",
+		"noon":      "陽光直射、林間涼爽、葉影斑駁、微風送暖、蟬聲悠揚",
+		"afternoon": "橙光透葉、樹影漫長、微風吹拂、光影溫柔、景色靜謐",
+		"night":     "黑影綿延、枝葉沙沙、夜風吹響、月光點點、林間寂靜"
+	}},
+	{"72": {"name":"岩層斜坡",
+		"midnight":  "冰冷沉寂、碎石鬆動、月光映照、陰影錯落、寒氣刺骨",
+		"morning":   "微光乍現、岩層泛黃、晨霧縹緲、涼意瀰漫、風聲低語",
+		"noon":      "烈日曝曬、石壁滾燙、空氣炙熱、影子短促、砂礫閃耀",
+		"afternoon": "霞光輝映、岩層泛紅、風聲徐徐、影子拉長、景色蒼茫",
+		"night":     "夜幕降臨、山風凜冽、石壁昏暗、冷氣透骨、靜謐無聲"
+	}},
+	{"73": {"name":"高山深谷",
+		"midnight":  "幽深漆黑、寒氣刺骨、風聲呼嘯、溪流低鳴、月色慘淡",
+		"morning":   "晨霧瀰漫、光影斑駁、溪水清涼、空氣濕潤、翠色盎然",
+		"noon":      "陽光炙熱、谷底陰涼、流水潺潺、鳥語呢喃、岩壁閃耀",
+		"afternoon": "晚霞染谷、風聲和緩、光影交錯、遠山朦朧、空氣寧靜",
+		"night":     "靜謐幽暗、山風涼颼、星光映水、低語回響、夜霧輕繞"
+	}},
+	{"74": {"name":"嚴峻懸崖",
+		"midnight":  "懸崖幽暗、寒風吹襲、峭壁陡峻、深淵難測、夜色神秘",
+		"morning":   "晨曦微光、岩壁泛金、風聲低鳴、遠景朦朧、空氣清涼",
+		"noon":      "陽光直射、石壁滾燙、熱風翻湧、陰影銳利、氣勢雄偉",
+		"afternoon": "夕陽映照、懸崖金紅、風聲回盪、影子悠長、景色壯闊",
+		"night":     "崖頂寂靜、寒氣瀰漫、風勢洶湧、夜色朦朧、峭壁幽森"
+	}},
+	{"75": {"name":"崩塌山壁",
+		"midnight":  "碎石冷冽、黑暗壓迫、寒風吹拂、山體沉寂、幽深無聲",
+		"morning":   "晨霧飄渺、岩屑潮濕、微光閃爍、空氣清新、冷風輕拂",
+		"noon":      "烈日曝曬、砂礫滾燙、岩壁乾裂、風沙飛舞、影子凌厲",
+		"afternoon": "斜陽映壁、岩石泛紅、風聲漸弱、影子悠長、山勢壯麗",
+		"night":     "夜色陰森、碎石冰冷、冷風吹襲、月光斜照、深邃靜謐"
+	}},
+	{"76": {"name":"高山碎石坡",
+		"midnight":  "碎石森冷、夜風吹襲、坡面崎嶇、黑影錯落、月光浮動",
+		"morning":   "晨曦微透、岩屑泛光、寒風輕拂、地勢陡峭、氣息清冽",
+		"noon":      "石坡滾燙、烈日直曬、砂礫鬆動、步履艱難、影子稀疏",
+		"afternoon": "金光閃爍、碎石餘溫、山風吹拂、影子拉長、景色蒼茫",
+		"night":     "夜幕沉寂、寒風滲骨、碎石微響、坡面冷硬、星空浩瀚"
+	}},
+	{"77": {"name":"高地火山岩區",
+		"midnight":  "黑暗荒涼、冷風穿梭、火山影綽、岩壁森冷、氣氛詭譎",
+		"morning":   "晨霧瀰漫、岩石泛紅、地熱微熾、空氣硫磺味、蒸氣縷縷",
+		"noon":      "岩層灼熱、熔岩斑駁、熱氣翻騰、砂礫滾燙、焦味瀰漫",
+		"afternoon": "餘暉映岩、紅光微熾、岩隙蒸氣、溫度漸降、風聲低吟",
+		"night":     "黑影錯落、熔岩黯紅、地熱輕湧、寂靜沉悶、夜風淒冷"
+	}},
+	{"78": {"name":"冰蝕山谷",
+		"midnight":  "冰雪皚皚、夜色幽寒、寒風咆哮、冰層反光、寂靜無聲",
+		"morning":   "晨曦微透、冰壁泛藍、冷霧浮動、雪層閃爍、冰氣凜冽",
+		"noon":      "陽光刺眼、冰河晶瑩、氣流凜冽、雪地反光、寒意依舊",
+		"afternoon": "夕陽染雪、冰層映霞、寒風吹拂、光影交錯、蒼涼寧靜",
+		"night":     "夜幕深沉、冰壁幽幽、風聲微颤、月色淡藍、霜氣凝結"
+	}},
+	{"79": {"name":"低冰原區",
+		"midnight":  "冰層靜謐、寒氣逼人、銀光浮動、遠方狼嚎、北風肆虐",
+		"morning":   "淡藍晨光、冰層透白、寒霧輕繞、微風拂雪、靜謐蒼茫",
+		"noon":      "陽光冷冽、冰原閃耀、天空純藍、雪地耀眼、風聲呼嘯",
+		"afternoon": "霞光映雪、遠景昏黃、冰層透紅、寒氣加深、靜寂無聲",
+		"night":     "星空浩瀚、冰野沉寂、北風凜冽、雪光幽微、夜色蒼茫"
+	}},
+	{"80": {"name":"高山峽谷",
+		"midnight":  "峽谷幽暗、寒風吹襲、岩壁隱沒、回音低鳴、氣氛神秘",
+		"morning":   "晨霧輕繞、陽光透縫、谷底寒冷、溪水潺潺、微風徐徐",
+		"noon":      "陽光直射、岩壁滾燙、峽谷高聳、空氣乾燥、風聲悠長",
+		"afternoon": "橙光映峽、岩層泛紅、陰影綿長、氣溫漸降、景色壯闊",
+		"night":     "夜幕低垂、風聲淒厲、峽壁黯淡、寒氣逼近、寂靜沉沉"
+	}},
+	{"81": {"name":"陡峭岩層山脊",
+		"midnight":  "山脊幽暗、峭壁陡峻、寒風呼嘯、陰影錯落、夜色深邃",
+		"morning":   "晨光初透、岩層泛橙、風聲淒冷、霧氣繚繞、岩縫幽深",
+		"noon":      "烈日曝曬、岩層滾燙、光影斑駁、空氣炙熱、風勢減弱",
+		"afternoon": "夕陽映壁、岩層泛紅、冷風輕撫、遠景迷蒙、山勢蒼茫",
+		"night":     "夜色籠罩、寒氣襲人、岩壁昏暗、微光閃爍、靜謐悠遠"
+	}},
+	{"82": {"name":"崎嶇高山丘陵",
+		"midnight":  "嶺巒起伏、夜色陰沉、寒風穿梭、碎石零落、黑影叢生",
+		"morning":   "晨霧籠罩、山巒隱現、薄霜點綴、光影斑駁、鳥鳴初啼",
+		"noon":      "日光耀眼、丘陵翻騰、熱氣升騰、草叢搖曳、蒼茫遼闊",
+		"afternoon": "金光灑落、山影綿延、微風送涼、霞色繽紛、氣氛靜謐",
+		"night":     "夜色深沉、山影交錯、風吹草動、狼嚎迴盪、沉寂無聲"
+	}},
+	{"83": {"name":"雪線分界區",
+		"midnight":  "雪線清晰、寒風凌厲、冰雪反光、星光點點、世界靜止",
+		"morning":   "雪光映晨、寒氣浮動、冰霜覆蓋、陽光微灑、山色蒼茫",
+		"noon":      "雪線分明、陽光耀眼、冰層晶瑩、山風清冷、氣息純淨",
+		"afternoon": "霞光輕灑、雪線泛橙、冰層折射、寒氣逐漸加深、蒼茫靜謐",
+		"night":     "星月映雪、寒風吹拂、冰晶閃爍、雪地幽靜、凜冬寂寥"
+	}},
+	{"84": {"name":"陡峭山壁",
+		"midnight":  "黑暗險峻、岩壁陰沉、風聲淒厲、寒氣逼人、寂靜壓迫",
+		"morning":   "晨曦微光、岩壁隱現、霧氣彌漫、冷風輕撫、景象突顯",
+		"noon":      "烈日曝曬、岩層滾燙、光影錯落、熱氣蒸騰、峭壁高聳",
+		"afternoon": "夕陽映照、岩壁染紅、陰影拉長、寒風輕拂、光影迷離",
+		"night":     "夜色如墨、岩壁隱匿、寒風呼嘯、寂靜無聲、陰影重重"
+	}},
+	{"85": {"name":"冰原邊界地區",
+		"midnight":  "銀光冷冽、冰原寂靜、寒風如刃、無聲無息、遠方雪山靜默",
+		"morning":   "晨曦洒下、冰層透亮、雪霧彌漫、寒氣凝結、清新微冷",
+		"noon":      "陽光刺眼、冰層晶瑩、氣流寒冽、風速急速、雪光反射",
+		"afternoon": "霞光映照、冰雪泛橙、寒氣襲來、陰影延長、世界靜謐",
+		"night":     "冰雪幽靜、月光灑落、寒風凜冽、雪層映月、蒼涼寂寞"
+	}},
+	{"86": {"name":"高原冰原交界",
+		"midnight":  "凜冽雪霧、冰原陰暗、寒風咆哮、夜色沉重、孤寂無聲",
+		"morning":   "晨光微透、冰雪交界、霜氣彌漫、光影綻放、寒意依舊",
+		"noon":      "強烈陽光、雪地炙熱、冰層閃耀、風勢增強、空氣稀薄",
+		"afternoon": "夕陽映冰、雪光微紅、冰原靜謐、陰影拉長、寒冷逼人",
+		"night":     "夜空繁星、冰雪幽深、寒氣刺骨、風雪交加、世界沉默"
+	}},
+	{"87": {"name":"近冰川區",
+		"midnight":  "冰冷無聲、雪野沉寂、北風呼嘯、冰層覆蓋、黑暗無邊",
+		"morning":   "晨曦微弱、冰雪反射、雪霧流動、氣息冰冷、寂靜幽遠",
+		"noon":      "陽光刺眼、冰川反光、風寒交加、雪層晶瑩、寒意依舊",
+		"afternoon": "夕陽染雪、冰原泛紅、寒風徹骨、陰影延長、靜謐景象",
+		"night":     "月光如洗、冰雪覆蓋、寒風凜冽、星光幽亮、無聲無息"
+	}},
+	{"88": {"name":"嚴寒高地",
+		"midnight":  "冰風刺骨、冷月高懸、雪原寂靜、黑影重重、寒冷無情",
+		"morning":   "晨霧霜凝、冰晶閃爍、清冷微風、日出微曦、天地遼闊",
+		"noon":      "烈日曝曬、氣溫嚴寒、冰雪反射、風暴來襲、空氣乾冷",
+		"afternoon": "雪光淡紅、寒氣逼人、陰影低垂、風霜滿地、寂靜無聲",
+		"night":     "寒夜漫長、冰雪覆蓋、寒風呼嘯、月光冷冽、世界蒼茫"
+	}},
+	{"89": {"name":"陡峭冰川谷地",
+		"midnight":  "月光映雪、冰川冷冽、風聲颯爽、峽谷深沉、寂靜蔓延",
+		"morning":   "冰層反光、晨光微弱、雪霧漂浮、寒風輕拂、景色隱約",
+		"noon":      "雪地刺眼、冰川透明、風力強勁、岩壁滾燙、溫差顯著",
+		"afternoon": "冰雪泛紅、夕陽映照、峽谷深處、陰影深邃、寒風加劇",
+		"night":     "冷風穿過、冰川深處、星光明亮、風雪肆虐、黑暗吞噬"
+	}},
+	{"90": {"name":"高山巖壁",
+		"midnight":  "黑暗隱匿、峭壁雄偉、寒風激烈、岩層斑駁、夜色沈寂",
+		"morning":   "曙光初現、岩層泛橙、霧氣彌漫、清風拂面、山勢壯闊",
+		"noon":      "陽光強烈、岩壁炙熱、空氣稀薄、風聲悅耳、山巒遼闊",
+		"afternoon": "夕陽映岩、陰影增長、風和日麗、光影交錯、氣溫降低",
+		"night":     "星空清晰、峭壁隱蔽、寒氣逼人、風冷夜深、寂靜無聲"
+	}},
+	{"91": {"name":"冰封山峰",
+		"midnight":  "月光冷冽、雪峰孤寂、寒風刺骨、冰雪凝結、黑暗無邊",
+		"morning":   "晨曦微光、冰峰閃爍、霜雪如畫、寒意依舊、光影流動",
+		"noon":      "陽光耀眼、冰峰高聳、雪光閃爍、冷風激烈、寒冷依然",
+		"afternoon": "夕陽照射、冰峰泛紅、陰影長延、寒風呼嘯、靜謐幽遠",
+		"night":     "夜幕低垂、冰峰隱匿、風雪交加、黑暗無聲、寒氣逼人"
+	}},
+	{"92": {"name":"陡峭懸崖峭壁",
+		"midnight":  "黑暗深沉、峭壁隱沒、寒風凜冽、冷月高懸、夜的寂靜",
+		"morning":   "曙光微透、峭壁映照、冰霜閃閃、霧氣繚繞、景象清新",
+		"noon":      "陽光炙熱、峭壁滾燙、影子錯落、風速激烈、光線刺眼",
+		"afternoon": "夕陽映照、峭壁泛紅、陰影拉長、風逐漸冷卻、景色迷人",
+		"night":     "星空深邃、峭壁隱藏、寒氣逼人、寂靜無聲、黑暗籠罩"
+	}},
+	{"93": {"name":"冰川崩塌帶",
+		"midnight":  "月光清冷、冰崩聲遠、雪原靜默、寒風咆哮、寂靜無聲",
+		"morning":   "曙光照耀、冰塊閃爍、霧氣彌漫、風寒徹骨、景象詭異",
+		"noon":      "烈日曬脆、冰層融化、崩塌聲響、雪光反射、寒冷依然",
+		"afternoon": "夕陽映照、雪原泛橙、陰影拉長、崩塌危險、景色衰退",
+		"night":     "夜幕低垂、冰川靜止、風雪交加、冷氣逼人、四下無聲"
+	}},
+	{"94": {"name":"永久雪原",
+		"midnight":  "月光如洗、雪原無垠、寒風凜冽、靜謐深沉、冰雪封存",
+		"morning":   "曙光初照、雪原閃爍、霜雪點點、冷氣依舊、空氣清新",
+		"noon":      "陽光刺眼、雪層反光、風寒如刃、冰雪明亮、氣溫微升",
+		"afternoon": "夕陽微曦、雪光泛紅、陰影延伸、寒氣逼人、靜謐沉寂",
+		"night":     "夜色幽深、雪原冰封、寒氣襲來、風雪交織、四周無聲"
+	}},
+	{"95": {"name":"冰原高地",
+		"midnight":  "冰霜凝結、雪原寂靜、冷風激烈、黑暗茫茫、寒氣滲透",
+		"morning":   "冰雪閃耀、霜氣輕揚、曙光微透、風鈴般清冷、雪白世界",
+		"noon":      "陽光炙熱、冰原反光、風速加劇、空氣稀薄、景色遼闊",
+		"afternoon": "夕陽微照、雪原泛紅、寒冷襲來、陰影拉長、靜謐遙遠",
+		"night":     "夜色深沉、冰原無聲、寒冷刺骨、月光冷冽、寂靜無聲"
+	}},
+	{"96": {"name":"冰川深谷",
+		"midnight":  "深谷幽暗、冰雪覆蓋、風聲嘶嘶、月光微弱、冷冽空氣",
+		"morning":   "霧氣蒸騰、冰川閃爍、晨光微曦、風呼嘯而過、冰冷依舊",
+		"noon":      "冰雪反光、寒風狂猛、陽光刺眼、景象壯麗、氣溫微升",
+		"afternoon": "夕陽映照、冰川反射、陰影濃烈、寒氣襲來、世界寂靜",
+		"night":     "星空燦爛、冰川隱現、寒風猛烈、月光冰冷、峽谷孤寂"
+	}},
+	{"97": {"name":"高海拔岩石山",
+		"midnight":  "岩層隱蔽、月光冷冽、風呼嘯而過、冷冽寒風、山脈隱匿",
+		"morning":   "曙光微透、岩層顯現、霜雪輕覆、冰風習習、景色宜人",
+		"noon":      "烈日曝曬、岩層炙熱、風力強勁、岩脈明顯、氣流稀薄",
+		"afternoon": "夕陽映照、岩壁染紅、陰影延長、冷風捲起、景色壯麗",
+		"night":     "夜幕低垂、岩壁隱匿、寒風凜冽、冷月明亮、四周寂靜"
+	}},
+	{"98": {"name":"高原極地山峰",
+		"midnight":  "黑暗無邊、寒風刺骨、雪山隱藏、冰雪凝結、寂靜壓迫",
+		"morning":   "晨光微弱、雪峰顯現、霧氣輕揚、冷風拂面、景色空曠",
+		"noon":      "陽光照射、冰雪閃光、冷風急速、寒冷依然、氣息稀薄",
+		"afternoon": "夕陽灑照、雪峰紅透、陰影延長、寒氣逼人、世界靜默",
+		"night":     "夜色深邃、冰雪覆蓋、月光冷冽、寒風呼嘯、夜靜無聲"
+	}},
+	{"99": {"name":"世界屋脊",
+		"midnight":  "寒冷深沉、山巒隱匿、冰雪蔓延、冷風呼嘯、寂靜孤立",
+		"morning":   "曙光初現、山脈顯露、冰層閃光、清冷微風、景象壯觀",
+		"noon":      "烈日曝曬、冰雪反射、風力強勁、景象遼闊、空氣稀薄",
+		"afternoon": "夕陽映照、冰雪泛紅、陰影拉長、冷風襲來、世界靜謐",
+		"night":     "月光皎潔、冰雪封存、寒風凜冽、風聲呼嘯、四周寂靜"
+	}}
+  ]
+}

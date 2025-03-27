@@ -1,14 +1,22 @@
-// domain/broadcast.js
-function broadcastToRoom(key, params, roomId, excludeId) {
-    for (let playerId in players) {
-        if (!playerId.startsWith("temp_")) continue;
-        let player = players[playerId];
-        if (player.room === roomId && playerId !== excludeId) {
-            let msg = i18n(player.lang, key, params);
-            if (player.connectionType === "websocket") {
+// domain/scripts/broadcast.js
+
+function broadcastToArea(message, x, y, excludeId) {
+  for (let p of Object.values(cache.players)) {
+    if (Math.abs(p.x - x) <= 2 && Math.abs(p.y - y) <= 2 && p.id !== excludeId) {
+      sendToPlayer(p.id, message);
+    }
+  }
+}
+function broadcastToArea(key, params, x, y, excludeId) {
+    for (let p of Object.values(cache.players)) {
+        if (Math.abs(p.x - x) <= 2 && Math.abs(p.y - y) <= 2 && p.id !== excludeId) {
+            let msg = i18n(p.lang, key, params);
+            
+            if (p.connectionType === "websocket") {
                 msg = JSON.stringify({ type: "broadcast", message: msg });
             }
-            sendToPlayer(playerId, msg);
+            
+            sendToPlayer(p.id, msg);
         }
     }
 }

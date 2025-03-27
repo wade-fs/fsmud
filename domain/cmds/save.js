@@ -1,13 +1,21 @@
 function save() {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "save_help", {
+            usage: "save",
+            description: "save player data."
+        });
+    }
+
     let playerData = {
         id: this.id,
         uuid: this.uuid,
         username: this.username,
-        room: this.room,
-        virtualRoom: this.virtualRoom,
+        area: this.area,
+        x: this.x,
+        y: this.y,
         race: this.race,
         hp: this.hp,
-        mana: this.mana,
+        mp: this.mp,
         int: this.int,
         spi: this.spi,
         luck: this.luck,

@@ -1,4 +1,4 @@
-// domain/player.js
+// domain/scripts/player.js
 
 if (typeof players === "undefined") {
     var players = {};
@@ -37,88 +37,72 @@ class Player {
     constructor(data) {
         this.id = data.id;
         this.uuid = data.uuid || generateUUID();
-        this.username = data.username || '';
-        this.password = data.password || ''; // 應加密
-        this.level = data.level || 1;
-        this.hp = data.hp || 100;
-        this.mp = data.mp || 50;
-        this.strength = data.strength || 10;
-        this.agility = data.agility || 10;
-        this.room = data.room;
-        this.connectionType = data.connectionType || "telnet";
-        this.location = data.location || null;
+        this.name = data.name || '';
+        this.password = data.password || '';
         this.isAdmin = data.isAdmin || false;
         this.aliases = data.aliases || {};
         this.inventory = data.inventory || [];
+        this.connectionType = data.connectionType || "telnet";
         this.lang = data.lang || "en";
-        if (!this.id) {
-            log("Player constructor", "Error: No player ID provided");
-            log(JSON.stringify(data));
-            throw new Error("Player ID is required");
-        } else {
-            if (this.room === null && this.location === null) {
-                this.room = "entrance";
-            }
-            log("Info", "init Player", JSON.stringify(this));
-        }
+
+        this.area = "entrance";
+        this.x = data.x || 0;
+        this.y = data.y || 0;
+        this.level = data.level || 1;
+        this.hp = data.hp || 100;
+        this.mp = data.mp || 100;
+        this.strength = data.strength || 10;
+        this.agility = data.agility || 10;
+        this.race = data.race || "Human";
     }
 
     save() {
-        if (!this.username) {
-            log(`Can not save player ${this.id}`);
-            return;
-        }
+        log("player.save()", JSON.stringify(this));
         let playerData = {
             id: this.id,
             uuid: this.uuid,
-            username: this.username,
+            name: this.name,
             password: this.password,
-            level: this.level,
-            hp: this.hp,
-            mp: this.mp,
-            strength: this.strength,
-            agility: this.agility,
-            room: this.room,
-            location: this.location,
+            area: this.area,
             isAdmin: this.isAdmin,
-            aliases: this.aliases,
+            x: this.x,
+            y: this.y,
+            health: this.health,
             inventory: this.inventory,
             lang: this.lang
         };
+        log("Saving player:", this.uuid);
         saveObject("players", this.uuid, playerData);
-        log(`Saved player ${this.username} to domain/players/${this.uuid}.json`);
+        log("Player saved:", this.uuid);
     }
 
-    static load(username) {
-        for (let playerId in players) {
-            if (players[playerId].username === username) {
-                return players[playerId];
-            }
-        }
+    static load(name) {
         for (let file of fileLists.players || []) {
-            let playerData = loadObject("players", file.split('/').pop().replace('.json', ''));
-            if (playerData && playerData.username === username) {
-                return playerData;
+            let uuid = file.split('/').pop().replace('.json', '');
+            let playerData = loadObject("players", uuid); // 修正 type 為 "players"
+            if (playerData && playerData.name === name) {
+                return new Player(playerData);
+            } else {
+                log(`Player.load(${name}) with uuid=${uuid} not match name ${playerData.name}`);
             }
         }
+        log(`Player.load(${name}) not found player file.`);
         return null;
     }
-
     clone() {
         return new Player({
             id: this.id,
-            username: this.username,
+            uuid: this.uuid,
+            name: this.name,
             password: this.password,
-            level: this.level,
-            hp: this.hp,
-            mp: this.mp,
-            strength: this.strength,
-            agility: this.agility,
-            room: this.room,
-            location: this.location,
             isAdmin: this.isAdmin,
-            aliases: this.aliases,
-            inventory: this.inventory
+            area: this.area,
+            x: this.x,
+            y: this.y,
+            health: this.health,
+            inventory: this.inventory.slice(),
+            connectionType: this.connectionType,
+            lang: this.lang
         });
     }
 }

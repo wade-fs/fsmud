@@ -1,47 +1,67 @@
-// domain/cache.js
+// domain/scripts/cache.js
+
 let cache = {
-    rooms: {},
+    terrains: {},
     npcs: {},
     items: {},
     cmds: {},
-    maps: {},
+    areas: {},
     players: {}
 };
 
+let currentTime = "noon";
+
 function preloadCache() {
     let {
-        rooms = [],
+        terrains = [],
         npcs = [],
         items = [],
         cmds = [],
-        maps = [],
+        areas = [],
         players = []
-    } = fileLists;
+    } = fileLists || {};
     log("Preloading cache...");
-    log("Rooms:", rooms);
+    log("Terrains:", terrains);
     log("NPCs:", npcs);
     log("Items:", items);
     log("Players:", players);
-    log("Maps:", maps);
+    log("Areas:", areas);
+    log("Cmds:", cmds);
 
     cache.cmds = cmds;
-    log("Info", "Preload Cmds:", cmds);
 
-    rooms.forEach(name => {
-        cache.rooms[name] = loadObject("rooms", name);
+    let terrainsData = loadFile("domain/configs/terrains.json");
+    if (terrainsData) {
+        cache.terrains = JSON.parse(
+            terrainsData.split('\n')
+                .filter(line => !line.trim().startsWith('//'))
+                .join('\n')
+        );
+    } else {
+        log("Error", "Failed to load terrains.json");
+    }
+
+    areas.forEach(name => {
+        if (name.startsWith("domain/areas/")) {
+            const parts = name.split('/');
+            const lastPart = parts[parts.length - 1];
+            name = lastPart.split('.')[0];
+        }
+        cache.areas[name] = loadObject("areas", name);
     });
+
     npcs.forEach(name => {
         cache.npcs[name] = loadObject("npcs", name);
     });
+
     items.forEach(name => {
         cache.items[name] = loadObject("items", name);
     });
-    maps.forEach(name => {
-        log("maps.forEach", name);
-        if (name.startsWith("domains/map/")) {
-            name = name.substring("domains/map/".length);
-        }
-        cache.maps[name] = loadObject("maps", name);
-    });
-    log("Info", "preloadCache cmds", cmds);
+
+    if (players !== null) {
+        players.forEach(name => {
+            log("Info", "players", name);
+            cache.players[name] = loadObject("players", name);
+        });
+    }
 }

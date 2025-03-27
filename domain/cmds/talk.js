@@ -1,5 +1,13 @@
 // domain/cmds/talk.js
 function talk(player, args) {
+    if (args === "-h" || args === "--help") {
+        return i18n(player.lang, "talk_help", {
+            usage: "talk <player_name> <message>",
+            description: "Send a private message to another player.",
+            examples: "talk Bob Hi there!"
+        });
+    }
+
     if (!args) {
         return i18n(player.lang, "talk_usage");
     }
@@ -9,25 +17,25 @@ function talk(player, args) {
         return i18n(player.lang, "talk_usage");
     }
 
-    let targetUsername = parts[0];
+    let targetName = parts[0];
     let message = parts.slice(1).join(" ");
 
     // 檢查目標玩家是否存在
     let targetPlayer = null;
     for (let p of Object.values(players)) {
-        if (p.username === targetUsername) {
+        if (p.name === targetName) {
             targetPlayer = p;
             break;
         }
     }
 
     if (!targetPlayer) {
-        return i18n(player.lang, "talk_player_not_found", { target: targetUsername });
+        return i18n(player.lang, "talk_player_not_found", { target: targetName });
     }
 
     // 生成訊息並發送給目標玩家
     let targetMsg = i18n(targetPlayer.lang, "talk_received", {
-        sender: player.username,
+        sender: player.name,
         message
     });
 
@@ -41,7 +49,7 @@ function talk(player, args) {
 
     // 返回發送者確認訊息
     return i18n(player.lang, "talk_sent", {
-        target: targetUsername,
+        target: targetName,
         message
     });
 }
