@@ -12,10 +12,11 @@ function drop(player, args) {
     let itemName = args.trim();
     if (!itemName) return "Drop what?";
 
-    let itemIndex = player.inventory.findIndex(itemId => cache.items[itemId].name.toLowerCase() === itemName.toLowerCase());
+    let itemIndex = player.inventory.findIndex(itemId => cache.items[itemId.toLowerCase()].name.toLowerCase() === itemName.toLowerCase());
     if (itemIndex === -1) return `You don't have ${itemName}.`;
+    log(`Cmd drop ${args}`, itemIndex, JSON.stringify(player.inventory));
 
-    let itemId = player.inventory[itemIndex];
+    let itemId = player.inventory[itemIndex].toLowerCase();
     let item = cache.items[itemId];
 
     // 從玩家背包移除物品

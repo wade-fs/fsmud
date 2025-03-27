@@ -21,6 +21,7 @@ function get(player, args) {
 
     // 將物品加入玩家背包
     player.inventory.push(item.name);
+    log("cmd get", JSON.stringify(player.inventory));
     item.owner = player.id;
     item.x = null;
     item.y = null;

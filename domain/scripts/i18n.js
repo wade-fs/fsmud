@@ -2,11 +2,9 @@
 let messages = {};
 
 function i18n(lang, key, params = {}) {
-    // 使用指定語言的訊息，無則 fallback 到英文，再無則用 key
     let langMessages = messages[lang] || messages["en"] || {};
     let msg = langMessages[key] || messages["en"][key] || key;
 
-    // 處理條件語法，例如 {isCritical|true: (Critical Hit!)|false:}
     const conditionRegex = /{([^|]+)\|([^}]+)}/g;
     let match;
     while ((match = conditionRegex.exec(msg)) !== null) {
@@ -17,7 +15,6 @@ function i18n(lang, key, params = {}) {
         msg = msg.replace(fullMatch, replacement);
     }
 
-    // 替換簡單參數，例如 {id}
     for (let [param, value] of Object.entries(params)) {
         msg = msg.replace(`{${param}}`, value);
     }
@@ -25,7 +22,7 @@ function i18n(lang, key, params = {}) {
 }
 
 function loadLanguage(lang) {
-    if (messages[lang]) return; // 已載入則跳過
+    if (messages[lang]) return;
     let rawData = loadFile(`domain/lang/${lang}.json`);
     if (rawData && typeof rawData === 'string') {
         try {
@@ -40,3 +37,4 @@ function loadLanguage(lang) {
 }
 
 loadLanguage("en");
+loadLanguage("zh");

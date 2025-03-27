@@ -65,7 +65,13 @@
     "look_no_exits": "這裡沒有明顯的出口.",
     "look_void": "你身處雲霧中.",
     "look_lost": "你迷路了.",
+	"and": "且",
     "items_here": "物品: ",
+    "south": "南",
+    "north": "北",
+    "east": "東",
+    "west": "西",
+
     "talk_usage": "用法：talk <玩家> <訊息>",
     "talk_player_not_found": "找不到玩家 '{target}'。",
     "talk_received": "{sender} 對你私語：{message}",

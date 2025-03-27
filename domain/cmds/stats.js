@@ -8,11 +8,10 @@ function stats(player, args) {
         });
     }
 
-    log("stats", JSON.stringify(player.inventory));
+
     let totalWeight = player.inventory.reduce((sum, itemId) => {
-        let item = cache.items[itemId];
-        log("stats", "ITEM", JSON.stringify(item));
-        return sum + (item?.weight || 0);
+        let item = cache.items?.[itemId.toLowerCase()];
+        return sum + (item ? item.weight || 0 : 0);
     }, 0);
 
     let statsData = {

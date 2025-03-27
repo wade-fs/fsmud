@@ -27,15 +27,26 @@ function look(player, args) {
     let description = terrainData["name"]+": "+terrainData[currentTime] || terrainData["noon"];
 
     let exits = [];
-    if (currentArea.isPassable(player.x, player.y - 1)) exits.push(i18n(player.lang, "north"));
-    if (currentArea.isPassable(player.x, player.y + 1)) exits.push(i18n(player.lang, "south"));
+
     if (currentArea.isPassable(player.x + 1, player.y)) exits.push(i18n(player.lang, "east"));
     if (currentArea.isPassable(player.x - 1, player.y)) exits.push(i18n(player.lang, "west"));
+    if (currentArea.isPassable(player.x, player.y + 1)) exits.push(i18n(player.lang, "south"));
+    if (currentArea.isPassable(player.x, player.y - 1)) exits.push(i18n(player.lang, "north"));
+
+    let exitsString = "";
+    if (exits.length === 1) {
+        exitsString = exits[0];
+    } else if (exits.length === 2) {
+        exitsString = exits.join(` ${i18n(player.lang, "and")} `);
+    } else if (exits.length > 2) {
+        const lastExit = exits.pop();
+        exitsString = exits.join(", ") + ` ${i18n(player.lang, "and")} ${lastExit}`;
+    }
 
     if (exits.length > 0) {
-        description += `\n${i18n(player.lang, "exits")}: ${exits.join(", ")}`;
+        description += `\n${i18n(player.lang, "look_exits", { exits: exitsString })}`;
     } else {
-        description += `\n${i18n(player.lang, "no_exits")}`;
+        description += `\n${i18n(player.lang, "look_no_exits")}`;
     }
 
     let area = cache.areas[player.area];
