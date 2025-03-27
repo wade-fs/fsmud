@@ -1,30 +1,31 @@
 # FSMUD - Fantasy Scripted Multi-User Dungeon
 
-FSMUD is a multi-user dungeon (MUD) game built with Go and JavaScript (via the V8 engine). It combines Go's high performance with JavaScript's flexibility, offering an extensible framework for text-based adventure gaming. Players can connect via WebSocket or Telnet to explore a virtual world, fight NPCs, collect items, and interact with others.
+FSMUD is a multi-user dungeon (MUD) game built with Go and JavaScript (via the V8 engine). It combines the high performance of Go with the flexibility of JavaScript to provide an extensible framework for creating text-based adventure games. Players can connect to the virtual world via WebSocket or Telnet to explore areas, fight NPCs, collect items, and interact with other players.
+
 
 ## Features
-- **Multi-protocol support:** WebSocket and Telnet clients.
-- **Dynamic scripting:** Game logic implemented in JavaScript (V8 engine) for rapid development and modification.
-- **Persistent storage:** Player data saved as JSON files using UUIDs as keys.
-- **Multi-language support:** English (en) and Chinese (zh), switchable with `set lang`.
-- **Room and map system:** Supports room-to-room movement and grid-based map exploration.
-- **Broadcasting:** Room-specific and global message broadcasting.
+- **Multi-protocol support**: Supports WebSocket and Telnet clients.
+- **Dynamic Script**: Game logic is implemented using JavaScript (V8 engine), which facilitates rapid development and modification.
+- **Persistent Storage**: Player data is saved as JSON files using UUID as key.
+- **Multi-language support**: Supports English (en) and Chinese (zh), which can be switched via the set lang command.
+- **Region System**: Use areas to manage the game world and support grid-based exploration.
+- **Broadcast**: Supports regional and global message broadcasting.
 
 ## System Requirements
 - Go 1.18 or higher
-- Git (for cloning the project and dependencies)
+- Git (for cloning projects and dependencies)
 - Browser (for WebSocket client) or Telnet client
 
-## Installation and Running
 
-### Clone the Project
+## Installation and Running
+### Clone the project
 ```sh
 git clone https://github.com/yourusername/fsmud.git
 cd fsmud
 ```
 
-### Install Dependencies
-Ensure Go is installed, then run:
+### Installation dependencies
+Make sure Go is installed, then run:
 ```sh
 go mod tidy
 ```
@@ -34,130 +35,141 @@ go mod tidy
 make mud
 ```
 
-### Connect to the Game
-- **WebSocket:** Open a browser, visit `http://localhost:8080`, and use the built-in client.
-- **Telnet:** Connect using a Telnet client to `localhost:2323`.
+### Connecting to the game
+- WebSocket: Open a browser and visit http://localhost:8080 to use the built-in client.
+- Telnet: Use a Telnet client to connect to localhost:2323.
 
-### First Login
-Log in with:
+### First login
+Log in using the following command:
 ```sh
 login <username> <password>
 ```
-- If the username doesn't exist, a new character is created. Example:
+If the username does not exist, a new role is created. For example:
 ```sh
 login wade jj
 ```
 
-### Command List
+## Command list
+Command | Description | Example Usage
+--------|-----------------------|------------------
+login | login game | login wade jj
+go |Move in the specified direction |go north
+look | View current area location |look
+say |Broadcast a message in the current area |say Hello everyone!
+talk |Send a private message to another player |talk chen Hi there!
+attack | Attack NPCs in the area | attack goblin
+get | Pick up items in the area | get sword
+drop |Drop the item to the current area |drop sword
+stats | View character status |stats
+set |Set properties |set lang zh, can set nickname, bio, lang
+quit | Exit the game and save progress | quit
+priv | switch administrator privileges |priv chen
+shutdown|shutdown server
 
-| Command  | Description                                  | Example Usage         |
-|----------|----------------------------------------------|-----------------------|
-| login    | Log into the game                           | `login wade jj`       |
-| go       | Move in a specified direction               | `go north`            |
-| look     | View the current room or map cell           | `look`                |
-| say      | Broadcast a message in the room             | `say Hello everyone!` |
-| talk     | Send a private message to another player    | `talk chen Hi there!` |
-| attack   | Attack an NPC in the room                   | `attack goblin`       |
-| get      | Pick up an item in the room                 | `get sword`           |
-| drop     | Drop an item into the room                  | `drop sword`          |
-| stats    | View character stats                        | `stats`               |
-| set      | Set attributes (lang, nick, bio, weather)   | `set lang zh`         |
-| priv     | Toggle admin privileges (admin only)        | `priv chen`           |
-| quit     | Exit the game and save progress             | `quit`                |
-| shutdown | Shut down the server (admin only)          | `shutdown`            |
+**Notice**:
 
-**Notes:**
-- Only `login` is available before logging in.
-- Admin commands (`priv`, `shutdown`) require `isAdmin: true`.
+- Before logging in only the login command is available.
+- Admin commands (priv, shutdown) require isAdmin: true.
 
 ## Directory Structure
-```
+<PRE>
 fsmud/
 ├── cmd/
-│   └── mud/
-│       ├── handlers/       # WebSocket and Telnet handling logic
-│       ├── v8funcs/        # V8 function bindings (e.g., sendToPlayer)
-│       └── main.go         # Main entry point
-├── domain/                 # Mudlib scripts
-│   ├── cmds/               # Command implementations (e.g., login.js, go.js)
-│   ├── static/             # Static files for WebSocket client
-│   ├── players/            # Player data (JSON)
-│   ├── rooms/              # Room data (JSON)
-│   ├── maps/               # Map data (JSON)
-│   ├── items/              # Item data (JSON)
-│   ├── npcs/               # NPC data (JSON)
-│   ├── lang/               # Language files (en.json, zh.json)
-│   ├── broadcast.js        # Broadcast functions
-│   ├── player.js           # Player class and UUID generation
-│   ├── room.js             # Room class
-│   ├── map.js              # Map class
-│   ├── command.js          # Command processing core
-│   └── ...                 # Other scripts
+│ └── mud/
+│ ├── handlers/ # WebSocket and Telnet processing logic
+│ ├── v8funcs/ # V8 function bindings (e.g. sendToPlayer)
+│ └── main.go # Main entry point
+├── domain/
+│ ├── cmds/ # Command implementation (e.g. login.js, go.js)
+│ ├── static/ # Static files for WebSocket clients
+│ ├── players/ # Player data (JSON)
+│ ├── areas/ # Area data (JSON)
+│ ├── items/ # Item data (JSON)
+│ ├── npcs/ # NPC data (JSON)
+│ ├── lang/ # Language files (en.json, zh.json)
+│ ├── scripts/ # Mudlib scripts
+│ │ ├── command.js # Command processing core
+│ │ ├── item.js # Item class
+│ │ ├── area.js # Area class
+│ │ ├── combat.js # Combat logic
+│ │ ├── objects.js # Object loading and saving
+│ │ ├── player.js # Player class and UUID generation
+│ │ ├── i18n.js # Internationalization support
+│ │ ├── cache.js # Cache management
+│ │ ├── npc.js # NPC class
+│ │ ├── weather.js # Weather system
+│ │ └── broadcast.js # Broadcast function
+│ └── ... # Other scripts
 ├── utils/
-│   ├── client/             # Client management (Go)
-│   └── v8go/               # V8 engine utilities
-└── README.md               # This file
-```
+│ ├── client/ # Client management (Go)
+│ └── v8go/ # V8 engine tools
+└── README.md # This file
+</PRE>
+### Change Notes
+Compared with previous versions:
+
+- Removed rooms/ and maps/ directories, and used areas/ to manage area data of the game world.
+- The main mudlib scripts have been moved from the domain/ root directory to domain/scripts/ to better organize the code.
 
 ## Data Storage
-- **Player data:** Saved as `domain/players/<uuid>.json`.
-- **Rooms and maps:** Stored in `domain/rooms/` and `domain/maps/`.
+- Player data: saved as domain/players/<uuid>.json.
+- Area data: stored in domain/areas/ and represented in JSON files.
 
 ## Development and Extension
-
-### Adding New Commands
-1. Create a new file in `domain/cmds/`, e.g., `mycommand.js`:
+### Add new commands
+- Create a new file in domain/cmds/, for example mycommand.js:
 ```js
 function mycommand(player, args) {
-    return "Hello from mycommand!";
+return "Hello from mycommand!";
 }
 ```
-2. Restart the server; the new command will be loaded automatically.
+- Restart the server and the new commands will be automatically loaded.
 
-### Custom Maps
-1. Add a map JSON in `domain/maps/`, e.g., `forest.json`:
+### Custom Area
+- Add a JSON file in domain/areas/, for example, forest.json:
 ```json
 {
-    "id": "forest",
-    "description": "A dense forest.",
-    "width": 5,
-    "height": 5,
-    "grid": [
-        [{"description": "A clearing", "passable": true, "items": [], "npcs": []}, ...],
-        ...
-    ]
+"id": "forest",
+"name": "Forest",
+"width": 5,
+"height": 5,
+"grid": [
+["00", "00", "00", "00", "00"],
+["00", "XX", "00", "XX", "00"],
+["00", "00", "00", "00", "00"],
+["00", "XX", "00", "XX", "00"],
+["00", "00", "00", "00", "00"]
+]
 }
 ```
-2. Explore it using the `go` command.
 
-### Multi-Language Support
-1. Edit `domain/lang/<lang>.json` and add message keys, e.g.:
+- Use the go command to explore the area.
+
+### Multi-language support
+- Edit domain/lang/<lang>.json and add a message key, for example:
 ```json
 {
-    "welcome_new": "Welcome, {username}!"
+"welcome_new": "Welcome, {username}!"
 }
 ```
-2. Use in scripts with `i18n(player.lang, "welcome_new", { username })`.
+
+- Use i18n in scripts (player.lang, "welcome_new", { username }).
 
 ## Known Issues
-- **Password security:** Currently stored in plaintext; encryption is recommended.
-- **Performance:** Large player counts may bottleneck V8 execution or file I/O.
-- **WebSocket client:** The static page has limited functionality and needs enhancement.
 
-## Contributing
-1. Fork and clone the project.
-2. Make changes and test locally.
-3. Submit a Pull Request with a description of your changes.
+## contribute
+- Fork and clone the project.
+- Make changes and test them locally.
+- Submit a Pull Request and describe your changes.
 
 Feel free to report issues or suggest features on the Issues page!
 
 ## License
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project uses the MIT license. See the LICENSE file for details.
+Enjoy exploring the world of FSMUD! If you have questions or need help, please let us know.
 
-Enjoy exploring the world of FSMUD! Let us know if you have questions or need assistance.
-
-# Contribute
-Welcome to participate in project development and improvement by submitting Pull Request or Issue!
+## [TODO][103] (possibly indefinite)
+- Not specifically listed here, please refer to [To Do Link][103]
 
 # Advanced Information
 - [Progress and Testing][100]

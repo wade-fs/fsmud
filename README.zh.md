@@ -1,130 +1,172 @@
 # FSMUD - Fantasy Scripted Multi-User Dungeon
 
-FSMUD 是一款基於 Go 和 JavaScript（V8 引擎）的多人 MUD 遊戲，結合 Go 的高效能與 JavaScript 的靈活性，提供可擴展的文字冒險遊戲框架。玩家可透過 WebSocket 或 Telnet 連接，探索虛擬世界、戰鬥、收集物品並互動。
+FSMUD 是一個使用 Go 和 JavaScript（通過 V8 引擎）構建的多用戶地牢（MUD）遊戲。它結合了 Go 的高性能和 JavaScript 的靈活性，提供了一個可擴展的框架，用於創建基於文本的冒險遊戲。玩家可以通過 WebSocket 或 Telnet 連接到虛擬世界，探索區域、與 NPC 戰鬥、收集物品並與其他玩家互動。
 
-## 特色
-- **多協議支持**：支援 WebSocket 和 Telnet 客戶端。
-- **動態腳本**：遊戲邏輯使用 JavaScript（V8 引擎），可快速開發和修改。
-- **持久存儲**：玩家數據以 JSON 文件存儲，使用 UUID 作為鍵。
-- **多語言支持**：支援 `en`（英文）和 `zh`（中文），可用 `set lang` 切換。
-- **房間與地圖系統**：支援基於房間和網格地圖的探索。
-- **廣播系統**：支援房間內及全局訊息廣播。
 
-## 安裝與運行
+## 特點
+- **多協議支持**：支持 WebSocket 和 Telnet 客戶端。
+- **動態腳本**：遊戲邏輯使用 JavaScript（V8 引擎）實現，便於快速開發和修改。
+- **持久化存儲**：玩家數據以 JSON 文件形式保存，使用 UUID 作為鍵。
+- **多語言支持**：支持英語（en）和中文（zh），可通過 set lang 命令切換。
+- **區域系統**：使用 areas 管理遊戲世界，支持基於網格的探索。
+- **廣播**：支持區域內和全局的消息廣播。
 
-### 下載專案
+## 系統需求
+- Go 1.18 或更高版本
+- Git（用於克隆項目和依賴）
+- 瀏覽器（用於 WebSocket 客戶端）或 Telnet 客戶端
+
+
+## 安裝和運行
+### 克隆項目
 ```sh
 git clone https://github.com/yourusername/fsmud.git
 cd fsmud
 ```
 
 ### 安裝依賴
+確保 Go 已安裝，然後運行：
 ```sh
 go mod tidy
 ```
 
-### 編譯與運行
+### 構建和運行
 ```sh
 make mud
 ```
 
-### 連接遊戲
-- **WebSocket**：瀏覽器訪問 `http://localhost:8080`
-- **Telnet**：使用 Telnet 連接 `localhost:2323`
+### 連接到遊戲
+- WebSocket：打開瀏覽器，訪問 http://localhost:8080，使用內置客戶端。
+- Telnet：使用 Telnet 客戶端連接到 localhost:2323。
 
-### 登入
+### 首次登錄
+使用以下命令登錄：
 ```sh
-login <用戶名> <密碼>
+login <username> <password>
 ```
-範例：
+如果用戶名不存在，則會創建一個新角色。例如：
 ```sh
 login wade jj
 ```
 
-## 指令
+## 命令列表
+命令	| 描述              	|示例用法
+--------|-----------------------|------------------
+login	|登錄遊戲	            |login wade jj
+go	    |向指定方向移動	        |go north
+look	|查看當前區域位置   	|look
+say	    |在當前區域廣播消息 	|say Hello everyone!
+talk	|向其他玩家發送私人消息	|talk chen Hi there!
+attack	|攻擊區域內的 NPC		|attack goblin
+get	    |拾取區域內的物品		|get sword
+drop	|將物品丟到當前區域		|drop sword
+stats	|查看角色狀態			|stats
+set	    |設置屬性				|set lang zh, 可設有 nickname, bio, lang
+quit	|退出遊戲並保存進度		|quit
+priv	|切換管理員權限			|priv chen
+shutdown|關閉服務器				|shutdown
 
-| 指令  | 說明                                  | 範例               |
-|------|--------------------------------------|------------------|
-| `login` | 登入遊戲                             | `login wade jj`  |
-| `go`    | 移動到指定方向                       | `go north`       |
-| `look`  | 查看當前房間或地圖                   | `look`           |
-| `say`   | 在房間內發言                         | `say Hello!`     |
-| `talk`  | 私訊玩家                             | `talk chen Hi!`  |
-| `attack`| 攻擊當前房間的 NPC                   | `attack goblin`  |
-| `get`   | 撿起房間內的物品                     | `get sword`      |
-| `drop`  | 丟棄物品                             | `drop sword`     |
-| `stats` | 查看角色狀態                         | `stats`          |
-| `set`   | 設定屬性（lang, nick, bio, weather）| `set lang zh`    |
-| `priv`  | 切換管理員權限（管理員專用）          | `priv chen`      |
-| `quit`  | 退出遊戲並儲存進度                   | `quit`           |
-| `shutdown` | 關閉伺服器（管理員專用）         | `shutdown`       |
+**注意**：
+
+- 在登錄前僅 login 命令可用。
+- 管理員命令（priv、shutdown）需要 isAdmin: true。
 
 ## 目錄結構
-```
+<PRE>
 fsmud/
 ├── cmd/
-│   ├── mud/                 # WebSocket / Telnet 處理邏輯
-│   └── main.go              # 入口點
-├── domain/                  # 遊戲腳本
-│   ├── cmds/                # 指令實作（如 login.js, go.js）
-│   ├── players/             # 玩家數據（JSON）
-│   ├── rooms/               # 房間數據（JSON）
-│   ├── maps/                # 地圖數據（JSON）
-│   ├── lang/                # 語言文件（en.json, zh.json）
-│   ├── broadcast.js         # 廣播功能
-│   ├── command.js           # 指令處理核心
-│   └── ...
-├── utils/                   # 工具函式
-└── README.md                # 本文件
-```
+│   └── mud/
+│       ├── handlers/       # WebSocket 和 Telnet 處理邏輯
+│       ├── v8funcs/        # V8 函數綁定（例如 sendToPlayer）
+│       └── main.go         # 主入口點
+├── domain/
+│   ├── cmds/               # 命令實現（例如 login.js, go.js）
+│   ├── static/             # WebSocket 客戶端的靜態文件
+│   ├── players/            # 玩家數據（JSON）
+│   ├── areas/              # 區域數據（JSON）
+│   ├── items/              # 物品數據（JSON）
+│   ├── npcs/               # NPC 數據（JSON）
+│   ├── lang/               # 語言文件（en.json, zh.json）
+│   ├── scripts/            # Mudlib 腳本
+│   │   ├── command.js      # 命令處理核心
+│   │   ├── item.js         # 物品類
+│   │   ├── area.js         # 區域類
+│   │   ├── combat.js       # 戰鬥邏輯
+│   │   ├── objects.js      # 對象加載和保存
+│   │   ├── player.js       # 玩家類和 UUID 生成
+│   │   ├── i18n.js         # 國際化支持
+│   │   ├── cache.js        # 緩存管理
+│   │   ├── npc.js          # NPC 類
+│   │   ├── weather.js      # 天氣系統
+│   │   └── broadcast.js    # 廣播函數
+│   └── ...                 # 其他腳本
+├── utils/
+│   ├── client/             # 客戶端管理（Go）
+│   └── v8go/               # V8 引擎工具
+└── README.md               # 本文件
+</PRE>
+### 變更說明
+與先前版本相比：
 
-## 開發與擴展
+- 移除了 rooms/ 和 maps/ 目錄，改用 areas/ 來管理遊戲世界的區域數據。
+- 主要的 mudlib 腳本已從 domain/ 根目錄移至 domain/scripts/，以更好地組織代碼。
 
-### 新增指令
-1. 在 `domain/cmds/` 新增 `mycommand.js`：
+## 數據存儲
+- 玩家數據：保存為 domain/players/<uuid>.json。
+- 區域數據：存儲在 domain/areas/ 中，以 JSON 文件形式表示。
+
+## 開發和擴展
+### 添加新命令
+- 在 domain/cmds/ 中創建一個新文件，例如 mycommand.js：
 ```js
 function mycommand(player, args) {
     return "Hello from mycommand!";
 }
 ```
-2. 重新啟動伺服器，新指令即生效。
+- 重啟服務器，新命令將自動加載。
 
-### 自訂地圖
-1. 在 `domain/maps/` 添加 JSON，如 `forest.json`：
+### 自定義區域
+- 在 domain/areas/ 中添加一個 JSON 文件，例如 forest.json：
 ```json
 {
     "id": "forest",
-    "description": "A dense forest.",
+    "name": "Forest",
     "width": 5,
     "height": 5,
     "grid": [
-        [{"description": "A clearing", "passable": true, "items": [], "npcs": []}, ...]
+        ["00", "00", "00", "00", "00"],
+        ["00", "XX", "00", "XX", "00"],
+        ["00", "00", "00", "00", "00"],
+        ["00", "XX", "00", "XX", "00"],
+        ["00", "00", "00", "00", "00"]
     ]
 }
 ```
-2. 玩家可透過 `go` 指令探索新地圖。
+
+- 使用 go 命令探索該區域。
 
 ### 多語言支持
-1. 修改 `domain/lang/<lang>.json`，新增訊息鍵值：
+- 編輯 domain/lang/<lang>.json，添加消息鍵，例如：
 ```json
 {
     "welcome_new": "Welcome, {username}!"
 }
 ```
-2. 在腳本中使用 `i18n(player.lang, "welcome_new", { username })` 取得翻譯。
+
+- 在腳本中使用 i18n(player.lang, "welcome_new", { username })。
 
 ## 已知問題
-- **密碼安全性**：目前以純文字存儲，建議加密。
-- **效能問題**：大量玩家可能會導致 V8 執行或文件 I/O 瓶頸。
-- **WebSocket 客戶端**：當前功能有限，需改進。
 
 ## 貢獻
-1. Fork 並 Clone 此專案。
-2. 修改後測試並提交 Pull Request。
-3. 在 Issues 區回報問題或建議新功能。
+- Fork 並克隆項目。
+- 進行更改並在本地測試。
+- 提交 Pull Request 並描述您的更改。
 
-## 授權
-本專案基於 MIT License 發布，詳見 `LICENSE` 文件。
+歡迎在 Issues 頁面報告問題或建議功能！
+
+## 許可證
+本項目採用 MIT 許可證。詳情請見 LICENSE 文件。  
+享受探索 FSMUD 的世界！如有疑問或需要幫助，請告訴我們。
 
 ## [待辦事項][103]（可能無限期）  
 - 不特別列在這兒，請參考 [待辦事項連結][103]
