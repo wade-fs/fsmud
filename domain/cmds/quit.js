@@ -9,6 +9,8 @@ function quit(player, args) {
     }
 
     player.save();
+    log("Player data saved for:", player.id);
     removePlayer(player.id);
+    log("Player removed:", player.id);
     return "goodbye";
 }

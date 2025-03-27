@@ -71,16 +71,22 @@ class Player {
             inventory: this.inventory,
             lang: this.lang
         };
-        saveObject("domain/players", this.uuid, playerData);
+        log("Saving player:", this.uuid);
+        saveObject("players", this.uuid, playerData);
+        log("Player saved:", this.uuid);
     }
 
     static load(name) {
         for (let file of fileLists.players || []) {
-            let playerData = loadObject("domain/players", file.split('/').pop().replace('.json', ''));
+            let uuid = file.split('/').pop().replace('.json', '');
+            let playerData = loadObject("players", uuid); // 修正 type 為 "players"
             if (playerData && playerData.name === name) {
                 return new Player(playerData);
+            } else {
+                log(`Player.load(${name}) with uuid=${uuid} not match name ${playerData.name}`);
             }
         }
+        log(`Player.load(${name}) not found player file.`);
         return null;
     }
     clone() {
@@ -89,11 +95,12 @@ class Player {
             uuid: this.uuid,
             name: this.name,
             password: this.password,
+            isAdmin: this.isAdmin,
             area: this.area,
             x: this.x,
             y: this.y,
             health: this.health,
-            inventory: this.inventory.slice(), // 深拷貝陣列
+            inventory: this.inventory.slice(),
             connectionType: this.connectionType,
             lang: this.lang
         });

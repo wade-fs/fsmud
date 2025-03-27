@@ -52,12 +52,11 @@ func LoadV8Scripts(ctx *v8.Context) {
 }
 
 func LoadV8JSON(ctx *v8.Context) {
-	dirs := []string{"areas", "npcs", "items", "players"}
-	filesJSON := make(map[string][]string)
-
 	cmdJsFiles := listFilesWithDepth("domain/cmds", ".js", 1)
-    filesJSON["cmds"] = extractCmds(cmdJsFiles, ".js")
 
+	filesJSON := map[string][]string{"cmds": extractCmds(cmdJsFiles, ".js")}
+
+	dirs := []string{"areas", "npcs", "items", "players"}
 	for _, dir := range dirs {
 		dirPath := filepath.Join("domain", dir)
 		fileList := listFilesWithDepth(dirPath, ".json", -1)

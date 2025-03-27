@@ -8,6 +8,9 @@ GO_FLAGS := -ldflags="-s -w -X main.Version=$(VERSION)"
 ENV  := GOPATH=$(GOPATH) GOROOT=$(GOROOT)
 ENVW := $(ENV) CGO_ENABLED=1 CGO_CFLAGS="-Wno-return-local-addr" GOOS=windows GOARCH=amd64 CC="x86_64-w64-mingw32-gcc -fno-stack-protector -D_FORTIFY_SOURCE=0 -lssp"
 
+all:
+	@ make mud
+	
 %:
 	@ cd cmd/$(basename $(notdir $@)) && \
 	echo "building $@..." && \
