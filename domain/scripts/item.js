@@ -1,10 +1,14 @@
 // domain/scripts/item.js
 
 class Item {
-    constructor(id, name, description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    constructor(data) {
+        this.id = data.id;
+        this.name = data.name;
+        this.desc = data.desc;
+        this.weight = data.weight;
+        this.value = data.value;
+        this.usable = data.usable;
+        this.effect = data.effect;
     }
 
     static load(id) {
@@ -17,9 +21,13 @@ class Item {
 
     clone() {
         return new Item({
-            id : this.id,
-            name : this.name,
-            description : this.description
+            id: this.id,
+            name: this.name,
+            desc: this.desc,
+            weight: this.weight,
+            value: this.value,
+            usable: this.usable,
+            effect: this.effect
         });
     }
 }

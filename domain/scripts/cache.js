@@ -20,6 +20,7 @@ function preloadCache() {
         areas = [],
         players = []
     } = fileLists || {};
+/*
     log("Preloading cache...");
     log("Terrains:", terrains);
     log("NPCs:", npcs);
@@ -27,7 +28,7 @@ function preloadCache() {
     log("Players:", players);
     log("Areas:", areas);
     log("Cmds:", cmds);
-
+*/
     cache.cmds = cmds;
 
     let terrainsData = loadFile("domain/configs/terrains.json");

@@ -86,5 +86,6 @@
     "set_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
     "stats_help": "Usage: {usage}\nDescription: {description}",
     "talk_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
-    "use_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}"
+    "use_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
+    "clone_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}"
 }

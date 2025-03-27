@@ -5,6 +5,11 @@ function loadObject(type, name) {
         cache[type] = {}; // 初始化 type 的快取
     }
     if (!cache[type][name]) {
+        if (name.startsWith(`domain/${type}/`)) {
+            const parts = name.split('/');
+            const lastPart = parts[parts.length - 1];
+            name = lastPart.split('.')[0];
+        }
         let filePath = `domain/${type}/${name}.json`; // 假設檔案路徑
         let rawData = loadFile(filePath);
         if (typeof rawData !== 'string' || rawData.trim() === '') {
