@@ -74,11 +74,7 @@ shutdown|關閉服務器				|shutdown
 ## 目錄結構
 <PRE>
 fsmud/
-├── cmd/
-│   └── mud/
-│       ├── handlers/       # WebSocket 和 Telnet 處理邏輯
-│       ├── v8funcs/        # V8 函數綁定（例如 sendToPlayer）
-│       └── main.go         # 主入口點
+├── cmd/mud/main.go         # 主入口點
 ├── domain/
 │   ├── cmds/               # 命令實現（例如 login.js, go.js）
 │   ├── static/             # WebSocket 客戶端的靜態文件
@@ -101,6 +97,8 @@ fsmud/
 │   │   └── broadcast.js    # 廣播函數
 │   └── ...                 # 其他腳本
 ├── utils/
+    ├── handlers/       # WebSocket 和 Telnet 處理邏輯
+    ├── v8funcs/        # V8 函數綁定（例如 sendToPlayer）
 │   ├── client/             # 客戶端管理（Go）
 │   └── v8go/               # V8 引擎工具
 └── README.md               # 本文件

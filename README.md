@@ -74,11 +74,7 @@ shutdown|shutdown server
 ## Directory Structure
 <PRE>
 fsmud/
-├── cmd/
-│ └── mud/
-│ ├── handlers/ # WebSocket and Telnet processing logic
-│ ├── v8funcs/ # V8 function bindings (e.g. sendToPlayer)
-│ └── main.go # Main entry point
+├── cmd/mud/main.go # Main entry point
 ├── domain/
 │ ├── cmds/ # Command implementation (e.g. login.js, go.js)
 │ ├── static/ # Static files for WebSocket clients
@@ -101,6 +97,8 @@ fsmud/
 │ │ └── broadcast.js # Broadcast function
 │ └── ... # Other scripts
 ├── utils/
+│ ├── handlers/ # WebSocket and Telnet processing logic
+│ ├── v8funcs/ # V8 function bindings (e.g. sendToPlayer)
 │ ├── client/ # Client management (Go)
 │ └── v8go/ # V8 engine tools
 └── README.md # This file
