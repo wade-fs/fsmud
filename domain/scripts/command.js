@@ -1,6 +1,10 @@
 // domain/scripts/command.js
 
 function processCommand(playerId, input) {
+	input = input.trim();
+    if (input.length == 0) {
+		return;
+    }
     let player = players[playerId];
     if (!player) {
         player = new Player({ id: playerId });

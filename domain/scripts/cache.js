@@ -10,6 +10,39 @@ let cache = {
 };
 
 let currentTime = "noon";
+let timeInterval = 0;
+let magnification = 60;
+let maxHB = 86400/magnification
+let timeIntervalId;
+
+function updateTime() {
+    if (timeIntervalId) {
+        clearInterval(timeIntervalId);
+    }
+    timeIntervalId = setInterval(() => {
+        timeInterval++;
+        if (timeInterval >= maxHB) {
+            timeInterval = 0;
+        }
+        let hour = Math.floor((timeInterval * magnification * 24) / 86400) % 24;
+        let day = "midnight";
+        if (hour >= 4 && hour < 22) {
+            if (hour < 9) {
+                day = "morning";
+            } else if (hour < 14) {
+                day = "noon";
+            } else if (hour < 18) {
+                day = "afternoon";
+            } else {
+                day = "night";
+            }
+        }
+        if (day !== currentTime) {
+            currentTime = day;
+		    broadcastGlobal("update_time", { time: currentTime });
+        }
+    }, 1000);
+}
 
 function preloadCache() {
     let {
@@ -65,4 +98,6 @@ function preloadCache() {
             cache.players[name] = loadObject("players", name);
         });
     }
+
+    updateTime();
 }

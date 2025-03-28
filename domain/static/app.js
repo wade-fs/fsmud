@@ -1,3 +1,4 @@
+// static/app.js
 let ws = new WebSocket("ws://localhost:8080/ws");
 
 ws.onmessage = function(event) {

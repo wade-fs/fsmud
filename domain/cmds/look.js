@@ -24,7 +24,7 @@ function look(player, args) {
     }
 
     let terrainData = terrain[terrainCode];
-    let description = terrainData["name"]+": "+terrainData[currentTime] || terrainData["noon"];
+    let room_desc = terrainData["name"]+": "+terrainData[currentTime] || terrainData["noon"];
 
     let exits = [];
 
@@ -33,28 +33,16 @@ function look(player, args) {
     if (currentArea.isPassable(player.x, player.y + 1)) exits.push(i18n(player.lang, "south"));
     if (currentArea.isPassable(player.x, player.y - 1)) exits.push(i18n(player.lang, "north"));
 
-    let exitsString = "";
-    if (exits.length === 1) {
-        exitsString = exits[0];
-    } else if (exits.length === 2) {
-        exitsString = exits.join(` ${i18n(player.lang, "and")} `);
-    } else if (exits.length > 2) {
-        const lastExit = exits.pop();
-        exitsString = exits.join(", ") + ` ${i18n(player.lang, "and")} ${lastExit}`;
-    }
-
-    if (exits.length > 0) {
-        description += `\n${i18n(player.lang, "look_exits", { exits: exitsString })}`;
-    } else {
-        description += `\n${i18n(player.lang, "look_no_exits")}`;
-    }
 
     let area = cache.areas[player.area];
     let items = area.getItemsAt(player.x, player.y);
+    let items_desc = "";
     if (items.length > 0) {
         let itemNames = items.map(item => item.name).join(", ");
-        description += `\n${i18n(player.lang, "items_here")}: ${itemNames}`;
+        items_desc = `${i18n(player.lang, "items_here")}: ${itemNames}`;
     }
+    // "look_room": "[{area}] {desc} (Time: {time}) Exits: {exits}"
+    description = i18n(player.lang, "look_room", { area:area.name, desc:room_desc, items:items_desc, exits:exits, time:currentTime });
 
     return description;
 }
