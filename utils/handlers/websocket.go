@@ -5,7 +5,7 @@ package handlers
 import (
 	"fmt"
 	"fsmud/utils/client"
-	v8 "fsmud/utils/v8go"
+	"fsmud/utils/v8go"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 	"net/http"
@@ -15,11 +15,11 @@ import (
 
 type WebSocketHandler struct {
 	Manager  *client.ClientManager
-	Context  *v8.Context
+	Context  *v8go.Context
 	Upgrader websocket.Upgrader
 }
 
-func NewWebSocketHandler(m *client.ClientManager, ctx *v8.Context) *WebSocketHandler {
+func NewWebSocketHandler(m *client.ClientManager, ctx *v8go.Context) *WebSocketHandler {
 	return &WebSocketHandler{
 		Manager: m,
 		Context: ctx,
@@ -49,7 +49,7 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 			h.Manager.Remove(conn)
 			_,err := h.Context.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
 			if err != nil {
-				e := err.(*v8.JSError)
+				e := err.(*v8go.JSError)
 				fmt.Println(e.Message)
 				fmt.Println(e.Location)
 				fmt.Println(e.StackTrace)
@@ -69,7 +69,7 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
 		val, err := h.Context.RunScript(script, "cmd.js")
 		if err != nil {
-			e := err.(*v8.JSError)
+			e := err.(*v8go.JSError)
 			fmt.Println(e.Message)
 			fmt.Println(e.Location)
 			fmt.Println(e.StackTrace)

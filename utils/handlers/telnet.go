@@ -7,13 +7,13 @@ import (
 	"fmt"
 	"fsmud/utils/client"
 	"fsmud/utils/v8funcs"
-	v8 "fsmud/utils/v8go"
+	"fsmud/utils/v8go"
 	"log"
 	"net"
 	"strings"
 )
 
-func StartTelnetServer(m *client.ClientManager, ctx *v8.Context) {
+func StartTelnetServer(m *client.ClientManager, ctx *v8go.Context) {
 	listener, err := net.Listen("tcp", ":2323")
 	if err != nil {
 		log.Fatal("Telnet server failed:", err)
@@ -36,7 +36,7 @@ func StartTelnetServer(m *client.ClientManager, ctx *v8.Context) {
 	}
 }
 
-func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
+func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8go.Context) {
 	defer conn.Close()
 
 	playerID := m.GeneratePlayerID()
@@ -56,7 +56,7 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 		val, err := ctx.RunScript(script, "cmd.js")
 		if err != nil {
 			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-			e := err.(*v8.JSError)
+			e := err.(*v8go.JSError)
 			fmt.Println(e.Message)
 			fmt.Println(e.Location)
 			fmt.Println(e.StackTrace)
@@ -85,7 +85,7 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 			_,err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, info.PlayerID), "cleanup.js")
 			if err != nil {
 				fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-				e := err.(*v8.JSError)
+				e := err.(*v8go.JSError)
 				fmt.Println(e.Message)
 				fmt.Println(e.Location)
 				fmt.Println(e.StackTrace)
@@ -102,7 +102,7 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 		_, err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
 		if err != nil {
 			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-			e := err.(*v8.JSError)
+			e := err.(*v8go.JSError)
 			fmt.Println(e.Message)
 			fmt.Println(e.Location)
 			fmt.Println(e.StackTrace)

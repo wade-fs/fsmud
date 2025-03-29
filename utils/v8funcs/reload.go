@@ -11,26 +11,26 @@ import (
 	"strings"
 
 	"fsmud/utils/client"
-	v8 "fsmud/utils/v8go"
+	"fsmud/utils/v8go"
 )
 
-func CbLoadV8JSON(m *client.ClientManager) v8.FunctionCallback {
-    return func(info *v8.FunctionCallbackInfo) *v8.Value {
+func CbLoadV8JSON(m *client.ClientManager) v8go.FunctionCallback {
+    return func(info *v8go.FunctionCallbackInfo) *v8go.Value {
         m.Broadcast("Reload system data files.", "", true, "")
 		LoadV8JSON(info.Context())
-        return v8.Undefined(info.Context().Isolate())
+        return v8go.Undefined(info.Context().Isolate())
     }
 }
 
-func CbLoadV8Scripts(m *client.ClientManager) v8.FunctionCallback {
-    return func(info *v8.FunctionCallbackInfo) *v8.Value {
+func CbLoadV8Scripts(m *client.ClientManager) v8go.FunctionCallback {
+    return func(info *v8go.FunctionCallbackInfo) *v8go.Value {
         m.Broadcast("Reload system javascript files.", "", true, "")
 		LoadV8Scripts(info.Context())
-        return v8.Undefined(info.Context().Isolate())
+        return v8go.Undefined(info.Context().Isolate())
     }
 }
 
-func LoadV8Scripts(ctx *v8.Context) {
+func LoadV8Scripts(ctx *v8go.Context) {
 	if ctx == nil {
 		log.Println("Error", "LoadV8Scripts", "ctx is nil")
 		return
@@ -46,7 +46,7 @@ func LoadV8Scripts(ctx *v8.Context) {
 			log.Println("LoadV8Scripts", file, string(scriptBytes))
     	    if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
     	        log.Printf("[Error] Failed to execute %s: %v\n", file, err)
-				e := err.(*v8.JSError)
+				e := err.(*v8go.JSError)
 				log.Print(e.Message)
 				log.Print(e.Location)
 				log.Print(e.StackTrace)
@@ -57,7 +57,7 @@ func LoadV8Scripts(ctx *v8.Context) {
 	}
 }
 
-func LoadV8JSON(ctx *v8.Context) {
+func LoadV8JSON(ctx *v8go.Context) {
 	cmdJsFiles := listFilesWithDepth("domain/cmds", ".js", 1)
 
 	filesJSON := map[string][]string{"cmds": extractCmds(cmdJsFiles, ".js")}
@@ -81,14 +81,14 @@ func LoadV8JSON(ctx *v8.Context) {
 	if err != nil {
 		log.Fatal("Failed to marshal file lists:", err)
 	}
-	filesVal, err := v8.JSONParse(ctx, string(filesJSONBytes))
+	filesVal, err := v8go.JSONParse(ctx, string(filesJSONBytes))
 	if err != nil {
 		log.Fatal("Failed to parse file lists JSON:", err)
 	}
 	ctx.Global().Set("fileLists", filesVal)
 
 	if _, err := ctx.RunScript("preloadCache();", "preloadCache"); err != nil {
-		e := err.(*v8.JSError)
+		e := err.(*v8go.JSError)
 		log.Print(e.Message)
 		log.Print(e.Location)
 		log.Print(e.StackTrace)
