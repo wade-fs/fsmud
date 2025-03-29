@@ -96,5 +96,9 @@
     "stats_help": "語法: {usage}\n說明: {description}",
     "talk_help": "語法: {usage}\n說明: {description}\n例子: {examples}",
     "use_help": "語法: {usage}\n說明: {description}\n例子: {examples}",
-    "clone_help": "語法: {usage}\n說明: {description}\n例子: {examples}"
+    "clone_help": "語法: {usage}\n說明: {description}\n例子: {examples}",
+    "not_in_character_creation": "你不在角色創建模式.",
+    "missing_fields": "你必須先設定 {fields} 欄位才能完成角色創建.",
+    "character_creation_complete": "角色基本設定完成，歡迎來到狂想空間!",
+    "finishCreation_help": "完成角色創建流程請用: describe 指令"
 }
