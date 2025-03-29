@@ -15,7 +15,7 @@ import (
 
 type ClientInfo struct {
 	Conn     interface{} // WebSocket 或 Telnet 連接
-	Room     string      // 當前房間
+	Area     string      // 當前房間
 	PlayerID string      // 玩家的唯一 ID
     ConnectionType string
 }
@@ -52,14 +52,14 @@ func (m *ClientManager) SetV8Context(ctx *v8go.Context) {
 	m.v8Ctx = ctx
 }
 
-func (m *ClientManager) Add(conn interface{}, room, connType string) {
+func (m *ClientManager) Add(conn interface{}, area, connType string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 
 	playerID := m.GeneratePlayerID()
 	m.clients[conn] = ClientInfo{
 		Conn:     conn,
-		Room:     room,
+		Area:     area,
 		PlayerID: playerID,
 		ConnectionType: connType,
 	}
@@ -67,11 +67,17 @@ func (m *ClientManager) Add(conn interface{}, room, connType string) {
 	// 通過 v8go 將玩家資訊注入 Mudlib
 	if m.v8Ctx != nil {
 		_, err := m.v8Ctx.RunScript(
-			fmt.Sprintf(`addPlayer("%s", "%s", "%s");`, playerID, room, connType),
+			fmt.Sprintf(`addPlayer("%s", "%s", "%s");`, playerID, area, connType),
 			"injectPlayer.js",
 		)
 		if err != nil {
-			log.Printf("Failed to inject player %s into Mudlib: %v", playerID, err)
+			log.Printf("Failed run addPlayer(%s,%s,%s) from Mudlib: %v", playerID, area, connType, err)
+			e := err.(*v8go.JSError)
+			fmt.Println(e.Message)
+			fmt.Println(e.Location)
+			fmt.Println(e.StackTrace)
+			fmt.Printf("javascript error: %v", e)
+			fmt.Printf("javascript stack trace: %+v", e)
 		}
 	}
 }
@@ -91,6 +97,12 @@ func (m *ClientManager) Remove(conn interface{}) {
 			)
 			if err != nil {
 				log.Printf("Failed to remove player %s from Mudlib: %v", info.PlayerID, err)
+				e := err.(*v8go.JSError)
+				fmt.Println(e.Message)
+				fmt.Println(e.Location)
+				fmt.Println(e.StackTrace)
+				fmt.Printf("javascript error: %v", e)
+				fmt.Printf("javascript stack trace: %+v", e)
 			}
 		}
 	}
@@ -103,20 +115,20 @@ func (m *ClientManager) Get(conn interface{}) (ClientInfo, bool) {
 	return info, exists
 }
 
-func (m *ClientManager) UpdateRoom(conn interface{}, room string) {
+func (m *ClientManager) UpdateRoom(conn interface{}, area string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	if info, exists := m.clients[conn]; exists {
-		info.Room = room
+		info.Area = area
 		m.clients[conn] = info
 	}
 }
 
-func (m *ClientManager) Broadcast(msg, room string, isGlobal bool, excludePlayerID string) {
+func (m *ClientManager) Broadcast(msg, area string, isGlobal bool, excludePlayerID string) {
 	m.mu.Lock()
 	defer m.mu.Unlock()
 	for _, info := range m.clients {
-		if isGlobal || (room != "" && info.Room == room) {
+		if isGlobal || (area != "" && info.Area == area) {
 			if excludePlayerID == "" || info.PlayerID != excludePlayerID {
 				info.Send(msg)
 			}

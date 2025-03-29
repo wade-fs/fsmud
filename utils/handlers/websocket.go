@@ -47,7 +47,15 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 		_, message, err := conn.ReadMessage()
 		if err != nil {
 			h.Manager.Remove(conn)
-			h.Context.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
+			_,err := h.Context.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
+			if err != nil {
+				e := err.(*v8.JSError)
+				fmt.Println(e.Message)
+				fmt.Println(e.Location)
+				fmt.Println(e.StackTrace)
+				fmt.Printf("javascript error: %v", e)
+				fmt.Printf("javascript stack trace: %+v", e)
+			}
 			return
 		}
 
@@ -61,7 +69,16 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
 		val, err := h.Context.RunScript(script, "cmd.js")
 		if err != nil {
+			e := err.(*v8.JSError)
+			fmt.Println(e.Message)
+			fmt.Println(e.Location)
+			fmt.Println(e.StackTrace)
+			fmt.Printf("javascript error: %v", e)
+			fmt.Printf("javascript stack trace: %+v", e)
 			conn.WriteMessage(websocket.TextMessage, []byte("Error: " + err.Error()))
+			conn.WriteMessage(websocket.TextMessage, []byte("Message: " + e.Message))
+			conn.WriteMessage(websocket.TextMessage, []byte("Location: " + e.Location))
+			conn.WriteMessage(websocket.TextMessage, []byte("StackTrace: " + e.StackTrace))
 			continue
 		}
 

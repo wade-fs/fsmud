@@ -40,7 +40,7 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 	defer conn.Close()
 
 	playerID := m.GeneratePlayerID()
-	m.Add(conn, "entrance", "telnet")
+	m.Add(conn, "character creation", "telnet")
 	fmt.Fprintf(conn, "Welcome to the MUD!\r\nPlease login or create with: <username> <password>\r\n> ")
 
 	scanner := bufio.NewScanner(conn)
@@ -56,6 +56,12 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 		val, err := ctx.RunScript(script, "cmd.js")
 		if err != nil {
 			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
+			e := err.(*v8.JSError)
+			fmt.Println(e.Message)
+			fmt.Println(e.Location)
+			fmt.Println(e.StackTrace)
+			fmt.Printf("javascript error: %v", e)
+			fmt.Printf("javascript stack trace: %+v", e)
 			continue
 		}
 
@@ -68,22 +74,40 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 		}
 
 		// 更新房間資訊（由 V8 控制）
-		roomScript := fmt.Sprintf(`players["%s"] ? players["%s"].room : "entrance"`, info.PlayerID, info.PlayerID)
-		roomVal, err := ctx.RunScript(roomScript, "get_room.js")
-		if err == nil && roomVal.IsString() {
-			m.UpdateRoom(conn, roomVal.String())
+		areaScript := fmt.Sprintf(`players["%s"] ? players["%s"].area : "character creation"`, info.PlayerID, info.PlayerID)
+		areaVal, err := ctx.RunScript(areaScript, "get_area.js")
+		if err == nil && areaVal.IsString() {
+			m.UpdateRoom(conn, areaVal.String())
 		}
 
 		// 如果收到 quit，清理並退出
 		if input == "quit" {
+			_,err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, info.PlayerID), "cleanup.js")
+			if err != nil {
+				fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
+				e := err.(*v8.JSError)
+				fmt.Println(e.Message)
+				fmt.Println(e.Location)
+				fmt.Println(e.StackTrace)
+				fmt.Printf("javascript error: %v", e)
+				fmt.Printf("javascript stack trace: %+v", e)
+			}
 			m.Remove(conn)
-			ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, info.PlayerID), "cleanup.js")
 			return
 		}
 	}
 	if err := scanner.Err(); err != nil {
 		log.Println("Telnet read error:", err)
 		m.Remove(conn)
-		ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
+		_, err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
+		if err != nil {
+			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
+			e := err.(*v8.JSError)
+			fmt.Println(e.Message)
+			fmt.Println(e.Location)
+			fmt.Println(e.StackTrace)
+			fmt.Printf("javascript error: %v", e)
+			fmt.Printf("javascript stack trace: %+v", e)
+		}
 	}
 }
