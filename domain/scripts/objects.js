@@ -60,7 +60,5 @@ function saveObject(type, name, obj) {
     let filePath = `domain/${type}/${name}.json`;
     let data = obj.toJSON ? obj.toJSON() : obj;
     saveFile(filePath, JSON.stringify(data, null, 2));
-    log("Saving object:", type, name);
     cache[type][name] = obj;
-    log("Cache updated:", type, name);
 }

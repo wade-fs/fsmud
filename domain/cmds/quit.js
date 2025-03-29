@@ -9,7 +9,7 @@ function quit(player, args) {
     }
 
     player.save();
-    log("Player data saved for:", player.id);
+    log("Player data saved for:", JSON.stringify(player, null, 2));
     removePlayer(player.id);
     log("Player removed:", player.id);
     return "goodbye";

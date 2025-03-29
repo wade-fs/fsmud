@@ -11,18 +11,19 @@ function generateUUID() {
     });
 }
 
-function addPlayer(playerId, room, connectionType) {
+function addPlayer(playerId, area, connectionType) {
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, room, connectionType });
-        log("addPlayer", `Player ${playerId} added to room ${room} with connectionType ${connectionType}`);
+        players[playerId] = new Player({ id: playerId, area, connectionType });
+        log("addPlayer", JSON.stringify(players[playerId]));
     } else {
-        players[playerId].room = room;
+        players[playerId].area = area;
         players[playerId].connectionType = connectionType;
-        log("addPlayer", `Player ${playerId} already exists, updated room to ${room} and connectionType to ${connectionType}`);
+        log("addPlayer", `Player ${playerId} already exists, updated area to ${area} and connectionType to ${connectionType}`);
     }
 }
 
 function removePlayer(playerId) {
+    log(`removePlayer(${playerId})`);
     if (players[playerId]) {
         const uuid = players[playerId].uuid;
         delete players[playerId];
@@ -39,9 +40,11 @@ class Player {
         this.uuid = data.uuid || generateUUID();
         this.name = data.name || '';
         this.password = data.password || '';
+        this.nickname = data.nickname || data.name;
+        this.bio = data.bio || data.name;
+        this.race = data.race || "Human";
         this.isAdmin = data.isAdmin || false;
         this.aliases = data.aliases || {};
-        this.inventory = data.inventory || [];
         this.connectionType = data.connectionType || "telnet";
         this.lang = data.lang || "en";
 
@@ -53,27 +56,35 @@ class Player {
         this.mp = data.mp || 100;
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
-        this.race = data.race || "Human";
+        this.inventory = data.inventory || [];
+        log("Player.New()", JSON.stringify(this));
     }
 
     save() {
-        log("player.save()", JSON.stringify(this));
         let playerData = {
             id: this.id,
             uuid: this.uuid,
             name: this.name,
             password: this.password,
-            area: this.area,
+            nickname: this.nickname,
+            bio: this.bio,
+            race: this.race,
             isAdmin: this.isAdmin,
+            aliases: this.aliases,
+            lang: this.lang,
+
+            area: this.area,
             x: this.x,
             y: this.y,
+            level: this.level,
             hp: this.hp,
-            inventory: this.inventory,
-            lang: this.lang
+            mp: this.mp,
+            strength: this.strength,
+            agility: this.agility,
+            inventory: this.inventory
         };
-        log("Saving player:", this.uuid);
         saveObject("players", this.uuid, playerData);
-        log("Player saved:", this.uuid);
+        log(`Player.save()`, JSON.stringify(playerData));
     }
 
     static load(name) {
@@ -89,20 +100,29 @@ class Player {
         log(`Player.load(${name}) not found player file.`);
         return null;
     }
+
     clone() {
         return new Player({
             id: this.id,
             uuid: this.uuid,
             name: this.name,
             password: this.password,
+            nickname: this.nickname,
+            bio: this.bio,
+            race: this.race,
             isAdmin: this.isAdmin,
+            aliases: this.aliases,
+            lang: this.lang,
+
             area: this.area,
             x: this.x,
             y: this.y,
             hp: this.hp,
+            mp: this.mp,
+            strength: this.strength,
+            agility: this.agility,
             inventory: this.inventory.slice(),
-            connectionType: this.connectionType,
-            lang: this.lang
         });
+        log(`Player.clone()`, JSON.stringify(playerData));
     }
 }
