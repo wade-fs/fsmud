@@ -1,56 +1,48 @@
 // domain/cmds/set.js
 function set(player, args) {
-    if (args === "-h" || args === "--help") {
+    if (args === "" || args === "-h" || args === "--help") {
         return i18n(player.lang, "set_help", {
-            usage: "set <subcommand> <value>",
-            description: "Set various properties like language, nickname, bio.",
-            examples: "set lang en, set nick Hero"
+            usage: "set <field> <value>",
+            description: "Set various properties like lang, nickname, bio, race.",
+            examples: "set lang en, set nickname Hero"
         });
     }
-
-    let parts = args.split(" ");
-    if (parts.length < 2) {
-        return i18n("unknown_command");
+    if (player.area != "character creation") {
+        return { type: "error", message: "你只能在角色創建期間使用 'set' 命令。" };
     }
-    let subcommand = parts[0].toLowerCase();
+    let parts = args.split(" ");
+    if (parts.length < 2) { return i18n("unknown_command"); }
+    let field = parts[0].toLowerCase();
     let value = parts.slice(1).join(" ");
-    switch (subcommand) {
-        case "lang":
-            let lang = value;
+    if (["nickname", "race", "bio", "lang"].includes(field)) {
+        if (field === "lang") {
             if (["en", "zh"].includes(lang)) {
-                loadLanguage(lang);
-                player.lang = lang;
-                player.save();
-                return i18n(player.lang, "setlang_success", { lang });
+                player.lang = value;
+                return i18n(player.lang, "setlang_success", { value });
             }
             return i18n(player.lang, "setlang_fail");
-        case "nick":
-            return player.setnick(value);
-        case "bio":
-            return player.setbio(value);
-        case "race":
-            if (["Human", "Dragon", "Elf", "Giant", "Dwarf", "Beastman", "Demon", "OtherAnimal"].includes(newRace)) {
-                this.race = newRace;
+        } else if (field === "race") {
+            if (["human", "dragon", "elf", "giant", "dwarf", "beastman", "demon", "animal"].includes(value.toLowerCase())) {
+                this.race = value;
                 this.applyRaceBonuses();
-                saveObject("players", this.id, this);
-            } else {
-                return "Invalid race.";
-            }
-        default:
-            return i18n("unknown_command");
+            } else { return "Invalid race."; }
+        } else { player[field] = value; }
+    } else {
+        return i18n("unknown_command");
     }
+    player.save();
 }
 
 function applyRaceBonuses() {
     switch (this.race) {
-        case "Dragon":
+        case "dragon":
             this.strength += 3;
             break;
-        case "Dwarf":
-        case "Beastman":
+        case "dwarf":
+        case "beastman":
             this.strength += 1;
             break;
-        case "Elf":
+        case "elf":
             this.agility += 2;
             break;
         default:

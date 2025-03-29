@@ -45,7 +45,13 @@ func LoadV8Scripts(ctx *v8.Context) {
     	    }
 			log.Println("LoadV8Scripts", file, string(scriptBytes))
     	    if _, err := ctx.RunScript(string(scriptBytes), file); err != nil {
-    	        log.Printf("Failed to execute %s: %v\n", file, err)
+    	        log.Printf("[Error] Failed to execute %s: %v\n", file, err)
+				e := err.(*v8.JSError)
+				log.Print(e.Message)
+				log.Print(e.Location)
+				log.Print(e.StackTrace)
+				log.Printf("[Error] javascript error: %v", e)
+				log.Printf("[Error] javascript stack trace: %+v", e)
     	    }
     	}
 	}
@@ -82,7 +88,12 @@ func LoadV8JSON(ctx *v8.Context) {
 	ctx.Global().Set("fileLists", filesVal)
 
 	if _, err := ctx.RunScript("preloadCache();", "preloadCache"); err != nil {
-		log.Fatalf("Failed to preload cache: %v", err)
+		e := err.(*v8.JSError)
+		log.Print(e.Message)
+		log.Print(e.Location)
+		log.Print(e.StackTrace)
+		log.Printf("[Error] javascript error: %v", e)
+		log.Printf("[Error] javascript stack trace: %+v", e)
 	}
 }
 func extractCmds(files []string, ext string) []string {

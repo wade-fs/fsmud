@@ -4,16 +4,16 @@ package v8funcs
 
 import (
 	"fmt"
-	v8 "fsmud/utils/v8go"
+	"fsmud/utils/v8go"
 )
 
-func CbLog() v8.FunctionCallback {
-	return func(info *v8.FunctionCallbackInfo) *v8.Value {
+func CbLog() v8go.FunctionCallback {
+	return func(info *v8go.FunctionCallbackInfo) *v8go.Value {
 		var args []interface{}
 		for _, arg := range info.Args() {
 			args = append(args, arg.String())
 		}
 		fmt.Println("[JS Log]:", args)
-		return v8.Undefined(info.Context().Isolate())
+		return v8go.Undefined(info.Context().Isolate())
 	}
 }

@@ -3,6 +3,7 @@
 package v8funcs
 
 import (
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -36,7 +37,12 @@ func CbSetInterval() v8.FunctionCallback {
 				select {
 				case <-ticker.C:
 					if _, err := info.Context().RunScript("("+callback.String()+")()", "timer.js"); err != nil {
-						log.Printf("Timer execution error: %v", err)
+						e := err.(*v8.JSError)
+						fmt.Println(e.Message)
+						fmt.Println(e.Location)
+						fmt.Println(e.StackTrace)
+						fmt.Printf("javascript error: %v", e)
+						fmt.Printf("javascript stack trace: %+v", e)
 					}
 				case <-ShutdownChan:
 					ticker.Stop()

@@ -67,7 +67,7 @@ class Player {
             isAdmin: this.isAdmin,
             x: this.x,
             y: this.y,
-            health: this.health,
+            hp: this.hp,
             inventory: this.inventory,
             lang: this.lang
         };
@@ -99,7 +99,7 @@ class Player {
             area: this.area,
             x: this.x,
             y: this.y,
-            health: this.health,
+            hp: this.hp,
             inventory: this.inventory.slice(),
             connectionType: this.connectionType,
             lang: this.lang

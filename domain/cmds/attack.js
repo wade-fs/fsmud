@@ -46,9 +46,9 @@ function attack(player, args) {
         totalDamage = Math.floor(totalDamage * 1.5);
     }
 
-    target.health -= totalDamage;
+    target.hp -= totalDamage;
 
-    if (target.health <= 0) {
+    if (target.hp <= 0) {
         let message = `${player.name} killed ${target.name}!`;
         broadcastToArea(message, player.x, player.y);
         delete cache.npcs[target.id];

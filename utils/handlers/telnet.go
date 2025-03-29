@@ -41,7 +41,7 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8.Context) {
 
 	playerID := m.GeneratePlayerID()
 	m.Add(conn, "entrance", "telnet")
-	fmt.Fprintf(conn, "Welcome to the MUD!\r\nPlease login with: login <username> <password>\r\n> ")
+	fmt.Fprintf(conn, "Welcome to the MUD!\r\nPlease login or create with: <username> <password>\r\n> ")
 
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
