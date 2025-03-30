@@ -20,6 +20,7 @@ function login(player, args) {
     let name = parts[0];
     let password = parts[1];
     let playerData = Player.load(name);
+    playerData.connectionType = player.connectionType;
 
     if (playerData) {
         let isValid = comparePassword(playerData.password, password);

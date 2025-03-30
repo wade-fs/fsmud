@@ -24,6 +24,7 @@ function processCommand(playerId, input) {
         // 先執行 login 命令以載入資料或創建新玩家
         if (cmd === "login") {
             let result = this[cmd](player, args);
+            log("\n", `cmd ${cmd}`, JSON.stringify(player), JSON.stringify(result), "\n");
             if (result.type === "login_success") {
                 let statsResult = stats(player, "");
                 let statsMessage = formatOutput(player, statsResult);

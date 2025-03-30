@@ -12,9 +12,10 @@ function generateUUID() {
 }
 
 function addPlayer(playerId, area, connectionType) {
+    log(`addPlayer(${playerId}, ${area}, ${connectionType})`);
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: "telnet" });
-        log("addPlayer", JSON.stringify(players[playerId]));
+        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: connectionType });
+        log("addPlayer!", JSON.stringify(players[playerId]));
     } else {
         players[playerId].area = area;
         players[playerId].connectionType = connectionType;
@@ -36,6 +37,7 @@ function removePlayer(playerId) {
 
 class Player {
     constructor(data) {
+        log("Player constructor", JSON.stringify(data));
         this.id = data.id;
         this.name = data.name         || '';
         this.password = data.password || '';
