@@ -57,7 +57,7 @@
     "night": "晚上",
     "setlang_success": "語言設置為 {lang}。",
     "setlang_fail": "無效的語言選擇。可用語言: en, zh",
-    "look_room": "[{area}] {desc} (時間: {time}) 出口: {exits}\n{items}",
+    "look_room": "[{area}](時間: {time})\n  {desc}\n出口: {exits}\n{items}",
     "look_item": "{item}: {desc} (重量: {weight}, 價值: {value})",
     "look_npcs": " NPC: {npcs}",
     "look_players": " 在這裡的玩家: {players}",

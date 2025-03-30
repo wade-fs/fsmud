@@ -52,7 +52,7 @@
     "update_time": "It is {time}.",
     "setlang_success": "Language set to {lang}.",
     "setlang_fail": "Invalid language choice. Available languages: en, zh",
-    "look_room": "[{area}] {desc} (Time: {time}) Exits: {exits}\n{items}",
+    "look_room": "[{area}] (Time: {time})\n  {desc}\nExits: {exits}\n{items}",
     "look_item": "{item}: {desc} (Weight: {weight}, Value: {value})",
     "look_players": " Players here: {players}",
     "look_player": "{id}{nick} [{race}]{bio}\nHP: {hp}, Mana: {mana}, Int: {int}, Spi: {spi}, Luck: {luck}",
