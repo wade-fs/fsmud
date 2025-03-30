@@ -57,6 +57,7 @@ class Player {
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
         this.inventory = data.inventory || [];
+        this.avatar = data.avatar || [];
         log("Player.New()", JSON.stringify(this));
     }
 
@@ -81,7 +82,8 @@ class Player {
             mp: this.mp,
             strength: this.strength,
             agility: this.agility,
-            inventory: this.inventory
+            inventory: this.inventory,
+            avatar: this.avatar
         };
         saveObject("players", this.uuid, playerData);
         log(`Player.save()`, JSON.stringify(playerData));
@@ -122,6 +124,7 @@ class Player {
             strength: this.strength,
             agility: this.agility,
             inventory: this.inventory.slice(),
+            avatar: this.avatar
         });
         log(`Player.clone()`, JSON.stringify(playerData));
     }

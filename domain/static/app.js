@@ -55,11 +55,15 @@ function sendCommand() {
 }
 
 function formatPlayerInfo(data) {
+    renderShapes(data.avatar, "player-avatar");
     return `
         <p>Name: ${data.name || "Unknown"}</p>
         <p>Level: ${data.level}</p>
         <p>HP: ${data.hp}</p>
         <p>MP: ${data.mp}</p>
+        <p>SP: ${data.strength}</p>
+        <p>AP: ${data.agility}</p>
+        <p>WT: ${data.weight}</p>
     `;
 }
 

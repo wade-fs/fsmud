@@ -15,12 +15,14 @@ function stats(player, args) {
     }, 0);
 
     let statsData = {
+        name: player.name,
         level: player.level,
         hp: player.hp,
         mp: player.mp,
         strength: player.strength,
         agility: player.agility,
         weight: totalWeight,
+        avatar: player.avatar
     };
 
     if (player.connectionType === "websocket") {
