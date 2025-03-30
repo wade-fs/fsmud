@@ -1,0 +1,12 @@
+{
+    "id": "apple",
+    "name": "Apple",
+    "desc": "A ripe red apple.",
+    "weight": 0.5,
+    "value": 2,
+    "usable": true,
+    "effect": {
+        "type": "heal",
+        "amount": 5
+    }
+}

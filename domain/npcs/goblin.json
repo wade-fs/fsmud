@@ -1,0 +1,9 @@
+// domain/npcs/goblin.json
+
+{
+    "id": "goblin",
+    "name": "哥布林",
+    "hp": 50,
+    "defense": 5,
+    "behavior": "patrol"
+}

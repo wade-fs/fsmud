@@ -1,0 +1,9 @@
+{
+    "id": "village_guard",
+    "name": "Village Guard",
+    "desc": "A stern guard watching the square.",
+    "hp": 80,
+    "attack": 8,
+    "dialogue": "State your business, traveler.",
+    "isHostile": false
+}

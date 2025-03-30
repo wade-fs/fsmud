@@ -1,0 +1,13 @@
+out/
+players/
+
+go.sum
+go.work
+go.work.sum
+
+.env
+mudlib.sh
+mudlib.txt
+mudlib-all.js
+*log
+M

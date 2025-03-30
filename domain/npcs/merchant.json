@@ -1,0 +1,9 @@
+{
+    "id": "merchant",
+    "name": "Merchant",
+    "desc": "A friendly vendor selling goods.",
+    "hp": 50,
+    "attack": 3,
+    "dialogue": "Care for some fresh apples?",
+    "isHostile": false
+}

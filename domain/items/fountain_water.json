@@ -1,0 +1,12 @@
+{
+    "id": "fountain_water",
+    "name": "Fountain Water",
+    "desc": "Cool, refreshing water from the fountain.",
+    "weight": 1,
+    "value": 5,
+    "usable": true,
+    "effect": {
+        "type": "heal",
+        "amount": 10
+    }
+}
