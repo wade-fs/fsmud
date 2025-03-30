@@ -1,6 +1,8 @@
-# FSMUD - Fantasy Scripted Multi-User Dungeon
+# FSMUD - Fantasy Space Multi-User Dungeon
 
 FSMUD 是一個使用 Go 和 JavaScript（通過 V8 引擎）構建的多用戶地牢（MUD）遊戲。它結合了 Go 的高性能和 JavaScript 的靈活性，提供了一個可擴展的框架，用於創建基於文本的冒險遊戲。玩家可以通過 WebSocket 或 Telnet 連接到虛擬世界，探索區域、與 NPC 戰鬥、收集物品並與其他玩家互動。
+
+每次編譯都會因為[v8go][9]而卡住，所以下載到utils/v8go。請參考來源網址。
 
 
 ## 特點
@@ -110,7 +112,7 @@ fsmud/
 - 主要的 mudlib 腳本已從 domain/ 根目錄移至 domain/scripts/，以更好地組織代碼。
 
 ## 數據存儲
-- 玩家數據：保存為 domain/players/<uuid>.json。
+- 玩家數據：保存為 domain/players/&lt;uuid&gt;.json。
 - 區域數據：存儲在 domain/areas/ 中，以 JSON 文件形式表示。
 
 ## 開發和擴展
@@ -144,7 +146,7 @@ function mycommand(player, args) {
 - 使用 go 命令探索該區域。
 
 ### 多語言支持
-- 編輯 domain/lang/<lang>.json，添加消息鍵，例如：
+- 編輯 domain/lang/&lt;lang&gt;.json，添加消息鍵，例如：
 ```json
 {
     "welcome_new": "Welcome, {username}!"

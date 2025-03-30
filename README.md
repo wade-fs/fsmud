@@ -1,6 +1,8 @@
-# FSMUD - Fantasy Scripted Multi-User Dungeon
+# FSMUD - Fantasy Space Multi-User Dungeon
 
 FSMUD is a multi-user dungeon (MUD) game built with Go and JavaScript (via the V8 engine). It combines the high performance of Go with the flexibility of JavaScript to provide an extensible framework for creating text-based adventure games. Players can connect to the virtual world via WebSocket or Telnet to explore areas, fight NPCs, collect items, and interact with other players.
+
+Because every compilation will be stuck due to [v8go][9], just download it to utils/v8go. Please refer to the source URL.
 
 
 ## Features
@@ -110,7 +112,7 @@ Compared with previous versions:
 - The main mudlib scripts have been moved from the domain/ root directory to domain/scripts/ to better organize the code.
 
 ## Data Storage
-- Player data: saved as domain/players/<uuid>.json.
+- Player data: saved as domain/players/&lt;uuid&gt;.json.
 - Area data: stored in domain/areas/ and represented in JSON files.
 
 ## Development and Extension
@@ -144,10 +146,10 @@ return "Hello from mycommand!";
 - Use the go command to explore the area.
 
 ### Multi-language support
-- Edit domain/lang/<lang>.json and add a message key, for example:
+- Edit domain/lang/&lt;lang&gt;.json and add a message key, for example:
 ```json
 {
-"welcome_new": "Welcome, {username}!"
+  "welcome_new": "Welcome, {username}!"
 }
 ```
 
@@ -166,7 +168,7 @@ Feel free to report issues or suggest features on the Issues page!
 This project uses the MIT license. See the LICENSE file for details.
 Enjoy exploring the world of FSMUD! If you have questions or need help, please let us know.
 
-## [TODO][103] (possibly indefinite)
+## [TODO][103] (Written in chinese, possibly indefinite)
 - Not specifically listed here, please refer to [To Do Link][103]
 
 # Advanced Information
@@ -191,3 +193,4 @@ Enjoy exploring the world of FSMUD! If you have questions or need help, please l
 [100]: docs/README-Progress.md
 [101]: docs/README-Thinking.md
 [102]: docs/README-Whats-TODO.md
+[103]: docs/README-TODO.zh.md
