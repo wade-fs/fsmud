@@ -83,3 +83,32 @@ document.getElementById("command").addEventListener("keydown", function(event) {
         sendCommand();
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    // 動態創建 #graphics div 並插入 #left-panel
+    var leftPanel = document.getElementById("left-panel");
+    var graphicsDiv = document.createElement("div");
+    graphicsDiv.id = "graphics";
+    graphicsDiv.style.height = "200px"; // 設定高度以容納圖形
+    // 在 #room-info 之前插入
+    leftPanel.insertBefore(graphicsDiv, document.getElementById("room-info"));
+
+    // 初始化 Two.js
+    var params = { width: 280, height: 200 }; // 設定畫布大小
+    var two = new Two(params).appendTo(graphicsDiv);
+
+    // 繪製一個矩形
+    var rect = two.makeRectangle(140, 100, 100, 50); // 中心點 (140, 100)，寬 100，高 50
+    rect.fill = "#FF8000"; // 填充橘色
+    rect.stroke = "orangered"; // 邊框為橙紅色
+    rect.linewidth = 5; // 邊框寬度
+
+    // 繪製一個圓形
+    var circle = two.makeCircle(140, 100, 30); // 中心點 (140, 100)，半徑 30
+    circle.fill = "#00FF00"; // 填充綠色
+    circle.stroke = "green"; // 邊框為深綠色
+    circle.linewidth = 3; // 邊框寬度
+
+    // 更新畫面以顯示圖形
+    two.update();
+});
