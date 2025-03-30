@@ -85,13 +85,7 @@ document.getElementById("command").addEventListener("keydown", function(event) {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    // 動態創建 #graphics div 並插入 #left-panel
-    var leftPanel = document.getElementById("left-panel");
-    var graphicsDiv = document.createElement("div");
-    graphicsDiv.id = "graphics";
-    graphicsDiv.style.height = "200px"; // 設定高度以容納圖形
-    // 在 #room-info 之前插入
-    leftPanel.insertBefore(graphicsDiv, document.getElementById("room-info"));
+    var graphicsDiv = document.getElementById("graphics");
 
     // 初始化 Two.js
     var params = { width: 280, height: 200 }; // 設定畫布大小
