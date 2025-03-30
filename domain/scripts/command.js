@@ -55,6 +55,8 @@ function processCommand(playerId, input) {
 
 // Helper function to format output based on connectionType
 function formatOutput(player, result) {
+    log("formatOutput player", JSON.stringify(player, null, 2));
+    log("formatOutput result", JSON.stringify(result, null, 2));
     if (player.connectionType === "websocket") {
         if (typeof result === "object") {
             return JSON.stringify(result); // Already structured
