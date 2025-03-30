@@ -13,7 +13,7 @@ function generateUUID() {
 
 function addPlayer(playerId, area, connectionType) {
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: "telnet" });
+        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: connectionType });
         log("addPlayer", JSON.stringify(players[playerId]));
     } else {
         players[playerId].area = area;
