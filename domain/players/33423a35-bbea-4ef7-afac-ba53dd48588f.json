@@ -1,0 +1,28 @@
+{
+  "id": "temp_1_1742994915687323439",
+  "uuid": "33423a35-bbea-4ef7-afac-ba53dd48588f",
+  "name": "wade",
+  "password": "$2a$10$8bDeUU5U730bccV71Yx32OvfxDu/UC4F8ibsIkbGLrZN3CRAOeUCm",
+  "nickname": "wade",
+  "bio": "wade",
+  "race": "Human",
+  "isAdmin": true,
+  "aliases": {},
+  "lang": "zh",
+  "area": "entrance",
+  "x": 1,
+  "y": 0,
+  "level": 1,
+  "hp": 100,
+  "mp": 100,
+  "strength": 10,
+  "agility": 10,
+  "inventory": [
+    "Apple"
+  ],
+  "avatar": [
+    {"type": "circle", "x": 50, "y": 50, "radius": 40, "fill": "#FF0000", "stroke": "#000000", "linewidth": 2},
+    {"type": "circle", "x": 40, "y": 40, "radius": 5, "fill": "#000000", "stroke": "#000000", "linewidth": 1},
+    {"type": "circle", "x": 60, "y": 40, "radius": 5, "fill": "#000000", "stroke": "#000000", "linewidth": 1}
+  ]
+}
