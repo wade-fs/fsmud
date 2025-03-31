@@ -1,20 +1,26 @@
 var twoInstances = {};
 
 function renderShapes(shapes, divId) {
-    if (typeof shapes === 'object' && shapes !== null && !Array.isArray(shapes)) {
-        var allShapes = [];
-
-        for (var key in shapes) {
-            if (shapes[key].shapes && Array.isArray(shapes[key].shapes)) {
-                allShapes = allShapes.concat(shapes[key].shapes);
-            }
+    var features = shapes;
+    
+    Object.keys(features).forEach(function(featureKey) {
+        var feature = features[featureKey];
+        if (feature.shapes && Array.isArray(feature.shapes)) {
+            feature.shapes.forEach(function(shape) {
+                if (!('fill' in shape) || shape.fill == null) {
+                    if (feature.color) {
+                        shape.fill = feature.color;
+                    }
+                }
+            });
         }
-        shapes = allShapes;
-    }
+    });
 
-    if (!Array.isArray(shapes)) {
-        log("錯誤：shapes 參數必須是數組或包含 shapes 數組的對象");
-        return;
+    var allShapes = [];
+    for (var key in shapes) {
+        if (shapes[key].shapes && Array.isArray(shapes[key].shapes)) {
+            allShapes = allShapes.concat(shapes[key].shapes);
+        }
     }
 
     var div = document.getElementById(divId);
@@ -25,7 +31,7 @@ function renderShapes(shapes, divId) {
 
     two.clear();
 
-    for (var shape of shapes) {
+    for (var shape of allShapes) {
         switch (shape.type) {
             case 'rectangle':
                 var rect = two.makeRectangle(shape.x, shape.y, shape.width, shape.height);
