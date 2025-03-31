@@ -15,6 +15,7 @@ function stats(player, args) {
     }, 0);
 
     let statsData = {
+        name: player.name,
         level: player.level,
         hp: player.hp,
         mp: player.mp,

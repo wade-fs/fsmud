@@ -46,9 +46,9 @@ func main() {
 	v8funcs.LoadV8JSON(ctx)
 
 	r := gin.Default()
-	r.Static("/domain/static", "./domain/static")
+	r.Static("/frontend", "./frontend")
 	r.GET("/", func(c *gin.Context) {
-		c.File("./domain/static/index.html")
+		c.File("./frontend/index.html")
 	})
 
 	wsHandler := handlers.NewWebSocketHandler(manager, ctx)

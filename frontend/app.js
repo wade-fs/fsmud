@@ -1,4 +1,4 @@
-// static/app.js
+// frontend/app.js
 let ws = new WebSocket("ws://localhost:8080/ws");
 
 ws.onmessage = function(event) {
@@ -67,6 +67,9 @@ function formatPlayerInfo(data) {
         <p>Level: ${data.level}</p>
         <p>HP: ${data.hp}</p>
         <p>MP: ${data.mp}</p>
+        <p>SP: ${data.strength}</p>
+        <p>AP: ${data.agility}</p>
+        <p>WT: ${data.weight}</p>
     `;
 }
 
