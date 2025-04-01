@@ -37,6 +37,16 @@
       }
     ]
   },
+    "head": {"shapes": [
+    {
+      "type": "circle",
+      "x": 50,
+      "y": 50,
+      "radius": 40,
+      "fill": "#FF0000",
+      "stroke": "#000000",
+      "linewidth": 2
+    }]},
   "eyes": {
     "color": "#4A90E2",
     "shapes": [
