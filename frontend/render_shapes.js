@@ -57,33 +57,29 @@ function renderShapes(shapes, divId) {
                 ellipse.linewidth = shape.linewidth || 1;
                 break;
             case 'triangle':
-                var points = shape.points.map(p => [p.x, p.y]);
-                var triangle = two.makePolygon(points, true);
+                var points = shape.points.map(p => new Two.Anchor(p[0], p[1]));
+                var triangle = two.makePath(points, false, false);
                 triangle.fill = shape.fill || 'none';
                 triangle.stroke = shape.stroke || '#000000';
                 triangle.linewidth = shape.linewidth || 1;
+                triangle.closed = true;
                 break;
+/*{
+  "type": "arrow",
+  "x1": 10,
+  "y1": 10,
+  "x2": 100,
+  "y2": 100,
+  "headlen": 20,
+  "fill": "#000000",
+  "stroke": "#000000",
+  "linewidth": 2
+}*/
             case 'arrow':
-                var line = two.makeLine(shape.start_x, shape.start_y, shape.end_x, shape.end_y);
-                line.stroke = shape.stroke;
-                line.linewidth = shape.linewidth || 1;
-                var dx = shape.end_x - shape.start_x;
-                var dy = shape.end_y - shape.start_y;
-                var distance = Math.sqrt(dx * dx + dy * dy);
-                var unit_dx = dx / distance;
-                var unit_dy = dy / distance;
-                var perpendicular_dx = -unit_dy;
-                var perpendicular_dy = unit_dx;
-                var base_point_x = shape.end_x - unit_dx * shape.arrow_length;
-                var base_point_y = shape.end_y - unit_dy * shape.arrow_length;
-                var arrow_point1_x = base_point_x + perpendicular_dx * (shape.arrow_width / 2);
-                var arrow_point1_y = base_point_y + perpendicular_dy * (shape.arrow_width / 2);
-                var arrow_point2_x = base_point_x - perpendicular_dx * (shape.arrow_width / 2);
-                var arrow_point2_y = base_point_y - perpendicular_dy * (shape.arrow_width / 2);
-                var arrowhead = two.makePolygon([ [shape.end_x, shape.end_y], [arrow_point1_x, arrow_point1_y], [arrow_point2_x, arrow_point2_y] ]);
-                arrowhead.fill = shape.fill;
-                arrowhead.stroke = shape.stroke;
-                arrowhead.linewidth = shape.linewidth || 1;
+                var arrow = two.makeArrow(shape.x1, shape.y1, shape.x2, shape.y2, shape.headlen);
+                arrow.fill = shape.fill || 'none';
+                arrow.stroke = shape.stroke || '#000000';
+                arrow.linewidth = shape.linewidth || 1;
                 break;
             case 'pentagon':
                 var points = [];
@@ -99,19 +95,89 @@ function renderShapes(shapes, divId) {
                 pentagon.stroke = shape.stroke;
                 pentagon.linewidth = shape.linewidth || 1;
                 break;
+/*{
+  "type": "star",
+  "center_x": 50,
+  "center_y": 50,
+  "outer_radius": 30,
+  "inner_radius": 15,
+  "points": 5,
+  "fill": "#FFD700",
+  "stroke": "#000000",
+  "linewidth": 1
+}*/
             case 'star':
-                var angles = [0, 72, 144, 216, 288].map(a => a * Math.PI / 180);
-                var points = angles.map(a => [shape.center_x + shape.outer_radius * Math.cos(a), shape.center_y + shape.outer_radius * Math.sin(a)]);
-                var path = two.makePath();
-                path.fill = shape.fill;
-                path.stroke = shape.stroke;
-                path.linewidth = shape.linewidth || 1;
-                path.moveTo(points[0][0], points[0][1]);
-                path.lineTo(points[2][0], points[2][1]);
-                path.lineTo(points[4][0], points[4][1]);
-                path.lineTo(points[1][0], points[1][1]);
-                path.lineTo(points[3][0], points[3][1]);
-                path.closePath();
+                var star = two.makeStar(shape.center_x, shape.center_y, shape.outer_radius, shape.inner_radius, shape.points);
+                star.fill = shape.fill || 'none';
+                star.stroke = shape.stroke || '#000000';
+                star.linewidth = shape.linewidth || 1;
+                break;
+/*{
+  "type": "curve",
+  "points": [
+    [10, 10],
+    [20, 50],
+    [30, 20],
+    [40, 60]
+  ],
+  "closed": false,
+  "fill": "none",
+  "stroke": "#000000",
+  "linewidth": 2
+}*/
+            case 'curve':
+                var curve = two.makeCurve(shape.points.map(p => [p[0], p[1]]), shape.closed || false);
+                curve.fill = shape.fill || 'none';
+                curve.stroke = shape.stroke || '#000000';
+                curve.linewidth = shape.linewidth || 1;
+                break;
+/*{
+  "type": "arcsegment",
+  "x": 50,
+  "y": 50,
+  "inner_radius": 20,
+  "outer_radius": 30,
+  "start_angle": 0,
+  "end_angle": 1.57,
+  "fill": "#FF0000",
+  "stroke": "#000000",
+  "linewidth": 1
+}*/
+            case 'arcsegment':
+                var arc = two.makeArcSegment(shape.x, shape.y, shape.inner_radius, shape.outer_radius, shape.start_angle, shape.end_angle);
+                arc.fill = shape.fill || 'none';
+                arc.stroke = shape.stroke || '#000000';
+                arc.linewidth = shape.linewidth || 1;
+                break;
+/*{
+  "type": "points",
+  "points": [
+    [10, 10],
+    [20, 20],
+    [30, 30]
+  ],
+  "fill": "#000000",
+  "size": 5
+}*/
+            case 'points':
+                var pts = two.makePoints(shape.points.map(p => [p[0], p[1]]));
+                pts.fill = shape.fill || '#000000';
+                pts.stroke = shape.stroke || 'none';
+                pts.size = shape.size || 5;
+                break;
+/*{
+  "type": "text",
+  "x": 50,
+  "y": 50,
+  "value": "Hello, Two.js!",
+  "fill": "#000000",
+  "size": 20
+}*/
+            case 'text':
+                var text = two.makeText(shape.value, shape.x, shape.y);
+                text.fill = shape.fill || '#000000';
+                text.stroke = shape.stroke || 'none';
+                text.size = shape.size || 20;
                 break;
             case 'path':
                 var path = two.makePath();
