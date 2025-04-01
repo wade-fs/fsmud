@@ -36,6 +36,9 @@ ws.onmessage = function(event) {
         case "login_success":
             output.textContent += `${data.message}\n`;
             break;
+        case "two":
+            renderShapes(data.data, "two-obj");
+            break;
         default:
             if (data.message) {
                 output.textContent += output.textContent += tryParseJsonMessage(data.message) + "\n";

@@ -13,7 +13,7 @@ func CbLog() v8go.FunctionCallback {
 		for _, arg := range info.Args() {
 			args = append(args, arg.String())
 		}
-		fmt.Println("[JS Log]:", args)
+		fmt.Println("[JS.Log]:", args)
 		return v8go.Undefined(info.Context().Isolate())
 	}
 }

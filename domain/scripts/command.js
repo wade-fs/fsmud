@@ -45,7 +45,6 @@ function processCommand(playerId, input) {
 
         // 執行其他命令
         let result = this[cmd](player, args);
-        log("\n", `cmd ${cmd}`, JSON.stringify(player), JSON.stringify(result), "\n");
         return formatOutput(player, result);
     } else {
         log("processCommand", "Unknown command:", cmd);
@@ -55,8 +54,6 @@ function processCommand(playerId, input) {
 
 // Helper function to format output based on connectionType
 function formatOutput(player, result) {
-    log("formatOutput player", JSON.stringify(player, null, 2));
-    log("formatOutput result", JSON.stringify(result, null, 2));
     if (player.connectionType === "websocket") {
         if (typeof result === "object") {
             return JSON.stringify(result); // Already structured
