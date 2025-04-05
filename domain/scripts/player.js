@@ -13,7 +13,7 @@ function generateUUID() {
 
 function addPlayer(playerId, area, connectionType) {
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: connectionType });
+        new Player({ id: playerId, area: "character creation", connectionType: connectionType });
         log("addPlayer", JSON.stringify(players[playerId]));
     } else {
         players[playerId].area = area;
@@ -58,7 +58,8 @@ class Player {
         this.agility = data.agility || 10;
         this.inventory = data.inventory || [];
         this.avatar = data.avatar || [];
-        log("Player.New()", JSON.stringify(this));
+        players[this.id] = this;
+        log("Player.constructor()", JSON.stringify(this));
     }
 
     save() {
@@ -94,6 +95,7 @@ class Player {
             let uuid = file.split('/').pop().replace('.json', '');
             let playerData = loadObject("players", uuid); // 修正 type 為 "players"
             if (playerData && playerData.name === name) {
+                log(`Found player data, call Player.load(${name})`);
                 return new Player(playerData);
             } else {
                 log(`Player.load(${name}) with uuid=${uuid} not match name ${playerData.name}`);
@@ -104,6 +106,7 @@ class Player {
     }
 
     clone() {
+        log(`Player.clone()`, JSON.stringify(this));
         return new Player({
             id: this.id,
             uuid: this.uuid,
@@ -126,6 +129,5 @@ class Player {
             inventory: this.inventory.slice(),
             avatar: this.avatar
         });
-        log(`Player.clone()`, JSON.stringify(playerData));
     }
 }

@@ -21,9 +21,6 @@ ws.onmessage = function(event) {
         case "global_broadcast":
             output.textContent += output.textContent += tryParseJsonMessage(data.message) + "\n";
             break;
-        case "stats":
-            document.getElementById("player-info").innerHTML = formatPlayerInfo(data.data);
-            break;
         case "player_update":
             document.getElementById("player-info").innerHTML = formatPlayerInfo(data.player);
             break;
@@ -36,7 +33,11 @@ ws.onmessage = function(event) {
         case "login_success":
             output.textContent += `${data.message}\n`;
             break;
+        case "stats":
+            document.getElementById("player-info").innerHTML = formatPlayerInfo(data.data);
+            break;
         case "two":
+            console.log("two.data", data.data);
             renderShapes(data.data, "two-obj");
             break;
         default:

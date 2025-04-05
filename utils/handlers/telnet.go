@@ -8,6 +8,7 @@ import (
 	"fsmud/utils/client"
 	"fsmud/utils/v8funcs"
 	"fsmud/utils/v8go"
+	"html/template"
 	"log"
 	"net"
 	"strings"
@@ -70,18 +71,20 @@ func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8go.Context) {
 			continue
 		}
 		if char == 13 { // ENTER 鍵
-			input := strings.TrimSpace(string(inputBuffer))
 			info, exists := m.Get(conn)
 			if !exists {
 				continue
 			}
-			if input != "" {
+
+			_input := strings.TrimSpace(string(inputBuffer))
+			if _input != "" {
 				historyMutex.Lock()
-				history = append(history, input)
+				history = append(history, _input)
 				historyIndex = len(history)
 				historyMutex.Unlock()
 			}
 
+			input := template.JSEscapeString(strings.TrimSpace(string(_input)))
 			script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
         	fmt.Printf("Run V8: '%s'\n", script)
 			val, err := ctx.RunScript(script, "cmd.js")

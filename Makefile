@@ -23,4 +23,4 @@ all: mud
 	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@
 
 run:
-	@ $(OUT)/mud
+	@ $(OUT)/mud 2>&1 | tee run.log

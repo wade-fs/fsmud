@@ -17,6 +17,7 @@ function login(player, args) {
         return { type: "error", message: "Usage: login <name> <password>" };
     }
 
+    let oldId = player.id;
     let name = parts[0];
     let password = parts[1];
     let playerData = Player.load(name);
@@ -27,6 +28,7 @@ function login(player, args) {
         if (!isValid) {
             return { type: "error", message: "Incorrect password." };
         }
+        playerData.id = oldId;
         Object.assign(player, playerData);
     } else {
         player.name = name;
