@@ -13,13 +13,23 @@ function tryParseJsonMessage(message) {
 }
 
 ws.onmessage = function(event) {
-    let data = JSON.parse(event.data);
     let output = document.getElementById("output");
+    var rawData = event.data;
+    var data;
+
+    try {
+        data = JSON.parse(rawData);
+    } catch (e) {
+        console.log("收到非 JSON 資料:", rawData);
+        output.textContent += rawData + "\n";
+        return;
+    }
+
     switch (data.type) {
         case "command_result":
         case "broadcast":
         case "global_broadcast":
-            output.textContent += output.textContent += tryParseJsonMessage(data.message) + "\n";
+            output.textContent += tryParseJsonMessage(data.message) + "\n";
             break;
         case "player_update":
             document.getElementById("player-info").innerHTML = formatPlayerInfo(data.player);
@@ -48,7 +58,7 @@ ws.onmessage = function(event) {
             break;
         default:
             if (data.message) {
-                output.textContent += output.textContent += tryParseJsonMessage(data.message) + "\n";
+                output.textContent += tryParseJsonMessage(data.message) + "\n";
             } else {
                 output.textContent += "收到未定義的訊息類型: " + JSON.stringify(data) + "\n";
             }
