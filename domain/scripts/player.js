@@ -13,7 +13,7 @@ function generateUUID() {
 
 function addPlayer(playerId, area, connectionType) {
     if (!players[playerId]) {
-        new Player({ id: playerId, area: "character creation", connectionType: connectionType });
+        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType });
         log("addPlayer", JSON.stringify(players[playerId]));
     } else {
         players[playerId].area = area;
@@ -64,7 +64,6 @@ class Player {
 
     save() {
         let playerData = {
-            id: this.id,
             uuid: this.uuid,
             name: this.name,
             password: this.password,
@@ -96,9 +95,7 @@ class Player {
             let playerData = loadObject("players", uuid); // 修正 type 為 "players"
             if (playerData && playerData.name === name) {
                 log(`Found player data, call Player.load(${name})`);
-                return new Player(playerData);
-            } else {
-                log(`Player.load(${name}) with uuid=${uuid} not match name ${playerData.name}`);
+                return playerData;
             }
         }
         log(`Player.load(${name}) not found player file.`);

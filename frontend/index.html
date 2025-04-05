@@ -2,6 +2,9 @@
 <html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>MUD Client</title>
     <link rel="stylesheet" href="/frontend/style.css">
 </head>
@@ -15,10 +18,10 @@
                 <h2>房間資料</h2>
                 <div id="room-info"></div>
                 <div id="room-schematic" style="width: 200px; height: 150px;"></div>
+                <div id="two-obj" style="width: 200px; height: 300px;"></div>
             </div>
             <div id="right-panel">
                 <h2>對話歷程</h2>
-                <div id="two-obj" style="width: 400px; height: 300px;"></div>
                 <pre id="output"></pre>
             </div>
         </div>
@@ -27,8 +30,8 @@
             <button id="send-button" onclick="sendCommand()">發送</button>
         </div>
     </div>
-    <script src="/frontend/two.js"></script>
-    <script src="/frontend/render_shapes.js"></script>
-    <script src="/frontend/app.js"></script>
+    <script src="/frontend/two.js?v=8"></script>
+    <script src="/frontend/render_shapes.js?v=8"></script>
+    <script src="/frontend/app.js?v=8"></script>
 </body>
 </html>

@@ -37,8 +37,14 @@ ws.onmessage = function(event) {
             document.getElementById("player-info").innerHTML = formatPlayerInfo(data.data);
             break;
         case "two":
-            console.log("two.data", data.data);
-            renderShapes(data.data, "two-obj");
+            let twoDivId = "two-obj";
+            let div = document.getElementById(twoDivId);
+            if (!twoInstances[twoDivId]) {
+                twoInstances[twoDivId] = new Two({ width: div.offsetWidth, height: div.offsetHeight }).appendTo(div);
+            }
+            let two = twoInstances[twoDivId];
+            renderShape(data.data, two);
+            two.update();
             break;
         default:
             if (data.message) {
