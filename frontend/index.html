@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>MUD Client</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+</head>
+<body>
+    <div id="container">
+        <div id="main">
+            <div id="left-panel">
+                <h2>玩家資料</h2>
+                <div id="player-info"></div>
+                <div id="player-avatar" style="width: 100px; height: 100px;"></div>
+                <h2>房間資料</h2>
+                <div id="room-info"></div>
+                <div id="room-schematic" style="width: 200px; height: 150px;"></div>
+                <div id="two-obj" style="width: 200px; height: 300px;"></div>
+            </div>
+            <div id="right-panel">
+                <h2>對話歷程</h2>
+                <pre id="output"></pre>
+            </div>
+        </div>
+        <div id="command-area">
+            <input id="command" type="text" placeholder="輸入指令">
+            <button id="send-button" onclick="sendCommand()">發送</button>
+        </div>
+    </div>
+    <script src="/frontend/two.js?v=28"></script>
+    <script src="/frontend/render_shapes.js?v=28"></script>
+    <script src="/frontend/app.js?v=28"></script>
+</body>
+</html>

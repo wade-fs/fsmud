@@ -8,6 +8,7 @@ import (
 	"fsmud/utils/v8go"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"html/template"
 	"net/http"
 	"log"
 	"strings"
@@ -59,13 +60,13 @@ func (h *WebSocketHandler) Handle(c *gin.Context) {
 			return
 		}
 
-		input := strings.TrimSpace(string(message))
 		info, exists := h.Manager.Get(conn)
 		if !exists {
 			continue
 		}
 
 		// 將所有輸入交給 V8 的 processCommand 處理
+		input := template.JSEscapeString(strings.TrimSpace(string(message)))
 		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
 		val, err := h.Context.RunScript(script, "cmd.js")
 		if err != nil {

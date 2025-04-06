@@ -1,26 +1,35 @@
-// static/app.js
+// frontend/app.js
 let ws = new WebSocket("ws://localhost:8080/ws");
 
+function tryParseJsonMessage(message) {
+    try {
+        if (typeof message === "string" && message.startsWith("{")) {
+            return JSON.parse(message).description || message;
+        }
+    } catch (e) {
+        // 解析失敗，返回原始訊息
+    }
+    return message;
+}
+
 ws.onmessage = function(event) {
-    let data = JSON.parse(event.data);
     let output = document.getElementById("output");
+    var rawData = event.data;
+    var data;
+
+    try {
+        data = JSON.parse(rawData);
+    } catch (e) {
+        console.log("收到非 JSON 資料:", rawData);
+        output.textContent += rawData + "\n";
+        return;
+    }
+
     switch (data.type) {
         case "command_result":
         case "broadcast":
         case "global_broadcast":
-            // 如果 message 是 JSON 字串，嘗試解析
-            let message = data.message;
-            try {
-                if (typeof message === "string" && message.startsWith("{")) {
-                    message = JSON.parse(message).description || data.message;
-                }
-            } catch (e) {
-                // 如果解析失敗，直接使用原始 message
-            }
-            output.textContent += message + "\n";
-            break;
-        case "stats":
-            document.getElementById("player-info").innerHTML = formatPlayerInfo(data.data);
+            output.textContent += tryParseJsonMessage(data.message) + "\n";
             break;
         case "player_update":
             document.getElementById("player-info").innerHTML = formatPlayerInfo(data.player);
@@ -34,18 +43,22 @@ ws.onmessage = function(event) {
         case "login_success":
             output.textContent += `${data.message}\n`;
             break;
+        case "stats":
+            document.getElementById("player-info").innerHTML = formatPlayerInfo(data.data);
+            break;
+        case "two":
+            let twoDivId = "two-obj";
+            let div = document.getElementById(twoDivId);
+            if (!twoInstances[twoDivId]) {
+                twoInstances[twoDivId] = new Two({ width: div.offsetWidth, height: div.offsetHeight }).appendTo(div);
+            }
+            let two = twoInstances[twoDivId];
+            renderShape(data.data, two);
+            two.update();
+            break;
         default:
-            // 處理未知的 type
             if (data.message) {
-                let defaultMessage = data.message;
-                try {
-                    if (typeof defaultMessage === "string" && defaultMessage.startsWith("{")) {
-                        defaultMessage = JSON.parse(defaultMessage).description || data.message;
-                    }
-                } catch (e) {
-                    // 如果解析失敗，直接使用原始 message
-                }
-                output.textContent += defaultMessage + "\n";
+                output.textContent += tryParseJsonMessage(data.message) + "\n";
             } else {
                 output.textContent += "收到未定義的訊息類型: " + JSON.stringify(data) + "\n";
             }
@@ -62,11 +75,15 @@ function sendCommand() {
 }
 
 function formatPlayerInfo(data) {
+    renderShapes(data.avatar, "player-avatar");
     return `
         <p>Name: ${data.name || "Unknown"}</p>
         <p>Level: ${data.level}</p>
         <p>HP: ${data.hp}</p>
         <p>MP: ${data.mp}</p>
+        <p>SP: ${data.strength}</p>
+        <p>AP: ${data.agility}</p>
+        <p>WT: ${data.weight}</p>
     `;
 }
 

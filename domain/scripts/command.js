@@ -7,11 +7,6 @@ function processCommand(playerId, input) {
     }
 
     let player = players[playerId];
-    if (!player) {
-        player = new Player({ id: playerId });
-        log(`1. playerId: ${playerId}`, JSON.stringify(player));
-    }
-
     let parts = input.trim().split(" ");
     let cmd = parts[0];
     let args = parts.slice(1).join(" ");
@@ -20,6 +15,7 @@ function processCommand(playerId, input) {
         return formatOutput(player, "Login usage: login <name> <password>");
     }
 
+    log(`processCommand(${playerId}) ${input}`);
     if (typeof this[cmd] === "function") {
         // 先執行 login 命令以載入資料或創建新玩家
         if (cmd === "login") {
@@ -45,7 +41,6 @@ function processCommand(playerId, input) {
 
         // 執行其他命令
         let result = this[cmd](player, args);
-        log("\n", `cmd ${cmd}`, JSON.stringify(player), JSON.stringify(result), "\n");
         return formatOutput(player, result);
     } else {
         log("processCommand", "Unknown command:", cmd);

@@ -1,4 +1,5 @@
 {
+    "say_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
     "say_empty": "What do you want to say?",
     "say_self": "You say: {message}",
     "say_broadcast": "{id} says: {message}",
@@ -85,7 +86,6 @@
     "look_help": "Usage: {usage}\nDescription: {description}",
     "priv_help": "Usage: {usage}\nDescription: {description}",
     "quit_help": "Usage: {usage}\nDescription: {description}",
-    "say_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
     "search_help": "Usage: {usage}\nDescription: {description}",
     "set_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
     "stats_help": "Usage: {usage}\nDescription: {description}",
@@ -95,5 +95,7 @@
     "not_in_character_creation": "You are not in character creation mode.",
     "missing_fields": "You must set {fields} before finishing character creation.",
     "character_creation_complete": "Character creation complete. Welcome to the game!",
-    "finishCreation_help": "Completes the character creation process after all required fields are set. Usage: describe"
+    "finishCreation_help": "Completes the character creation process after all required fields are set. Usage: describe",
+    "two_help": "Usage: {usage}\nDescription: {description}\nExamples: {examples}",
+    "two_success": "You say: {message}"
 }

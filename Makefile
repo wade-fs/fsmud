@@ -23,4 +23,5 @@ all: mud
 	$(GOROOT)/bin/go build $(GO_FLAGS) -o $(OUT)/$@
 
 run:
-	@ $(OUT)/mud
+	@ perl -i -pe 's/\.js\?v=(\d+)/".js?v=".($$1+1)/ge' frontend/index.html
+	@ $(OUT)/mud 2>&1 | tee run.log

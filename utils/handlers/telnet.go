@@ -8,9 +8,11 @@ import (
 	"fsmud/utils/client"
 	"fsmud/utils/v8funcs"
 	"fsmud/utils/v8go"
+	"html/template"
 	"log"
 	"net"
 	"strings"
+	"sync"
 )
 
 func StartTelnetServer(m *client.ClientManager, ctx *v8go.Context) {
@@ -39,75 +41,108 @@ func StartTelnetServer(m *client.ClientManager, ctx *v8go.Context) {
 func handleTelnet(conn net.Conn, m *client.ClientManager, ctx *v8go.Context) {
 	defer conn.Close()
 
+	var history []string
+	var historyIndex int
+	var historyMutex sync.Mutex
+
 	playerID := m.GeneratePlayerID()
 	m.Add(conn, "character creation", "telnet")
 	fmt.Fprintf(conn, "Welcome to the MUD!\r\nPlease login or create with: <username> <password>\r\n> ")
 
-	scanner := bufio.NewScanner(conn)
-	for scanner.Scan() {
-		input := strings.TrimSpace(scanner.Text())
-		info, exists := m.Get(conn)
-		if !exists {
-			continue
-		}
+	// 讓客戶端進入 Raw Mode
+	conn.Write([]byte{255, 251, 1})  // IAC WILL ECHO
+	conn.Write([]byte{255, 251, 3})  // IAC WILL SUPPRESS GO AHEAD
+	conn.Write([]byte{255, 252, 34}) // IAC WONT LINEMODE
 
-		// 將所有輸入交給 V8 的 processCommand 處理
-		script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
-		val, err := ctx.RunScript(script, "cmd.js")
+	reader := bufio.NewReader(conn)
+	var inputBuffer []rune
+
+	for {
+		char, err := reader.ReadByte()
 		if err != nil {
-			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-			e := err.(*v8go.JSError)
-			fmt.Println(e.Message)
-			fmt.Println(e.Location)
-			fmt.Println(e.StackTrace)
-			fmt.Printf("javascript error: %v", e)
-			fmt.Printf("javascript stack trace: %+v", e)
-			continue
-		}
-
-		// 處理回傳結果
-		result := val.String()
-		if result != "" && result != "undefined" {
-			fmt.Fprintf(conn, "%s\r\n> ", result)
-		} else {
-			fmt.Fprintf(conn, "> ") // 保持提示符
-		}
-
-		// 更新房間資訊（由 V8 控制）
-		areaScript := fmt.Sprintf(`players["%s"] ? players["%s"].area : "character creation"`, info.PlayerID, info.PlayerID)
-		areaVal, err := ctx.RunScript(areaScript, "get_area.js")
-		if err == nil && areaVal.IsString() {
-			m.UpdateRoom(conn, areaVal.String())
-		}
-
-		// 如果收到 quit，清理並退出
-		if input == "quit" {
-			_,err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, info.PlayerID), "cleanup.js")
-			if err != nil {
-				fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-				e := err.(*v8go.JSError)
-				fmt.Println(e.Message)
-				fmt.Println(e.Location)
-				fmt.Println(e.StackTrace)
-				fmt.Printf("javascript error: %v", e)
-				fmt.Printf("javascript stack trace: %+v", e)
-			}
-			m.Remove(conn)
 			return
 		}
-	}
-	if err := scanner.Err(); err != nil {
-		log.Println("Telnet read error:", err)
-		m.Remove(conn)
-		_, err := ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
-		if err != nil {
-			fmt.Fprintf(conn, "Error: %s\r\n> ", err.Error())
-			e := err.(*v8go.JSError)
-			fmt.Println(e.Message)
-			fmt.Println(e.Location)
-			fmt.Println(e.StackTrace)
-			fmt.Printf("javascript error: %v", e)
-			fmt.Printf("javascript stack trace: %+v", e)
+
+		if char == 255 { // IAC byte
+			next, _ := reader.ReadByte()
+			if next == 251 || next == 252 || next == 253 || next == 254 { // WILL, WONT, DO, DONT
+				reader.ReadByte() // 跳過選項 byte
+			}
+			continue
+		}
+		if char == 13 { // ENTER 鍵
+			info, exists := m.Get(conn)
+			if !exists {
+				continue
+			}
+
+			_input := strings.TrimSpace(string(inputBuffer))
+			if _input != "" {
+				historyMutex.Lock()
+				history = append(history, _input)
+				historyIndex = len(history)
+				historyMutex.Unlock()
+			}
+
+			input := template.JSEscapeString(strings.TrimSpace(string(_input)))
+			script := fmt.Sprintf(`processCommand("%s", "%s")`, info.PlayerID, input)
+        	fmt.Printf("Run V8: '%s'\n", script)
+			val, err := ctx.RunScript(script, "cmd.js")
+			if err != nil {
+				conn.Write([]byte("Error processing command\n"))
+			} else {
+				msg := "\r\n"+strings.ReplaceAll(val.String(), "\n", "\r\n")+"\r\n"
+				conn.Write([]byte(msg))
+			}
+
+			inputBuffer = nil // 清空輸入緩衝區
+			conn.Write([]byte("> "))
+			continue
+		}
+
+		if char == '\x7F' {
+		    if len(inputBuffer) > 0 {
+		        inputBuffer = inputBuffer[:len(inputBuffer)-1]
+		        conn.Write([]byte("\b\033[K"))
+		    }
+		    continue
+		}
+
+		if char == 27 { // 方向鍵 (Escape sequence)
+			next, _ := reader.ReadByte()
+			if next == 91 {
+				direction, _ := reader.ReadByte()
+				if direction == 65 { // 向上鍵 (History Up)
+					historyMutex.Lock()
+					if historyIndex > 0 {
+						historyIndex--
+					}
+					if historyIndex < len(history) {
+						inputBuffer = []rune(history[historyIndex])
+					}
+					historyMutex.Unlock()
+				} else if direction == 66 { // 向下鍵 (History Down)
+					historyMutex.Lock()
+					if historyIndex < len(history)-1 {
+						historyIndex++
+						inputBuffer = []rune(history[historyIndex])
+					} else {
+						historyIndex = len(history)
+						inputBuffer = nil
+					}
+					historyMutex.Unlock()
+				}
+				conn.Write([]byte("\r> " + string(inputBuffer) + " \033[K")) // 清除行並顯示歷史命令
+			}
+			continue
+		}
+
+		if char >= 32 && char <= 126 {
+			inputBuffer = append(inputBuffer, rune(char))
+			conn.Write([]byte{char})
+		} else {
+			log.Println([]byte{char})
+			ctx.RunScript(fmt.Sprintf(`removePlayer("%s")`, playerID), "cleanup.js")
 		}
 	}
 }

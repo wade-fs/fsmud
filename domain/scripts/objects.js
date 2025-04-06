@@ -1,6 +1,7 @@
 // domain/scripts/objects.js
 
 function loadObject(type, name) {
+    log(`loadObject(${type}, ${name})`);
     if (!cache[type]) {
         cache[type] = {}; // 初始化 type 的快取
     }
@@ -31,7 +32,7 @@ function loadObject(type, name) {
                     cache[type][name] = new NPC(data);
                     break;
                 case "players":
-                    cache[type][name] = new Player(data); // 為 "players" 創建 Player 實例
+                    cache[type][name] = new Player(data);
                     break;
                 case "areas":
                     cache[type][name] = new Area(data);

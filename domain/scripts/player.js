@@ -13,7 +13,7 @@ function generateUUID() {
 
 function addPlayer(playerId, area, connectionType) {
     if (!players[playerId]) {
-        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType: "telnet" });
+        players[playerId] = new Player({ id: playerId, area: "character creation", connectionType });
         log("addPlayer", JSON.stringify(players[playerId]));
     } else {
         players[playerId].area = area;
@@ -57,12 +57,13 @@ class Player {
         this.strength = data.strength || 10;
         this.agility = data.agility || 10;
         this.inventory = data.inventory || [];
-        log("Player.New()", JSON.stringify(this));
+        this.avatar = data.avatar || [];
+        players[this.id] = this;
+        log("Player.constructor()", JSON.stringify(this));
     }
 
     save() {
         let playerData = {
-            id: this.id,
             uuid: this.uuid,
             name: this.name,
             password: this.password,
@@ -81,7 +82,8 @@ class Player {
             mp: this.mp,
             strength: this.strength,
             agility: this.agility,
-            inventory: this.inventory
+            inventory: this.inventory,
+            avatar: this.avatar
         };
         saveObject("players", this.uuid, playerData);
         log(`Player.save()`, JSON.stringify(playerData));
@@ -92,9 +94,8 @@ class Player {
             let uuid = file.split('/').pop().replace('.json', '');
             let playerData = loadObject("players", uuid); // 修正 type 為 "players"
             if (playerData && playerData.name === name) {
-                return new Player(playerData);
-            } else {
-                log(`Player.load(${name}) with uuid=${uuid} not match name ${playerData.name}`);
+                log(`Found player data, call Player.load(${name})`);
+                return playerData;
             }
         }
         log(`Player.load(${name}) not found player file.`);
@@ -102,6 +103,7 @@ class Player {
     }
 
     clone() {
+        log(`Player.clone()`, JSON.stringify(this));
         return new Player({
             id: this.id,
             uuid: this.uuid,
@@ -122,7 +124,7 @@ class Player {
             strength: this.strength,
             agility: this.agility,
             inventory: this.inventory.slice(),
+            avatar: this.avatar
         });
-        log(`Player.clone()`, JSON.stringify(playerData));
     }
 }
