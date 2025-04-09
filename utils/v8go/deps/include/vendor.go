@@ -3,6 +3,6 @@
 package include
 
 import (
-	_ "fsmud/utils/v8go/deps/include/cppgc"
-  _ "fsmud/utils/v8go/deps/include/libplatform"
+	_ "github.com/ferdinandvhagen/v8go/deps/include/cppgc"
+	_ "github.com/ferdinandvhagen/v8go/deps/include/libplatform"
 )

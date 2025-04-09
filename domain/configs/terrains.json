@@ -784,22 +784,6 @@
       "afternoon": "Sunset glow reflecting, red rock walls, lengthening shadows, cold wind rising, magnificent scenery",
       "night": "Night falling, hidden rock walls, fierce cold wind, bright cold moon, all around silent"
     }
-  },
-  { "98": { "name": "Highland Polar Peak",
-      "midnight": "Boundless darkness, bone-chilling cold wind, hidden snow-capped mountains, ice and snow condensing, oppressive silence",
-      "morning": "Faint morning light, snow peak appearing, light mist rising, cold wind on the face, vast scenery",
-      "noon": "Sunlight shining, ice and snow sparkling, rapid cold wind, persistent cold, thin air",
-      "afternoon": "Sunset glow scattering, red snow peak, lengthening shadows, biting cold, world silent",
-      "night": "Deep night colors, ice and snow covered, cold moonlight, cold wind howling, silent night"
-    }
-  },
-  { "99": { "name": "Roof of the World",
-      "midnight": "Deep cold, hidden mountain ranges, ice and snow spreading, cold wind howling, lonely isolation",
-      "morning": "Dawn first appearing, mountain ranges revealed, ice layer sparkling, clear cold breeze, magnificent scenery",
-      "noon": "Scorching sun, ice and snow reflecting light, strong wind, vast scenery, thin air",
-      "afternoon": "Sunset glow reflecting, red ice and snow, lengthening shadows, cold wind invading, world quiet",
-      "night": "Bright moonlight, ice and snow sealed, fierce cold wind, wind howling, all around silent"
-    }
   }
 ],
 
@@ -1490,20 +1474,6 @@
 		"noon":      "烈日曝曬、岩層炙熱、風力強勁、岩脈明顯、氣流稀薄",
 		"afternoon": "夕陽映照、岩壁染紅、陰影延長、冷風捲起、景色壯麗",
 		"night":     "夜幕低垂、岩壁隱匿、寒風凜冽、冷月明亮、四周寂靜"
-	}},
-	{"98": {"name":"高原極地山峰",
-		"midnight":  "黑暗無邊、寒風刺骨、雪山隱藏、冰雪凝結、寂靜壓迫",
-		"morning":   "晨光微弱、雪峰顯現、霧氣輕揚、冷風拂面、景色空曠",
-		"noon":      "陽光照射、冰雪閃光、冷風急速、寒冷依然、氣息稀薄",
-		"afternoon": "夕陽灑照、雪峰紅透、陰影延長、寒氣逼人、世界靜默",
-		"night":     "夜色深邃、冰雪覆蓋、月光冷冽、寒風呼嘯、夜靜無聲"
-	}},
-	{"99": {"name":"世界屋脊",
-		"midnight":  "寒冷深沉、山巒隱匿、冰雪蔓延、冷風呼嘯、寂靜孤立",
-		"morning":   "曙光初現、山脈顯露、冰層閃光、清冷微風、景象壯觀",
-		"noon":      "烈日曝曬、冰雪反射、風力強勁、景象遼闊、空氣稀薄",
-		"afternoon": "夕陽映照、冰雪泛紅、陰影拉長、冷風襲來、世界靜謐",
-		"night":     "月光皎潔、冰雪封存、寒風凜冽、風聲呼嘯、四周寂靜"
 	}}
   ]
 }
