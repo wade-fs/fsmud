@@ -257,13 +257,14 @@ function renderShape(shapeStr, two) {
                     console.log("無效的 points 資料 (應為 x1 y1 x2 y2 ...):", shape);
                     return;
                 }
+                const anchors = [];
                 for (let i = 1; i < cleanParts.length; i += 2) {
-                    const x = parseFloat(cleanParts[i]);
-                    const y = parseFloat(cleanParts[i + 1]);
-                    const point = two.makeCircle(x, y, size / 2); // 用圓代替點
-                    point.fill = fill;
-                    point.stroke = stroke;
+                    anchors.push(new Two.Anchor(parseFloat(cleanParts[i]), parseFloat(cleanParts[i + 1])));
                 }
+                const pts = two.makePoints(anchors);
+                pts.fill = fill;
+                pts.stroke = stroke;
+                pts.size = size;
                 break;
             }
 
